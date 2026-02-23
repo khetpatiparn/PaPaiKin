@@ -5,6 +5,10 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 // mongoose
 import { MongooseModule } from '@nestjs/mongoose';
+import { ControlMenuModule } from './control-menu/control-menu.module';
+import { MenuModule } from './menu/menu.module';
+import { ShopModule } from './shop/shop.module';
+import { ShopMenuItemModule } from './shop-menu-item/shop-menu-item.module';
 
 @Module({
   imports: [
@@ -16,6 +20,10 @@ import { MongooseModule } from '@nestjs/mongoose';
         uri: config.get<string>('DB_URI'), // Loaded from .ENV
       }),
     }),
+    ControlMenuModule,
+    MenuModule,
+    ShopModule,
+    ShopMenuItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],
