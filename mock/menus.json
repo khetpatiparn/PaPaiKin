@@ -1,0 +1,37 @@
+[
+  {
+    "_id": { "$oid": "65d4b0000000000000000001" },
+    "menuName": "ข้าวกะเพราหมูสับไข่ดาว",
+    "menuImage": "https://img.wongnai.com/p/1920x0/2020/07/28/1d2c67645d9441f78f8447833446850c.jpg",
+    "ingredients": ["หมูสับ", "ใบกะเพรา", "พริก", "ไข่ไก่"],
+    "cookingMethod": ["ผัด"]
+  },
+  {
+    "_id": { "$oid": "65d4b0000000000000000002" },
+    "menuName": "Iced Latte (ลาเต้เย็น)",
+    "menuImage": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=500",
+    "ingredients": ["Espresso Shot", "Milk", "Ice"],
+    "cookingMethod": ["ชง"]
+  },
+  {
+    "_id": { "$oid": "65d4b0000000000000000003" },
+    "menuName": "ข้าวมันไก่ต้ม",
+    "menuImage": "https://img.wongnai.com/p/1920x0/2019/08/17/5700201874944d15a519894751430045.jpg",
+    "ingredients": ["ไก่ต้ม", "ข้าวมัน", "น้ำจิ้ม"],
+    "cookingMethod": ["ต้ม"]
+  },
+  {
+    "_id": { "$oid": "65d4b0000000000000000004" },
+    "menuName": "Pork Chop Steak",
+    "menuImage": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500",
+    "ingredients": ["เนื้อหมู", "เฟรนช์ฟรายส์", "สลัด"],
+    "cookingMethod": ["ย่าง"]
+  },
+  {
+    "_id": { "$oid": "65d4b0000000000000000005" },
+    "menuName": "Strawberry Bingsu",
+    "menuImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
+    "ingredients": ["น้ำแข็งไส", "สตอเบอรี่", "นมข้น"],
+    "cookingMethod": ["ทำของหวาน"]
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "_id": { "$oid": "65d4a0000000000000000001" },
+    "shopName": "ป้าแจ๋ว ตามสั่ง (หอ FBT)",
+    "shopImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",
+    "location": { "type": "Point", "coordinates": [100.7818, 13.7290] },
+    "deliveryOptions": ["Delivery", "Pickup"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000002" },
+    "shopName": "Geeky Coffee (ตึกวิศวะ)",
+    "shopImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500",
+    "location": { "type": "Point", "coordinates": [100.7752, 13.7265] },
+    "deliveryOptions": ["Pickup"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000003" },
+    "shopName": "เฮียตี๋ ข้าวมันไก่ตอน (เกกี 2)",
+    "shopImage": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500",
+    "location": { "type": "Point", "coordinates": [100.7790, 13.7285] },
+    "deliveryOptions": ["Delivery"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000004" },
+    "shopName": "ลุงหนวด สเต็กเด็กแนว (RNP)",
+    "shopImage": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500",
+    "location": { "type": "Point", "coordinates": [100.7850, 13.7310] },
+    "deliveryOptions": ["Delivery", "Pickup"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000005" },
+    "shopName": "Sweet Syntax (ร้านขนมหวาน)",
+    "shopImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
+    "location": { "type": "Point", "coordinates": [100.7765, 13.7275] },
+    "deliveryOptions": ["Pickup"]
+  }
+]
