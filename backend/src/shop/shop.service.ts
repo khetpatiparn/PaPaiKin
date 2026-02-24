@@ -2,8 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { UpdateShopDto } from './dto/update-shop.dto';
 
+import { Shop } from './schema/shop.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
 @Injectable()
 export class ShopService {
+  constructor(@InjectModel(Shop.name) private menuModel: Model<Shop>) {}
+
   create(createShopDto: CreateShopDto) {
     return 'This action adds a new shop';
   }

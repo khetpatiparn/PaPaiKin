@@ -5,10 +5,10 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 // mongoose
 import { MongooseModule } from '@nestjs/mongoose';
-import { ControlMenuModule } from './control-menu/control-menu.module';
 import { MenuModule } from './menu/menu.module';
 import { ShopModule } from './shop/shop.module';
 import { ShopMenuItemModule } from './shop-menu-item/shop-menu-item.module';
+import { Connection } from 'mongoose';
 
 @Module({
   imports: [
@@ -18,9 +18,15 @@ import { ShopMenuItemModule } from './shop-menu-item/shop-menu-item.module';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         uri: config.get<string>('DB_URI'), // Loaded from .ENV
+        onConnectionCreate: (connection: Connection) => {
+          connection.on('connected', () => console.log('connected'));
+          connection.on('open', () => console.log('open'));
+          connection.on('disconnected', () => console.log('disconnected'));
+          connection.on('reconnected', () => console.log('reconnected'));
+          connection.on('disconnecting', () => console.log('disconnecting'));
+        },
       }),
     }),
-    ControlMenuModule,
     MenuModule,
     ShopModule,
     ShopMenuItemModule,
