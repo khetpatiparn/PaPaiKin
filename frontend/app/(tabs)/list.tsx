@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function ProfileTab() {
   return (
     <View style={styles.container}>
-      <Text>Profile page</Text>
+      <Text>list page</Text>
     </View>
   );
 }

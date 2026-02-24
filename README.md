@@ -7,6 +7,8 @@ Logs
 - config docker compose
 - can connect mongo with mongoDB compass
 - can create schema & connect mongo db
+25/2/2569
+- make prototype control-menu page
 
 
 Notes:
@@ -23,3 +25,6 @@ To use mongosh shell // เน้นรัน mongosh ผ่าน docker ก่
 
 To connect mongoDB compass 
 - use URI : "mongodb://myDatabaseUser:D1fficultP%40ssw0rd@mongodb0.example.com:27017/?authSource=admin"
+
+To run front-end with expo :
+- use command "npx expo start"
