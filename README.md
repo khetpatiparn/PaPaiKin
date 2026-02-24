@@ -8,6 +8,7 @@ Logs
 - can connect mongo with mongoDB compass
 - can create schema & connect mongo db
 
+
 Notes:
 To connect mongodb in docker :
 - open docker desktop
