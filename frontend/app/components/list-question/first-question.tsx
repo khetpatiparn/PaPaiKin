@@ -12,27 +12,31 @@ export default function FirstQuestion({ handleNext }: FirstQuestionProps) {
       <Text>Step : 1</Text>
       <Text>Q1 : กินสไตล์ไหน</Text>
       <View style={questionStyle.container}>
-        <Pressable style={questionStyle.item} onPress={handleNext("อาหารจานเดียว")}>
-          <Text style={questionStyle.textColor}>อาหารจานเดียว</Text>
+        <Pressable style={questionStyle.item} onPress={handleNext}>
+          <Text style={questionStyle.textColor}>จานเดียว</Text>
         </Pressable>
 
-        <Pressable style={questionStyle.item} onPress={handleNext("เมนูเส้น")}>
-          <Text style={questionStyle.textColor}>เมนูเส้น</Text>
+        <Pressable style={questionStyle.item} onPress={handleNext}>
+          <Text style={questionStyle.textColor}>เส้น</Text>
         </Pressable>
 
-        <Pressable style={questionStyle.item} onPress={handleNext("กับข้าว/ทานเล่น")}>
-          <Text style={questionStyle.textColor}>กับข้าว/ทานเล่น</Text>
+        <Pressable style={questionStyle.item} onPress={handleNext}>
+          <Text style={questionStyle.textColor}>กับข้าว</Text>
         </Pressable>
 
-        <Pressable style={questionStyle.item} onPress={handleNext("เครื่องดื่ม")}>
+        <Pressable style={questionStyle.item} onPress={handleNext}>
+          <Text style={questionStyle.textColor}>ทานเล่น</Text>
+        </Pressable>
+
+        <Pressable style={questionStyle.item} onPress={handleNext}>
           <Text style={questionStyle.textColor}>เครื่องดื่ม</Text>
         </Pressable>
 
-        <Pressable style={questionStyle.item} onPress={handleNext("ของหวาน")}>
+        <Pressable style={questionStyle.item} onPress={handleNext}>
           <Text style={questionStyle.textColor}>ของหวาน</Text>
         </Pressable>
 
-        <Pressable style={questionStyle.item} onPress={handleNext("อะไรก็ได้")}>
+        <Pressable style={questionStyle.item} onPress={handleNext}>
           <Text style={questionStyle.textColor}>อะไรก็ได้</Text>
         </Pressable>
       </View>

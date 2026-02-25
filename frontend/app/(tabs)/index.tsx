@@ -5,20 +5,16 @@ import FirstQuestion from "../components/list-question/first-question";
 import SecondQuestion from "../components/list-question/second-question";
 import ThirdQuestion from "../components/list-question/third-question";
 
-interface listAnswer {
-  q1: string;
-  q2: string;
-  q3: string;
-}
+import { ListAnswer } from "../components/list-question/types/type-question";
 
 export default function Index() {
 
   const [step, setStep] = useState<number>(1);
 
-  const [answer, setAnswer] = useState<listAnswer>()
+  const [answer, setAnswer] = useState<ListAnswer>({})
 
-  const handleNext = () => {
-    setAnswer()
+  const handleNext = (key: keyof ListAnswer, value : string) => {
+    // setAnswer()
     setStep(step + 1);
   }
 

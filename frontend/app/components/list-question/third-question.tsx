@@ -12,11 +12,11 @@ export default function ThirdQuestion({ handleNext }: ThirdQuestionProps) {
       <Text>Q3 : รูปแบบการปรุง</Text>
       <View style={[questionStyle.container]}>
         <Pressable style={questionStyle.item} onPress={handleNext}>
-          <Text style={questionStyle.textColor}>แบบแห้ง (ผัด/ทอด/ย่าง/ยำ)</Text>
+          <Text style={questionStyle.textColor}>แบบแห้ง (ผัด/ทอด/ย่าง/ยำ/อบแห้ง)</Text>
         </Pressable>
 
         <Pressable style={questionStyle.item} onPress={handleNext}>
-          <Text style={questionStyle.textColor}>แบบน้ำ (แกง/ต้ม/ซุป)</Text>
+          <Text style={questionStyle.textColor}>แบบน้ำ (แกง/ต้ม/ซุป/ลวก/นึ่ง)</Text>
         </Pressable>
 
         <Pressable style={questionStyle.item} onPress={handleNext}>
