@@ -1,6 +1,6 @@
 # PaPaiKin
 
-Logs
+Logs:
 23/2/2569
 - create branch (connect-db)
 24/2/2569
@@ -9,7 +9,13 @@ Logs
 - can create schema & connect mongo db
 25/2/2569
 - make prototype control-menu page
+- edit schema => add field "category : string" in menus and shopMenuItems collection for mapping with UI control-menu(front) correctly 
 
+Todos:
+control-menu features:
+  [] build UI control menu page
+  [] in coltrol menu page can send API data => category:string , ingredients: string[], cooking: string[] correctly
+  [] fix schema in backend for according Schema Diagram changed
 
 Notes:
 To connect mongodb in docker :
