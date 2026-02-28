@@ -10,6 +10,14 @@ export default function SecondQuestion({ handleNext }: SecondQuestionProps) {
 
   const listQ2 = ["หมู", "ไก่", "เนื้อ", "ทะเล", "ไม่ทานเนื้อ", "อะไรก็ได้"];
 
+  const shuffleIngredients = [
+    INGREDIENTS.PORK,
+    INGREDIENTS.CHICKEN,
+    INGREDIENTS.BEEF,
+    INGREDIENTS.SEAFOOD,
+    INGREDIENTS.VEGETARIAN,
+  ]
+
   return (
     <View>
       <Text>Step : 2</Text>
@@ -35,7 +43,10 @@ export default function SecondQuestion({ handleNext }: SecondQuestionProps) {
           <Text style={questionStyle.textColor}>{listQ2[4]}</Text>
         </Pressable>
 
-        <Pressable style={questionStyle.item} onPress={() => handleNext("q2", INGREDIENTS.ANY)}>
+        <Pressable style={questionStyle.item} onPress={() => {
+          const random = shuffleIngredients[Math.floor(Math.random() * shuffleIngredients.length)];
+          handleNext('q2', random)
+        }}>
           <Text style={questionStyle.textColor}>{listQ2[5]}</Text>
         </Pressable>
       </View>

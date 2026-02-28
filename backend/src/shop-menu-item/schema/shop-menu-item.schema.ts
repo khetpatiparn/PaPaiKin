@@ -3,9 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { Location, LocationSchema } from 'src/common/schemas/location.schema';
 
-// import { Menu } from 'src/menu/schema/menu.schema';
-// import { Shop } from 'src/shop/schema/shop.schema';
-
 export type ShopMenuItemDocument = HydratedDocument<ShopMenuItem>;
 
 @Schema({ _id: false })

@@ -25,7 +25,7 @@
 
 - [x] build UI control menu page
 - [x] fix schema in backend for according Schema Diagram changed
-- [ ] in coltrol menu page can send API data => category:string , ingredients: string[], cooking: string[] correctly
+- [x] in coltrol menu page can send API data => category:string , ingredients: string[], cooking: string[] correctly
 
 ---
 

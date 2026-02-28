@@ -7,7 +7,7 @@
     "price": 50,
     "menuImage": "https://img.wongnai.com/p/1920x0/2020/07/28/1d2c67645d9441f78f8447833446850c.jpg",
     "shopImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",
-    "attributes": { "ingredients": ["หมูสับ", "ใบกะเพรา", "พริก", "ไข่ไก่"], "cookingMethod": ["ผัด"] },
+    "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "ใบกะเพรา", "พริก", "ไข่ไก่"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7818, 13.7290] }
   },
   {
@@ -18,7 +18,7 @@
     "price": 45,
     "menuImage": "https://img.wongnai.com/p/1920x0/2019/08/17/5700201874944d15a519894751430045.jpg",
     "shopImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",
-    "attributes": { "ingredients": ["ไก่ต้ม", "ข้าวมัน"], "cookingMethod": ["ต้ม"] },
+    "attributes": { "category": "SINGLE_DISH", "ingredients": ["ไก่ต้ม", "ข้าวมัน"], "cookingMethod": ["ต้ม"] },
     "location": { "type": "Point", "coordinates": [100.7818, 13.7290] }
   },
   {
@@ -29,7 +29,7 @@
     "price": 60,
     "menuImage": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=500",
     "shopImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500",
-    "attributes": { "ingredients": ["Espresso Shot", "Milk"], "cookingMethod": ["ชง"] },
+    "attributes": { "category": "BEVERAGE", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7752, 13.7265] }
   },
   {
@@ -40,7 +40,7 @@
     "price": 129,
     "menuImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
     "shopImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500",
-    "attributes": { "ingredients": ["น้ำแข็งไส", "สตอเบอรี่"], "cookingMethod": ["ทำของหวาน"] },
+    "attributes": { "category": "DESSERT", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7752, 13.7265] }
   },
   {
@@ -51,7 +51,7 @@
     "price": 50,
     "menuImage": "https://img.wongnai.com/p/1920x0/2019/08/17/5700201874944d15a519894751430045.jpg",
     "shopImage": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500",
-    "attributes": { "ingredients": ["ไก่ต้ม", "ข้าวมัน"], "cookingMethod": ["ต้ม"] },
+    "attributes": { "category": "SINGLE_DISH", "ingredients": ["ไก่ต้ม", "ข้าวมัน"], "cookingMethod": ["ต้ม"] },
     "location": { "type": "Point", "coordinates": [100.7790, 13.7285] }
   },
   {
@@ -62,7 +62,7 @@
     "price": 55,
     "menuImage": "https://img.wongnai.com/p/1920x0/2020/07/28/1d2c67645d9441f78f8447833446850c.jpg",
     "shopImage": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500",
-    "attributes": { "ingredients": ["ไก่ทอด", "ใบกะเพรา"], "cookingMethod": ["ทอด", "ผัด"] },
+    "attributes": { "category": "SINGLE_DISH", "ingredients": ["ไก่ทอด", "ใบกะเพรา"], "cookingMethod": ["ทอด", "ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7790, 13.7285] }
   },
   {
@@ -73,7 +73,7 @@
     "price": 89,
     "menuImage": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500",
     "shopImage": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500",
-    "attributes": { "ingredients": ["เนื้อหมู", "เฟรนช์ฟรายส์"], "cookingMethod": ["ย่าง"] },
+    "attributes": { "category": "SINGLE_DISH", "ingredients": ["เนื้อหมู", "เฟรนช์ฟรายส์"], "cookingMethod": ["ย่าง"] },
     "location": { "type": "Point", "coordinates": [100.7850, 13.7310] }
   },
   {
@@ -84,7 +84,7 @@
     "price": 79,
     "menuImage": "https://img.wongnai.com/p/1920x0/2020/07/28/1d2c67645d9441f78f8447833446850c.jpg",
     "shopImage": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500",
-    "attributes": { "ingredients": ["เส้นสปาเก็ตตี้", "พริกไทยอ่อน"], "cookingMethod": ["ผัด"] },
+    "attributes": { "category": "NOODLE", "ingredients": ["เส้นสปาเก็ตตี้", "พริกไทยอ่อน"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7850, 13.7310] }
   },
   {
@@ -95,7 +95,7 @@
     "price": 159,
     "menuImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
     "shopImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
-    "attributes": { "ingredients": ["น้ำแข็งไส", "สตอเบอรี่"], "cookingMethod": ["ทำของหวาน"] },
+    "attributes": { "category": "DESSERT", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7765, 13.7275] }
   },
   {
@@ -106,7 +106,7 @@
     "price": 70,
     "menuImage": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=500",
     "shopImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
-    "attributes": { "ingredients": ["Espresso Shot", "Milk"], "cookingMethod": ["ชง"] },
+    "attributes": { "category": "BEVERAGE", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7765, 13.7275] }
   }
 ]

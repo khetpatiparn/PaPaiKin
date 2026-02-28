@@ -10,6 +10,13 @@ export default function FirstQuestion({ handleNext }: FirstQuestionProps) {
 
   const listQ1 = ["จานเดียว", "เส้น", "กับข้าว", "ทานเล่น", "เครื่องดื่ม", "ของหวาน", "อะไรก็ได้"];
 
+  const shuffleCategory = [
+    FOOD_CATEGORIES.SINGLE_DISH,
+    FOOD_CATEGORIES.SIDE_DISH,
+    FOOD_CATEGORIES.NOODLE,
+    FOOD_CATEGORIES.APPETIZER,
+  ]
+
   return (
     <View>
       <Text>Step : 1</Text>
@@ -39,7 +46,10 @@ export default function FirstQuestion({ handleNext }: FirstQuestionProps) {
           <Text style={questionStyle.textColor}>{listQ1[5]}</Text>
         </Pressable>
 
-        <Pressable style={questionStyle.item} onPress={() => handleNext("q1", FOOD_CATEGORIES.ANY)}>
+        <Pressable style={questionStyle.item} onPress={() => {
+          const random = shuffleCategory[Math.floor(Math.random() * shuffleCategory.length)];
+          handleNext("q1", random)
+        }}>
           <Text style={questionStyle.textColor}>{listQ1[6]}</Text>
         </Pressable>
       </View>

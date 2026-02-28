@@ -16,10 +16,10 @@ export default function Index() {
   const [answer, setAnswer] = useState<ListAnswer>({})
 
   // send answer
-  const sendAnswer = async () => {
-    axios.post('http://localhost:3000/menu/control-menu', answer)
+  const sendAnswer = async (answer: ListAnswer) => {
+    axios.post('http://192.168.137.1:3000/menu/control-menu', answer)
       .then(function (response) {
-        console.log(response);
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -27,16 +27,19 @@ export default function Index() {
   }
 
   const handleNext = (q: keyof ListAnswer, ans: ListAnswer[keyof ListAnswer]) => {
-    if (step < 3) {
-      setAnswer((prevAns) => ({
-        ...prevAns,
-        [q]: ans
-      }))
-      setStep((prevStep) => prevStep + 1)
-    }else {
-      console.log('stepvalue =',step)
-      sendAnswer()
+    const updatedAnswer = { ...answer, [q]: ans };
+    setAnswer(updatedAnswer);
+
+    if (step === 3) {
+      sendAnswer(updatedAnswer);
+      return;
     }
+
+    if (q === 'q1' && (ans === 'BEVERAGE' || ans === 'DESSERT')) {
+      sendAnswer(updatedAnswer);
+      return;
+    }
+    setStep((prevStep) => prevStep + 1)
   }
 
   return (

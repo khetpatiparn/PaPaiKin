@@ -6,7 +6,6 @@ export const FOOD_CATEGORIES = {
     APPETIZER: "APPETIZER",
     BEVERAGE: "BEVERAGE",
     DESSERT: "DESSERT",
-    ANY: "ANY",
   } as const;
 
 export type FoodCategory = typeof FOOD_CATEGORIES[keyof typeof FOOD_CATEGORIES];
@@ -18,7 +17,6 @@ export const INGREDIENTS = {
     BEEF: "BEEF",
     SEAFOOD: "SEAFOOD",
     VEGETARIAN: "VEGETARIAN",
-    ANY: "ANY",
   } as const;
 
 export type Ingredients = typeof INGREDIENTS[keyof typeof INGREDIENTS];
@@ -27,7 +25,6 @@ export type Ingredients = typeof INGREDIENTS[keyof typeof INGREDIENTS];
 export const COOKING_METHOD = {
     DRY: "DRY",
     SOUP: "SOUP",
-    ANY: "ANY",
   } as const;
 
 export type CookingMethod = typeof COOKING_METHOD[keyof typeof COOKING_METHOD];
