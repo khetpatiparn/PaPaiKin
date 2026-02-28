@@ -43,3 +43,6 @@
 
 ### To run front-end with expo :
 - use command `npx expo start`
+
+### To run back-end with nestjs :
+- use command `npm run start:dev`

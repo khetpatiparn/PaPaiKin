@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { View, Text } from "react-native";
+import axios from 'axios';
+
 
 import FirstQuestion from "../components/list-question/first-question";
 import SecondQuestion from "../components/list-question/second-question";
@@ -13,9 +15,28 @@ export default function Index() {
 
   const [answer, setAnswer] = useState<ListAnswer>({})
 
-  const handleNext = (key: keyof ListAnswer, value : string) => {
-    // setAnswer()
-    setStep(step + 1);
+  // send answer
+  const sendAnswer = async () => {
+    axios.post('http://localhost:3000/menu/control-menu', answer)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const handleNext = (q: keyof ListAnswer, ans: ListAnswer[keyof ListAnswer]) => {
+    if (step < 3) {
+      setAnswer((prevAns) => ({
+        ...prevAns,
+        [q]: ans
+      }))
+      setStep((prevStep) => prevStep + 1)
+    }else {
+      console.log('stepvalue =',step)
+      sendAnswer()
+    }
   }
 
   return (

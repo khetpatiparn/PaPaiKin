@@ -31,4 +31,8 @@ export class MenuController {
   remove(@Param('id') id: string) {
     return this.menuService.remove(+id);
   }
+
+  // Control-menu
+  @Post('control-menu')
+  
 }
