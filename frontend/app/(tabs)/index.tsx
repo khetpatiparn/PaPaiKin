@@ -17,7 +17,7 @@ export default function Index() {
 
   // send answer
   const sendAnswer = async (answer: ListAnswer) => {
-    axios.post('http://192.168.137.1:3000/menu/control-menu', answer)
+    axios.post('http://192.168.137.1:3000/shop-menu-item/control-menu', answer)
       .then(function (response) {
         console.log(response.data);
       })

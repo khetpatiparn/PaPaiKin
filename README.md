@@ -19,7 +19,7 @@
 
 ### 28/2/2569
 - completed control-menu feature
-- changes DFD LV0 diagram 1.0 process call D2 Store instead D1 Store  
+- changes DFD LV0 diagram 1.0 process call D2 Store instead D1 Store
 
 ---
 
@@ -30,7 +30,7 @@
 - [x] build UI control menu page
 - [x] fix schema in backend for according Schema Diagram changed
 - [x] in coltrol menu page can send API data => category:string , ingredients: string[], cooking: string[] correctly
-- [] change calling collection from D1 store(menu collections) to D2 store(shopMenuItem colleciton) instead.
+- [x] change calling collection from D1 store(menu collections) to D2 store(shopMenuItem colleciton) instead.
 
 ---
 
