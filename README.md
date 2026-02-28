@@ -17,6 +17,10 @@
 - make prototype control-menu page
 - edit schema => add field "category : string" in menus and shopMenuItems collection for mapping with UI control-menu(front) correctly
 
+### 28/2/2569
+- completed control-menu feature
+- changes DFD LV0 diagram 1.0 process call D2 Store instead D1 Store  
+
 ---
 
 ## Todos
@@ -26,8 +30,17 @@
 - [x] build UI control menu page
 - [x] fix schema in backend for according Schema Diagram changed
 - [x] in coltrol menu page can send API data => category:string , ingredients: string[], cooking: string[] correctly
+- [] change calling collection from D1 store(menu collections) to D2 store(shopMenuItem colleciton) instead.
 
 ---
+
+### guided menu feature :
+- [] จัดการการจัดเรียงหน้าพวก stack layout และ tab layout (FE)
+- [] push data from control-menu into guided menu page (FE)
+- [] build UI guided menu page (FE)
+- [] permission location from user
+- []
+
 
 ## Notes
 
