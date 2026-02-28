@@ -16,6 +16,10 @@ export class CreateMenuDto {
   @IsUrl()
   declare menuImage: string;
 
+  @IsString()
+  @IsNotEmpty()
+  declare category: string;
+
   @IsArray()
   @IsOptional()
   @IsString({ each: true })

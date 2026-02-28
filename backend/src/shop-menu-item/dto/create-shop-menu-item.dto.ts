@@ -13,6 +13,10 @@ import {
 import { LocationDto } from 'src/common/dtos/location.dto';
 
 export class AttributeDto {
+  @IsString()
+  @IsNotEmpty()
+  declare category: string;
+
   @IsArray()
   @IsOptional()
   @IsString({ each: true })

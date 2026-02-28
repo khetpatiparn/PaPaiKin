@@ -34,5 +34,4 @@ export class MenuController {
 
   // Control-menu
   @Post('control-menu')
-  
 }

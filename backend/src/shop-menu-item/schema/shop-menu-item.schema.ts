@@ -10,6 +10,9 @@ export type ShopMenuItemDocument = HydratedDocument<ShopMenuItem>;
 
 @Schema({ _id: false })
 export class Attribute {
+  @Prop({ required: true })
+  declare category: string;
+
   @Prop([String])
   declare ingredients: string[];
 

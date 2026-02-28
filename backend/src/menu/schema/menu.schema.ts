@@ -11,6 +11,9 @@ export class Menu {
   @Prop({ required: true })
   declare menuImage: string;
 
+  @Prop({ required: true })
+  declare category: string;
+
   @Prop([String])
   declare ingredients: string[];
 
