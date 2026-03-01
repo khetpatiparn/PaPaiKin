@@ -21,6 +21,8 @@
 - completed control-menu feature
 - changes DFD LV0 diagram 1.0 process call D2 Store instead D1 Store
 
+### 1/3/2569
+- fix file stucture in frontend (move /components out of /app to src/components)
 ---
 
 ## Todos
@@ -31,6 +33,7 @@
 - [x] fix schema in backend for according Schema Diagram changed
 - [x] in coltrol menu page can send API data => category:string , ingredients: string[], cooking: string[] correctly
 - [x] change calling collection from D1 store(menu collections) to D2 store(shopMenuItem colleciton) instead.
+- [x] fix file stucture in frontend (move /components out of /app to src/components)
 
 ---
 

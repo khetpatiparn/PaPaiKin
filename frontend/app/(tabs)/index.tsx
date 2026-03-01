@@ -2,12 +2,11 @@ import { useState } from "react";
 import { View, Text } from "react-native";
 import axios from 'axios';
 
+import FirstQuestion from "@/components/list-question/first-question";
+import SecondQuestion from "@/components/list-question/second-question";
+import ThirdQuestion from "@/components/list-question/third-question";
 
-import FirstQuestion from "../components/list-question/first-question";
-import SecondQuestion from "../components/list-question/second-question";
-import ThirdQuestion from "../components/list-question/third-question";
-
-import { ListAnswer } from "../components/list-question/types/type-question";
+import { ListAnswer } from "../../components/list-question/types/type-question";
 
 export default function Index() {
 
