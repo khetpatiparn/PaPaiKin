@@ -1,11 +1,23 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
+import { Tabs, usePathname } from 'expo-router';
 
 export default function TabLayout() {
+
+  const pathname = usePathname();
+
+  const screensToHideTab = ['/home/control-menu']
+  const shouldHideTab = screensToHideTab.includes(pathname);
+
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#FF6B00', // สีส้มตาม Theme PaPaiKin
+        tabBarStyle: shouldHideTab ? { display: 'none' } : { display: 'flex' }
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
@@ -13,10 +25,10 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="list"
+        name="search"
         options={{
-          title: 'List',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="list" color={color} />,
+          title: 'Search',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="search" color={color} />,
         }}
       />
     </Tabs>

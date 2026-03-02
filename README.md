@@ -30,13 +30,11 @@
 - [x] fix file stucture in frontend (move /components out of /app to src/components)
 
 ### 2/3/2569
-- [] สร้างโครง navation and layout ของ Papaikin ผ่าน useRouter (FE)
+- [x] สร้างโครง navation and layout ของ Papaikin ผ่าน useRouter (FE)
 - adjust dfd lv0 เดิม(P1.0 ไปขอ request แล้วส่งมาที่ P1.0) => ใหม่(P1.0 รับแค่คำตอบแล้วส่งข้อมูลคำตอบใน query param ไปยัง P2.0)
 ---
 
 ## Todo Lists
-- []
-- [] จัดการการจัดเรียงหน้าพวก stack layout และ tab layout (FE)
 - [] push data from control-menu into guided menu page (FE)
 - [] build UI guided menu page (FE)
 - [] permission location from user

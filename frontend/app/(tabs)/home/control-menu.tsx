@@ -6,9 +6,9 @@ import FirstQuestion from "@/components/list-question/first-question";
 import SecondQuestion from "@/components/list-question/second-question";
 import ThirdQuestion from "@/components/list-question/third-question";
 
-import { ListAnswer } from "../../components/list-question/types/type-question";
+import { ListAnswer } from "../../../components/list-question/types/type-question";
 
-export default function Index() {
+export default function ControlMenu() {
 
   const [step, setStep] = useState<number>(1);
 

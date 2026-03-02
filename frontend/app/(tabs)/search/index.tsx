@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 
-export default function ProfileTab() {
+export default function FilterAndSearch() {
   return (
     <View style={styles.container}>
       <Text>list page</Text>
