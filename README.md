@@ -3,17 +3,14 @@
 ## Logs & Todos
 
 ### 23/2/2569
-
 - create branch (connect-db)
 
 ### 24/2/2569
-
 - config docker compose
 - can connect mongo with mongoDB compass
 - can create schema & connect mongo db
 
 ### 25/2/2569
-
 - make prototype control-menu page
 - edit schema => add field "category : string" in menus and shopMenuItems collection for mapping with UI control-menu(front) correctly
 - [x] build UI control menu page
@@ -32,10 +29,14 @@
 ### 2/3/2569
 - [x] สร้างโครง navation and layout ของ Papaikin ผ่าน useRouter (FE)
 - adjust dfd lv0 เดิม(P1.0 ไปขอ request แล้วส่งมาที่ P1.0) => ใหม่(P1.0 รับแค่คำตอบแล้วส่งข้อมูลคำตอบใน query param ไปยัง P2.0)
+
+### 3/3/2569
+- [x] push data from control-menu into guided menu page (FE)
+
+
 ---
 
 ## Todo Lists
-- [] push data from control-menu into guided menu page (FE)
 - [] build UI guided menu page (FE)
 - [] permission location from user
 
