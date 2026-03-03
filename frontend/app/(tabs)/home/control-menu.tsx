@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { View, Text } from "react-native";
-import axios from 'axios';
 
 import FirstQuestion from "@/components/list-question/first-question";
 import SecondQuestion from "@/components/list-question/second-question";
 import ThirdQuestion from "@/components/list-question/third-question";
 
 import { ListAnswer } from "../../../components/list-question/types/type-question";
+import { router } from "expo-router";
 
 export default function ControlMenu() {
 
@@ -14,28 +14,23 @@ export default function ControlMenu() {
 
   const [answer, setAnswer] = useState<ListAnswer>({})
 
-  // send answer
-  const sendAnswer = async (answer: ListAnswer) => {
-    axios.post('http://192.168.137.1:3000/shop-menu-item/control-menu', answer)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
   const handleNext = (q: keyof ListAnswer, ans: ListAnswer[keyof ListAnswer]) => {
     const updatedAnswer = { ...answer, [q]: ans };
     setAnswer(updatedAnswer);
 
     if (step === 3) {
-      sendAnswer(updatedAnswer);
+      router.navigate({
+        pathname: "/(tabs)/home/guided-menu",
+        params: updatedAnswer,
+      })
       return;
     }
 
     if (q === 'q1' && (ans === 'BEVERAGE' || ans === 'DESSERT')) {
-      sendAnswer(updatedAnswer);
+      router.navigate({
+        pathname: "/(tabs)/home/guided-menu",
+        params: updatedAnswer,
+      })
       return;
     }
     setStep((prevStep) => prevStep + 1)
