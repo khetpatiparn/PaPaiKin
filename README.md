@@ -47,6 +47,9 @@
 - [x] send data from guided menu page to backend
 - [x] frontend can pull data from backend
 
+### 9/3/2569
+- [x] improve guided menu feature
+
 ---
 
 ## Todo Lists

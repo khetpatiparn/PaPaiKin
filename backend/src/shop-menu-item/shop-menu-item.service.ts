@@ -60,16 +60,15 @@ export class ShopMenuItemService {
     };
 
     interface shopMenuItemQuery {
-      category?: string;
-      ingredients?: { $in: string[] };
-      cookingMethod?: { $in: string[] };
+      'attributes.category': string;
+      'attributes.ingredients'?: { $in: string[] };
+      'attributes.cookingMethod'?: { $in: string[] };
     }
 
-    const query: shopMenuItemQuery = {};
+    const query: shopMenuItemQuery = {
+      'attributes.category': filter.userAnswer.q1,
+    };
 
-    if (filter.userAnswer.q1) {
-      query['attributes.category'] = filter.userAnswer.q1;
-    }
     if (filter.userAnswer.q2) {
       query['attributes.ingredients'] = {
         $in: INGREDIENT_MAP[filter.userAnswer.q2],
@@ -168,20 +167,23 @@ export class ShopMenuItemService {
 
     const random = this.findRandomMenu(allMenus, [cheapest, nearest]);
 
-    const nearestDistance = nearest
-      ? this.calculateDistance(
-          filter.userLocation.latitude,
-          filter.userLocation.longitude,
-          nearest.location.coordinates[1],
-          nearest.location.coordinates[0],
-        )
-      : null;
+    const cards = [cheapest, nearest, random];
+    const distanceCards = cards.map((card) =>
+      card
+        ? this.calculateDistance(
+            filter.userLocation.latitude,
+            filter.userLocation.longitude,
+            card.location.coordinates[1],
+            card.location.coordinates[0],
+          )
+        : null,
+    );
 
     return {
       randomMenu: random,
       cheapestMenu: cheapest,
       nearestMenu: nearest,
-      nearestDistance: nearestDistance,
+      distanceCards: distanceCards,
     };
   }
 }

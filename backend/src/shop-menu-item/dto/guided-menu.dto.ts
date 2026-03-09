@@ -9,8 +9,8 @@ import {
 
 export class UserAnswerDto {
   @IsString()
-  @IsOptional()
-  q1?: string;
+  @IsNotEmpty()
+  declare q1: string;
 
   @IsString()
   @IsOptional()
