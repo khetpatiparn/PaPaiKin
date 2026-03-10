@@ -53,6 +53,7 @@
 ### 10/3/2569
 - ปรับโปรเจกต์ใหม่ทั้งหมด ย้าย Frontend มาที่ Line แทน
 - ค้าง Expo ที่ restaurant-listing branch
+- สร้าง branch สำหรับทำ Line BOT ชื่อ line-bot
 
 
 ---
