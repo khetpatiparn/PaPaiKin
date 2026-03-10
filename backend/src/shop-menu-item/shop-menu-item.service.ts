@@ -12,6 +12,7 @@ import { Model } from 'mongoose';
 // feauture
 // import { ControlMenuDto } from './dto/control-menu.dto';
 import { GuidedMenuDto, UserLocationDto } from './dto/guided-menu.dto';
+import { RestaurantListingDto } from './dto/restaurant-listing.dto';
 
 @Injectable()
 export class ShopMenuItemService {
@@ -45,6 +46,7 @@ export class ShopMenuItemService {
     return `This action removes a #${id} shopMenuItem`;
   }
 
+  // GUIDED MENU FEATURES
   // {"userAnswer": {"q1": "SINGLE_DISH", "q2": "PORK", "q3": "DRY"}, "userLocation": {"latitude": 13.7259477, "longitude": 100.7707321}}
   async findMenuQuery(filter: GuidedMenuDto): Promise<ShopMenuItemDocument[]> {
     const INGREDIENT_MAP: Record<string, string[]> = {
@@ -185,5 +187,12 @@ export class ShopMenuItemService {
       nearestMenu: nearest,
       distanceCards: distanceCards,
     };
+  }
+
+  async findRestaurantByMenu(
+    dto: RestaurantListingDto,
+  ): Promise<ShopMenuItemDocument[]> {
+    const query = { menuId: dto.menuId };
+    return this.shopMenuItemModel.find(query).exec();
   }
 }

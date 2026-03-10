@@ -33,5 +33,40 @@
     "shopImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
     "location": { "type": "Point", "coordinates": [100.7765, 13.7275] },
     "deliveryOptions": ["Pickup"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000006" },
+    "shopName": "ครัวคุณยาย (หน้า ม.)",
+    "shopImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=500",
+    "location": { "type": "Point", "coordinates": [100.7700, 13.7250] },
+    "deliveryOptions": ["Delivery", "Pickup"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000007" },
+    "shopName": "ร้านพี่ต้น ยำรวมมิตร (โรงอาหาร 2)",
+    "shopImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=500",
+    "location": { "type": "Point", "coordinates": [100.7780, 13.7300] },
+    "deliveryOptions": ["Pickup"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000008" },
+    "shopName": "ก๋วยเตี๋ยวเรือลุงเปี๊ยก",
+    "shopImage": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500",
+    "location": { "type": "Point", "coordinates": [100.7720, 13.7260] },
+    "deliveryOptions": ["Pickup"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000009" },
+    "shopName": "แม่ศรี ข้าวแกง (ตลาดนัด)",
+    "shopImage": "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=500",
+    "location": { "type": "Point", "coordinates": [100.7830, 13.7320] },
+    "deliveryOptions": ["Delivery"]
+  },
+  {
+    "_id": { "$oid": "65d4a0000000000000000010" },
+    "shopName": "ข้าวหมูแดงสีมรกต",
+    "shopImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500",
+    "location": { "type": "Point", "coordinates": [100.7740, 13.7270] },
+    "deliveryOptions": ["Delivery", "Pickup"]
   }
 ]

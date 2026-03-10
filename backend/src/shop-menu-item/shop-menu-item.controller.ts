@@ -12,6 +12,7 @@ import { CreateShopMenuItemDto } from './dto/create-shop-menu-item.dto';
 import { UpdateShopMenuItemDto } from './dto/update-shop-menu-item.dto';
 // import { ControlMenuDto } from './dto/control-menu.dto';
 import { GuidedMenuDto } from './dto/guided-menu.dto';
+import { RestaurantListingDto } from './dto/restaurant-listing.dto';
 
 @Controller('shop-menu-item')
 export class ShopMenuItemController {
@@ -45,9 +46,15 @@ export class ShopMenuItemController {
     return this.shopMenuItemService.remove(+id);
   }
 
-  // Control-menu
+  // Guided-menu
   @Post('guided-menu')
   guidedMenu(@Body() guidedMenuDto: GuidedMenuDto) {
     return this.shopMenuItemService.getGuidedMenu(guidedMenuDto);
+  }
+
+  // Restaurant-listing
+  @Get('restaurant-listing/:menuId')
+  restaurantListing(@Param('menuId') menuId: string) {
+    return this.shopMenuItemService.findRestaurantByMenu({ menuId });
   }
 }

@@ -63,8 +63,10 @@ export default function GuidedMenu() {
       try {
         // mobile
         // const response = await axios.post('http://192.168.137.1:3000/shop-menu-item/guided-menu', queryMenu);
-        //emulator
-        const response = await axios.post('http://193.168.79.65:3000/shop-menu-item/guided-menu', queryMenu)
+        // emulator
+        // const response = await axios.post('http://193.168.79.65:3000/shop-menu-item/guided-menu', queryMenu)
+        // web
+        const response = await axios.post('http://localhost:3000/shop-menu-item/guided-menu', queryMenu)
         // console.log(response.data);
         setGuidedMenus(response.data);
       } catch (error) {
@@ -74,6 +76,8 @@ export default function GuidedMenu() {
     sendAnswer()
 
   }, [userLocation, answer.q1, answer.q2, answer.q3])
+
+  const pathToRestaurantListing = "/(tabs)/home/restaurant-listing";
 
   return (
     <ScrollView style={{ flex: 1, padding: 16 }}>
@@ -88,17 +92,38 @@ export default function GuidedMenu() {
         </View>
       ) : (
         <View style={{ gap: 12 }}>
-          <Pressable onPress={() => router.navigate("/(tabs)/home/restaurant-listing")}>
+          <Pressable onPress={() => router.navigate({
+            pathname: pathToRestaurantListing,
+            params: {
+              menuId: guidedMenus.randomMenu.menuId,
+              menuName: guidedMenus.randomMenu.menuName,
+              menuImage: guidedMenus.randomMenu.menuImage,
+            },
+          })}>
             <Text style={{ fontWeight: 'bold' }}>--- แนะนำ ---</Text>
             <Text>{JSON.stringify(guidedMenus.randomMenu, null, 2)}</Text>
           </Pressable>
 
-          <Pressable onPress={() => router.navigate("/(tabs)/home/restaurant-listing")}>
+          <Pressable onPress={() => router.navigate({
+            pathname: pathToRestaurantListing,
+            params: {
+              menuId: guidedMenus.cheapestMenu.menuId,
+              menuName: guidedMenus.cheapestMenu.menuName,
+              menuImage: guidedMenus.cheapestMenu.menuImage,
+            },
+          })}>
             <Text style={{ fontWeight: 'bold' }}>--- ถูกที่สุด ---</Text>
             <Text>{JSON.stringify(guidedMenus.cheapestMenu, null, 2)}</Text>
           </Pressable>
 
-          <Pressable onPress={() => router.navigate("/(tabs)/home/restaurant-listing")}>
+          <Pressable onPress={() => router.navigate({
+            pathname: pathToRestaurantListing,
+            params: {
+              menuId: guidedMenus.nearestMenu.menuId,
+              menuName: guidedMenus.nearestMenu.menuName,
+              menuImage: guidedMenus.nearestMenu.menuImage,
+            },
+          })}>
             <Text style={{ fontWeight: 'bold' }}>--- ใกล้ที่สุด ---</Text>
             <Text>{JSON.stringify(guidedMenus.nearestMenu, null, 2)}</Text>
           </Pressable>
