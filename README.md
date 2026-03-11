@@ -55,6 +55,8 @@
 - ค้าง Expo ที่ restaurant-listing branch
 - สร้าง branch สำหรับทำ Line BOT ชื่อ line-bot
 
+### 11/3/2569
+- connected line webhook and messaging api
 
 ---
 
