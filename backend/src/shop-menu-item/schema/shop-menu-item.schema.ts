@@ -42,6 +42,12 @@ export class ShopMenuItem {
   @Prop({ required: true })
   declare shopImage: string;
 
+  @Prop({ default: '' })
+  declare shopCategory: string;
+
+  @Prop({ default: '' })
+  declare locationName: string;
+
   @Prop({ type: AttributeSchema })
   declare attributes: Attribute;
 

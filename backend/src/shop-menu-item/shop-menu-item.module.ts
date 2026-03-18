@@ -16,5 +16,6 @@ import {
   ],
   controllers: [ShopMenuItemController],
   providers: [ShopMenuItemService],
+  exports: [ShopMenuItemService],
 })
 export class ShopMenuItemModule {}

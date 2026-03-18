@@ -8,7 +8,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { validateSignature, webhook } from '@line/bot-sdk';
+import {
+  LINE_SIGNATURE_HTTP_HEADER_NAME,
+  validateSignature,
+  webhook,
+} from '@line/bot-sdk';
 import type { Request } from 'express';
 import { LineBotService } from './line-bot.service';
 
@@ -22,7 +26,7 @@ export class LineBotController {
   @Post('webhook')
   @HttpCode(200)
   async handleWebhook(
-    @Headers('x-line-signature') signature: string,
+    @Headers(LINE_SIGNATURE_HTTP_HEADER_NAME) signature: string,
     @Req() req: Request,
     @Body() body: { events: webhook.Event[] },
   ) {
