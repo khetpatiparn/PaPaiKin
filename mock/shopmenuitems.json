@@ -9,6 +9,7 @@
     "shopImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "โรงอาหารหอ FBT",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "ใบกะเพรา", "พริก", "ไข่ไก่"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7818, 13.7290] }
   },
@@ -22,6 +23,7 @@
     "shopImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "หน้ามหาวิทยาลัย",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "ใบกะเพรา", "พริก", "ไข่ไก่"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7700, 13.7250] }
   },
@@ -35,6 +37,7 @@
     "shopImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=500",
     "shopCategory": "อาหารอีสาน/ส้มตำ",
     "locationName": "โรงอาหาร 2",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "ใบกะเพรา", "พริก", "ไข่ไก่"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7780, 13.7300] }
   },
@@ -48,6 +51,7 @@
     "shopImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "โรงอาหารหอ FBT",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["ไก่", "ข้าวมัน", "น้ำจิ้ม"], "cookingMethod": ["แห้ง"] },
     "location": { "type": "Point", "coordinates": [100.7818, 13.7290] }
   },
@@ -61,6 +65,7 @@
     "shopImage": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500",
     "shopCategory": "ข้าวมันไก่/ข้าวหมูแดง",
     "locationName": "โรงอาหารเกกี 2",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["ไก่", "ข้าวมัน", "น้ำจิ้ม"], "cookingMethod": ["แห้ง"] },
     "location": { "type": "Point", "coordinates": [100.7790, 13.7285] }
   },
@@ -74,6 +79,7 @@
     "shopImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500",
     "shopCategory": "คาเฟ่/เครื่องดื่ม",
     "locationName": "ตึกวิศวกรรมศาสตร์",
+    "promotion": "แถมช็อตเอสเปรสโซ่ บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "BEVERAGE", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7752, 13.7265] }
   },
@@ -87,6 +93,7 @@
     "shopImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
     "shopCategory": "ขนมหวาน/เครื่องดื่ม",
     "locationName": "หน้ามหาวิทยาลัย",
+    "promotion": "",
     "attributes": { "category": "BEVERAGE", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7765, 13.7275] }
   },
@@ -100,6 +107,7 @@
     "shopImage": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500",
     "shopCategory": "สเต็ก/อาหารฝรั่ง",
     "locationName": "อาคาร RNP",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมู", "เฟรนช์ฟรายส์", "สลัด"], "cookingMethod": ["ย่าง"] },
     "location": { "type": "Point", "coordinates": [100.7850, 13.7310] }
   },
@@ -113,6 +121,7 @@
     "shopImage": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500",
     "shopCategory": "คาเฟ่/เครื่องดื่ม",
     "locationName": "ตึกวิศวกรรมศาสตร์",
+    "promotion": "แถมช็อตเอสเปรสโซ่ บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "DESSERT", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7752, 13.7265] }
   },
@@ -126,6 +135,7 @@
     "shopImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
     "shopCategory": "ขนมหวาน/เครื่องดื่ม",
     "locationName": "หน้ามหาวิทยาลัย",
+    "promotion": "",
     "attributes": { "category": "DESSERT", "ingredients": [], "cookingMethod": [] },
     "location": { "type": "Point", "coordinates": [100.7765, 13.7275] }
   },
@@ -139,6 +149,7 @@
     "shopImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "โรงอาหารหอ FBT",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "ไข่ไก่", "ข้าวสวย"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7818, 13.7290] }
   },
@@ -152,6 +163,7 @@
     "shopImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "หน้ามหาวิทยาลัย",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "ไข่ไก่", "ข้าวสวย"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7700, 13.7250] }
   },
@@ -165,6 +177,7 @@
     "shopImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "หน้ามหาวิทยาลัย",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "เห็ด", "มะเขือเทศ"], "cookingMethod": ["ต้ม"] },
     "location": { "type": "Point", "coordinates": [100.7700, 13.7250] }
   },
@@ -178,6 +191,7 @@
     "shopImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "หน้ามหาวิทยาลัย",
+    "promotion": "",
     "attributes": { "category": "NOODLE", "ingredients": ["เนื้อหมู", "เส้นจันท์", "ถั่วงอก"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7700, 13.7250] }
   },
@@ -191,6 +205,7 @@
     "shopImage": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500",
     "shopCategory": "ก๋วยเตี๋ยว/เส้น",
     "locationName": "ตลาดนัด KMITL",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "NOODLE", "ingredients": ["เนื้อหมู", "เส้นจันท์", "ถั่วงอก"], "cookingMethod": ["ผัด"] },
     "location": { "type": "Point", "coordinates": [100.7720, 13.7260] }
   },
@@ -204,6 +219,7 @@
     "shopImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=500",
     "shopCategory": "อาหารอีสาน/ส้มตำ",
     "locationName": "โรงอาหาร 2",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูสับ", "วุ้นเส้น", "มะเขือเทศ"], "cookingMethod": ["ยำ"] },
     "location": { "type": "Point", "coordinates": [100.7780, 13.7300] }
   },
@@ -217,6 +233,7 @@
     "shopImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=500",
     "shopCategory": "อาหารอีสาน/ส้มตำ",
     "locationName": "โรงอาหาร 2",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["ไก่", "มะละกอ", "ถั่วลิสง"], "cookingMethod": ["ยำ", "ย่าง"] },
     "location": { "type": "Point", "coordinates": [100.7780, 13.7300] }
   },
@@ -230,6 +247,7 @@
     "shopImage": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500",
     "shopCategory": "ก๋วยเตี๋ยว/เส้น",
     "locationName": "ตลาดนัด KMITL",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "NOODLE", "ingredients": ["เนื้อหมู", "เส้นเล็ก", "ผักบุ้ง"], "cookingMethod": ["ต้ม"] },
     "location": { "type": "Point", "coordinates": [100.7720, 13.7260] }
   },
@@ -243,6 +261,7 @@
     "shopImage": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500",
     "shopCategory": "ก๋วยเตี๋ยว/เส้น",
     "locationName": "ตลาดนัด KMITL",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "NOODLE", "ingredients": ["หมูสับ", "เส้นเล็ก", "ถั่วงอก"], "cookingMethod": ["ต้ม"] },
     "location": { "type": "Point", "coordinates": [100.7720, 13.7260] }
   },
@@ -256,6 +275,7 @@
     "shopImage": "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=500",
     "shopCategory": "ข้าวแกง/อาหารถุง",
     "locationName": "ตลาดนัด KMITL",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["สะโพกไก่", "มะเขือ", "ใบโหระพา"], "cookingMethod": ["แกง"] },
     "location": { "type": "Point", "coordinates": [100.7830, 13.7320] }
   },
@@ -269,6 +289,7 @@
     "shopImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=500",
     "shopCategory": "อาหารตามสั่ง",
     "locationName": "หน้ามหาวิทยาลัย",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["สะโพกไก่", "มะเขือ", "ใบโหระพา"], "cookingMethod": ["แกง"] },
     "location": { "type": "Point", "coordinates": [100.7700, 13.7250] }
   },
@@ -282,6 +303,7 @@
     "shopImage": "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=500",
     "shopCategory": "ข้าวแกง/อาหารถุง",
     "locationName": "ตลาดนัด KMITL",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["กุ้ง", "ผัก", "น้ำแกงส้ม"], "cookingMethod": ["แกง"] },
     "location": { "type": "Point", "coordinates": [100.7830, 13.7320] }
   },
@@ -295,6 +317,7 @@
     "shopImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500",
     "shopCategory": "ข้าวหมูแดง/หมูกรอบ",
     "locationName": "หน้าหอ 4",
+    "promotion": "",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูแดง", "ข้าวสวย", "ไข่ต้ม"], "cookingMethod": ["ย่าง"] },
     "location": { "type": "Point", "coordinates": [100.7740, 13.7270] }
   },
@@ -308,6 +331,7 @@
     "shopImage": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500",
     "shopCategory": "ข้าวมันไก่/ข้าวหมูแดง",
     "locationName": "โรงอาหารเกกี 2",
+    "promotion": "ลด 5 บาท บอกว่ามาจาก PaPaiKin",
     "attributes": { "category": "SINGLE_DISH", "ingredients": ["หมูแดง", "ข้าวสวย", "ไข่ต้ม"], "cookingMethod": ["ย่าง"] },
     "location": { "type": "Point", "coordinates": [100.7790, 13.7285] }
   }
