@@ -758,7 +758,7 @@ export class LineBotService {
             type: 'button',
             style: 'primary',
             height: 'sm',
-            color: '#6FAF4F',
+            color: '#D97A2B',
             action: {
               type: 'postback',
               label: '🍽️ ดูร้านที่มี',
@@ -770,7 +770,7 @@ export class LineBotService {
             type: 'button',
             style: 'primary',
             height: 'sm',
-            color: '#D97A2B',
+            color: '#6FAF4F',
             action: {
               type: 'postback',
               label: '📖 ดูสูตร',
@@ -865,7 +865,7 @@ export class LineBotService {
         contents: [
           {
             type: 'text',
-            text: `🔥 โปรโมชัน`,
+            text: `โปรโมชัน`,
             size: 'xs',
             weight: 'bold',
             color: '#C44A3A',
@@ -906,7 +906,7 @@ export class LineBotService {
             type: 'button',
             style: 'primary',
             height: 'sm',
-            color: '#6FAF4F',
+            color: '#D97A2B',
             action: {
               type: 'uri',
               label: 'ดูเส้นทาง',
