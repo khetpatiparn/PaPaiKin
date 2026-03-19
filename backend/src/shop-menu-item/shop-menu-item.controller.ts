@@ -28,10 +28,6 @@ export class ShopMenuItemController {
     return this.shopMenuItemService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.shopMenuItemService.findOne(+id);
-  }
 
   // @Patch(':id')
   // update(

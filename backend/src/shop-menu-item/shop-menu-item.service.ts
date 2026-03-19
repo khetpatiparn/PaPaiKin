@@ -7,7 +7,7 @@ import {
   ShopMenuItemDocument,
 } from './schema/shop-menu-item.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 // feauture
 // import { ControlMenuDto } from './dto/control-menu.dto';
@@ -34,8 +34,10 @@ export class ShopMenuItemService {
     return this.shopMenuItemModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} shopMenuItem`;
+  async findOneByMenuId(menuId: string): Promise<ShopMenuItemDocument | null> {
+    return this.shopMenuItemModel
+      .findOne({ menuId: new Types.ObjectId(menuId) })
+      .exec();
   }
 
   // update(id: number, updateShopMenuItemDto: UpdateShopMenuItemDto) {

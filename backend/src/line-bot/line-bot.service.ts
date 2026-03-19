@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { messagingApi, webhook } from '@line/bot-sdk';
+import { buffer } from 'node:stream/consumers';
 import { ShopMenuItemService } from 'src/shop-menu-item/shop-menu-item.service';
 import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.schema';
+import { GeminiService } from 'src/gemini/gemini.service';
 
 interface UserSession {
   currentStep: 'IDLE' | 'Q1' | 'Q2' | 'Q3' | 'LOCATION';
@@ -11,11 +13,14 @@ interface UserSession {
     q2?: string;
     q3?: string;
   };
+  lastAnswers?: { q1?: string; q2?: string; q3?: string };
+  lastLocation?: { latitude: number; longitude: number };
 }
 
 @Injectable()
 export class LineBotService {
   private readonly client: messagingApi.MessagingApiClient;
+  private readonly blobClient: messagingApi.MessagingApiBlobClient;
   private sessions = new Map<string, UserSession>();
 
   private readonly Q1_OPTIONS = ['SINGLE_DISH', 'NOODLE', 'SIDE_DISH'];
@@ -23,11 +28,25 @@ export class LineBotService {
   constructor(
     private readonly configService: ConfigService,
     private readonly shopMenuItemService: ShopMenuItemService,
+    private readonly geminiService: GeminiService,
   ) {
+    const channelAccessToken = this.configService.get<string>(
+      'LINE_CHANNEL_ACCESS_TOKEN',
+    )!;
+
     this.client = new messagingApi.MessagingApiClient({
-      channelAccessToken: this.configService.get<string>(
-        'LINE_CHANNEL_ACCESS_TOKEN',
-      )!,
+      channelAccessToken,
+    });
+
+    this.blobClient = new messagingApi.MessagingApiBlobClient({
+      channelAccessToken,
+    });
+  }
+
+  private async animationLoading(userId: string, loadingSec: number) {
+    await this.client.showLoadingAnimation({
+      chatId: userId,
+      loadingSeconds: loadingSec,
     });
   }
 
@@ -62,6 +81,7 @@ export class LineBotService {
         if (text === 'สุ่มเมนู') {
           session.currentStep = 'Q1';
           session.answers = {};
+          await this.animationLoading(userId, 20);
           return this.askQ1(messageEvent.replyToken!);
         }
       } else if (messageEvent.message.type === 'location') {
@@ -75,71 +95,29 @@ export class LineBotService {
 
         const answers = { ...session.answers };
         const { latitude, longitude } = messageEvent.message;
+        const replyToken = messageEvent.replyToken!;
 
+        session.lastAnswers = { ...answers };
+        session.lastLocation = { latitude, longitude };
         session.currentStep = 'IDLE';
         session.answers = {};
 
-        await this.replyText(messageEvent.replyToken!, `กำลังค้นหาเมนู.....`);
+        await this.showMenuResults(replyToken, answers, { latitude, longitude }, userId);
+      } else if (messageEvent.message.type === 'image') {
+        await this.animationLoading(userId, 20);
 
-        const result = await this.shopMenuItemService.getGuidedMenu({
-          userAnswer: {
-            q1: answers.q1!,
-            q2: answers.q2!,
-            q3: answers.q3!,
-          },
-          userLocation: {
-            latitude,
-            longitude,
-          },
+        const stream = await this.blobClient.getMessageContent(
+          messageEvent.message.id,
+        );
+        const buf = await buffer(stream);
+        const imageBase64 = buf.toString('base64');
+
+        const result = await this.geminiService.analyzeFood(imageBase64);
+
+        await this.client.replyMessage({
+          replyToken: messageEvent.replyToken!,
+          messages: [{ type: 'text', text: result }],
         });
-        const { randomMenu, cheapestMenu, nearestMenu, distanceCards } = result;
-
-        const bubbles: any[] = [];
-
-        if (randomMenu && distanceCards[0] !== null) {
-          const km = (distanceCards[0] / 1000).toFixed(2);
-          bubbles.push(
-            this.buildMenuBubble('เมนูแนะนำ', '#C44A3A', randomMenu, km),
-          );
-        }
-        if (randomMenu && distanceCards[1] !== null) {
-          const km = (distanceCards[1] / 1000).toFixed(2);
-          bubbles.push(
-            this.buildMenuBubble('เมนูประหยัด', '#6FAF4F', cheapestMenu!, km),
-          );
-        }
-        if (randomMenu && distanceCards[2] !== null) {
-          const km = (distanceCards[2] / 1000).toFixed(2);
-          bubbles.push(
-            this.buildMenuBubble('เมนูใกล้ฉัน', '#4C8CE4', nearestMenu!, km),
-          );
-        }
-
-        if (bubbles.length > 0) {
-          await this.client.pushMessage({
-            to: userId,
-            messages: [
-              {
-                type: 'flex',
-                altText: 'ผลการสุ่ม',
-                contents: {
-                  type: 'carousel',
-                  contents: bubbles,
-                },
-              },
-            ],
-          });
-        } else {
-          await this.client.pushMessage({
-            to: userId,
-            messages: [
-              {
-                type: 'text',
-                text: 'ไม่พบเมนู ลองสุ่มใหม่อีกครั้ง',
-              },
-            ],
-          });
-        }
       }
     } else if (event.type === 'postback') {
       const postbackEvent = event;
@@ -210,7 +188,7 @@ export class LineBotService {
                         type: 'postback',
                         label: '🍛 จานเดียว',
                         data: 'q1=SINGLE_DISH',
-                        displayText: 'จานเดียว',
+                        displayText: 'เลือก จานเดียว',
                       },
                       style: 'primary',
                       height: 'sm',
@@ -222,7 +200,7 @@ export class LineBotService {
                         type: 'postback',
                         label: '🍜 เส้น',
                         data: 'q1=NOODLE',
-                        displayText: 'เส้น',
+                        displayText: 'เลือก เส้น',
                       },
                       style: 'primary',
                       height: 'sm',
@@ -243,7 +221,7 @@ export class LineBotService {
                         type: 'postback',
                         label: '🍴 กับข้าว',
                         data: 'q1=SIDE_DISH',
-                        displayText: 'กับข้าว',
+                        displayText: 'เลือก กับข้าว',
                       },
                       height: 'sm',
                       style: 'primary',
@@ -255,7 +233,7 @@ export class LineBotService {
                         type: 'postback',
                         label: '❔ อะไรก็ได้',
                         data: 'q1=ANY',
-                        displayText: 'อะไรก็ได้',
+                        displayText: 'เลือก อะไรก็ได้',
                       },
                       height: 'sm',
                       style: 'primary',
@@ -346,7 +324,7 @@ export class LineBotService {
                     type: 'postback',
                     label: '🐷 หมู',
                     data: 'q2=PORK',
-                    displayText: 'หมู',
+                    displayText: 'เลือก หมู',
                   },
                   style: 'primary',
                   height: 'sm',
@@ -359,7 +337,7 @@ export class LineBotService {
                     type: 'postback',
                     label: '🐔 ไก่',
                     data: 'q2=CHICKEN',
-                    displayText: 'ไก่',
+                    displayText: 'เลือก ไก่',
                   },
                   style: 'primary',
                   height: 'sm',
@@ -372,7 +350,7 @@ export class LineBotService {
                     type: 'postback',
                     label: '🥩 เนื้อ',
                     data: 'q2=BEEF',
-                    displayText: 'เนื้อ',
+                    displayText: 'เลือก เนื้อ',
                   },
                   height: 'sm',
                   style: 'primary',
@@ -385,7 +363,7 @@ export class LineBotService {
                     type: 'postback',
                     label: '🌊 ทะเล',
                     data: 'q2=SEAFOOD',
-                    displayText: 'ทะเล',
+                    displayText: 'เลือก ทะเล',
                   },
                   height: 'sm',
                   style: 'primary',
@@ -398,7 +376,7 @@ export class LineBotService {
                     type: 'postback',
                     label: '🥬 มังสวิรัติ',
                     data: 'q2=VEGETARIAN',
-                    displayText: 'มังสวิรัติ',
+                    displayText: 'เลือก มังสวิรัติ',
                   },
                   height: 'sm',
                   style: 'primary',
@@ -411,7 +389,7 @@ export class LineBotService {
                     type: 'postback',
                     label: '❔อะไรก็ได้',
                     data: 'q2=ANY',
-                    displayText: 'อะไรก็ได้',
+                    displayText: 'เลือก อะไรก็ได้',
                   },
                   height: 'sm',
                   style: 'primary',
@@ -454,7 +432,7 @@ export class LineBotService {
                 },
                 {
                   type: 'text',
-                  text: 'เลือกรูปแบบอยากที่ทาน',
+                  text: 'เลือกรูปแบบที่อยากทาน',
                   weight: 'bold',
                   size: 'xl',
                   margin: 'md',
@@ -487,7 +465,7 @@ export class LineBotService {
                     type: 'postback',
                     label: 'แบบแห้ง (ผัด/ทอด/ย่าง/ยำ)',
                     data: 'q3=DRY',
-                    displayText: 'แบบแห้ง',
+                    displayText: 'เลือก แบบแห้ง',
                   },
                   height: 'sm',
                   style: 'primary',
@@ -500,7 +478,7 @@ export class LineBotService {
                     type: 'postback',
                     label: 'แบบน้ำ (แกง/ต้ม/ซุป)',
                     data: 'q3=SOUP',
-                    displayText: 'แบบน้ำ',
+                    displayText: 'เลือก แบบน้ำ',
                   },
                   height: 'sm',
                   style: 'primary',
@@ -513,7 +491,7 @@ export class LineBotService {
                     type: 'postback',
                     label: '❔อะไรก็ได้',
                     data: 'q2=ANY',
-                    displayText: 'อะไรก็ได้',
+                    displayText: 'เลือก อะไรก็ได้',
                   },
                   height: 'sm',
                   style: 'primary',
@@ -567,6 +545,16 @@ export class LineBotService {
     const session = this.sessions.get(userId)!;
     const params = new URLSearchParams(data);
 
+    if (params.has('action') && params.get('action') === 'reshuffle') {
+      const { lastAnswers, lastLocation } = session;
+      if (!lastAnswers?.q1 || !lastLocation) {
+        session.currentStep = 'Q1';
+        session.answers = {};
+        return this.askQ1(replyToken);
+      }
+      return this.showMenuResults(replyToken, lastAnswers, lastLocation, userId);
+    }
+
     if (params.has('q1') && session.currentStep !== 'Q1') return;
     if (params.has('q2') && session.currentStep !== 'Q2') return;
     if (params.has('q3') && session.currentStep !== 'Q3') return;
@@ -606,6 +594,7 @@ export class LineBotService {
       const menuId = params.get('viewShops');
       if (!menuId) return;
 
+      await this.animationLoading(userId, 20);
       const restaurants = await this.shopMenuItemService.findRestaurantByMenu({
         menuId,
       });
@@ -638,8 +627,139 @@ export class LineBotService {
           ],
         });
       }
+    } else if (params.has('viewRecipe')) {
+      const menuId = params.get('viewRecipe');
+      if (!menuId) return;
+
+      await this.handleViewRecipe(replyToken, menuId, userId);
     }
     return;
+  }
+
+  private async showMenuResults(
+    replyToken: string,
+    answers: { q1?: string; q2?: string; q3?: string },
+    location: { latitude: number; longitude: number },
+    userId: string,
+  ): Promise<void> {
+    await this.animationLoading(userId, 20);
+
+    const result = await this.shopMenuItemService.getGuidedMenu({
+      userAnswer: { q1: answers.q1!, q2: answers.q2!, q3: answers.q3! },
+      userLocation: location,
+    });
+    const { randomMenu, cheapestMenu, nearestMenu, distanceCards } = result;
+
+    const bubbles: any[] = [];
+    if (randomMenu && distanceCards[0] !== null)
+      bubbles.push(
+        this.buildMenuBubble(
+          'เมนูแนะนำ',
+          '#C44A3A',
+          randomMenu,
+          (distanceCards[0] / 1000).toFixed(2),
+        ),
+      );
+    if (cheapestMenu && distanceCards[1] !== null)
+      bubbles.push(
+        this.buildMenuBubble(
+          'เมนูประหยัด',
+          '#6FAF4F',
+          cheapestMenu,
+          (distanceCards[1] / 1000).toFixed(2),
+        ),
+      );
+    if (nearestMenu && distanceCards[2] !== null)
+      bubbles.push(
+        this.buildMenuBubble(
+          'เมนูใกล้ฉัน',
+          '#4C8CE4',
+          nearestMenu,
+          (distanceCards[2] / 1000).toFixed(2),
+        ),
+      );
+
+    const reshuffleQuickReply: messagingApi.QuickReply = {
+      items: [
+        {
+          type: 'action',
+          action: {
+            type: 'postback',
+            label: 'สุ่มใหม่',
+            data: 'action=reshuffle',
+            displayText: 'สุ่มใหม่',
+          },
+        },
+      ],
+    };
+
+    if (bubbles.length > 0) {
+      await this.client.replyMessage({
+        replyToken,
+        messages: [
+          {
+            type: 'flex',
+            altText: 'ผลการสุ่ม',
+            contents: { type: 'carousel', contents: bubbles },
+          },
+          {
+            type: 'text',
+            text: 'ไม่ชอบรึป่าว? 🤔 กดสุ่มใหม่ได้เลยนะ',
+            quickReply: reshuffleQuickReply,
+          },
+        ],
+      });
+    } else {
+      await this.client.replyMessage({
+        replyToken,
+        messages: [
+          {
+            type: 'text',
+            text: 'ไม่พบเมนู ลองสุ่มใหม่อีกครั้ง',
+            quickReply: reshuffleQuickReply,
+          },
+        ],
+      });
+    }
+  }
+
+  private async handleViewRecipe(
+    replyToken: string,
+    menuId: string,
+    userId: string,
+  ): Promise<void> {
+    const item = await this.shopMenuItemService.findOneByMenuId(menuId);
+
+    if (!item) {
+      await this.client.replyMessage({
+        replyToken,
+        messages: [{ type: 'text', text: 'ไม่พบข้อมูลเมนูนี้' }],
+      });
+      return;
+    }
+
+    const contextPrompt = [
+      item.menuName,
+      item.attributes?.ingredients?.length
+        ? `วัตถุดิบ: ${item.attributes.ingredients.join(', ')}`
+        : '',
+      item.attributes?.cookingMethod?.length
+        ? `วิธีทำ: ${item.attributes.cookingMethod.join(', ')}`
+        : '',
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    await this.animationLoading(userId, 10);
+
+    const recipe = await this.geminiService.generateRecipe(contextPrompt);
+
+    await this.client.replyMessage({
+      replyToken,
+      messages: [
+        { type: 'text', text: `📖 สูตร: ${item.menuName}\n\n${recipe}` },
+      ],
+    });
   }
 
   private getPriceLevel(price: number): string {
