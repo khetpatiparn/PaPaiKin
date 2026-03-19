@@ -48,6 +48,9 @@ export class ShopMenuItem {
   @Prop({ default: '' })
   declare locationName: string;
 
+  @Prop({ default: '' })
+  declare promotion: string;
+
   @Prop({ type: AttributeSchema })
   declare attributes: Attribute;
 

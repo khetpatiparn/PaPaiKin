@@ -788,6 +788,100 @@ export class LineBotService {
     const long = item.location.coordinates[0];
     const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}&travelmode=walking`;
 
+    const bodyContents: any[] = [
+      {
+        type: 'text',
+        text: item.shopName,
+        weight: 'bold',
+        size: 'lg',
+        wrap: true,
+      },
+      {
+        type: 'text',
+        text: item.shopCategory || '',
+        color: '#999999',
+      },
+      {
+        type: 'box',
+        layout: 'vertical',
+        margin: 'sm',
+        spacing: 'xs',
+        contents: [
+          {
+            type: 'box',
+            layout: 'baseline',
+            contents: [
+              {
+                type: 'text',
+                text: 'สถานที่',
+                weight: 'bold',
+                flex: 3,
+                size: 'xs',
+                color: '#555555',
+              },
+              {
+                type: 'text',
+                text: item.locationName || '-',
+                flex: 5,
+                color: '#888888',
+                size: 'sm',
+                wrap: true,
+              },
+            ],
+          },
+          {
+            type: 'box',
+            layout: 'baseline',
+            contents: [
+              {
+                type: 'text',
+                text: 'ช่วงราคา',
+                weight: 'bold',
+                flex: 3,
+                size: 'xs',
+                color: '#555555',
+              },
+              {
+                type: 'text',
+                text: this.getPriceLevel(item.price),
+                flex: 5,
+                color: '#888888',
+                size: 'sm',
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    if (item.promotion) {
+      bodyContents.push({
+        type: 'box',
+        layout: 'vertical',
+        margin: 'md',
+        backgroundColor: '#FFF3E0',
+        cornerRadius: '8px',
+        paddingAll: '10px',
+        contents: [
+          {
+            type: 'text',
+            text: `🔥 โปรโมชัน`,
+            size: 'xs',
+            weight: 'bold',
+            color: '#C44A3A',
+          },
+          {
+            type: 'text',
+            text: item.promotion,
+            size: 'sm',
+            color: '#D97A2B',
+            wrap: true,
+            margin: 'xs',
+          },
+        ],
+      });
+    }
+
     return {
       type: 'bubble' as const,
       hero: {
@@ -801,71 +895,7 @@ export class LineBotService {
         type: 'box',
         layout: 'vertical',
         spacing: 'sm',
-        contents: [
-          {
-            type: 'text',
-            text: item.shopName,
-            weight: 'bold',
-            size: 'lg',
-            wrap: true,
-          },
-          {
-            type: 'text',
-            text: item.shopCategory || '',
-            color: '#999999',
-          },
-          {
-            type: 'box',
-            layout: 'vertical',
-            margin: 'sm',
-            spacing: 'xs',
-            contents: [
-              {
-                type: 'box',
-                layout: 'baseline',
-                contents: [
-                  {
-                    type: 'text',
-                    text: 'สถานที่',
-                    weight: 'bold',
-                    flex: 3,
-                    size: 'xs',
-                    color: '#555555',
-                  },
-                  {
-                    type: 'text',
-                    text: item.locationName || '-',
-                    flex: 5,
-                    color: '#888888',
-                    size: 'sm',
-                    wrap: true,
-                  },
-                ],
-              },
-              {
-                type: 'box',
-                layout: 'baseline',
-                contents: [
-                  {
-                    type: 'text',
-                    text: 'ช่วงราคา',
-                    weight: 'bold',
-                    flex: 3,
-                    size: 'xs',
-                    color: '#555555',
-                  },
-                  {
-                    type: 'text',
-                    text: this.getPriceLevel(item.price),
-                    flex: 5,
-                    color: '#888888',
-                    size: 'sm',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
+        contents: bodyContents,
       },
       footer: {
         type: 'box',
