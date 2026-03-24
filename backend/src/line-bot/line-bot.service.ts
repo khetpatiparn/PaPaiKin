@@ -7,7 +7,7 @@ import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.s
 import { GeminiService } from 'src/gemini/gemini.service';
 
 interface UserSession {
-  currentStep: 'IDLE' | 'Q1' | 'Q2' | 'Q3' | 'LOCATION';
+  currentStep: 'IDLE' | 'Q1' | 'Q2' | 'Q3' | 'LOCATION' | 'QUICK_LOCATION';
   answers: {
     q1?: string;
     q2?: string;
@@ -84,30 +84,47 @@ export class LineBotService {
           await this.animationLoading(userId, 20);
           return this.askQ1(messageEvent.replyToken!);
         }
+
+        if (text === 'สุ่มด่วน') {
+          session.currentStep = 'QUICK_LOCATION';
+          return this.askLocation(messageEvent.replyToken!);
+        }
       } else if (messageEvent.message.type === 'location') {
-        if (session.currentStep !== 'LOCATION') {
+        if (
+          session.currentStep !== 'LOCATION' &&
+          session.currentStep !== 'QUICK_LOCATION'
+        ) {
           await this.replyText(
             messageEvent.replyToken!,
-            `พิมพ์ 'สุ่มเมนู' เพื่อใช้งาน`,
+            `เลือกเมนูบน Rich menu อีกครั้งเพื่อใช้งาน`,
           );
           return;
         }
 
-        const answers = { ...session.answers };
         const { latitude, longitude } = messageEvent.message;
         const replyToken = messageEvent.replyToken!;
+        const isQuick = session.currentStep === 'QUICK_LOCATION';
 
-        session.lastAnswers = { ...answers };
         session.lastLocation = { latitude, longitude };
         session.currentStep = 'IDLE';
-        session.answers = {};
 
-        await this.showMenuResults(
-          replyToken,
-          answers,
-          { latitude, longitude },
-          userId,
-        );
+        if (isQuick) {
+          await this.showQuickResult(
+            replyToken,
+            { latitude, longitude },
+            userId,
+          );
+        } else {
+          const answers = { ...session.answers };
+          session.lastAnswers = { ...answers };
+          session.answers = {};
+          await this.showMenuResults(
+            replyToken,
+            answers,
+            { latitude, longitude },
+            userId,
+          );
+        }
       } else if (messageEvent.message.type === 'image') {
         await this.animationLoading(userId, 20);
 
@@ -563,6 +580,12 @@ export class LineBotService {
     const session = this.sessions.get(userId)!;
     const params = new URLSearchParams(data);
 
+    if (params.has('action') && params.get('action') === 'quick_reshuffle') {
+      const { lastLocation } = session;
+      if (!lastLocation) return;
+      return this.showQuickResult(replyToken, lastLocation, userId);
+    }
+
     if (params.has('action') && params.get('action') === 'reshuffle') {
       const { lastAnswers, lastLocation } = session;
       if (!lastAnswers?.q1 || !lastLocation) {
@@ -746,6 +769,58 @@ export class LineBotService {
     }
   }
 
+  private async showQuickResult(
+    replyToken: string,
+    location: { latitude: number; longitude: number },
+    userId: string,
+  ): Promise<void> {
+    await this.animationLoading(userId, 20);
+
+    const { items, distances } =
+      await this.shopMenuItemService.getQuickMenu(location);
+
+    const bubbles: any[] = items.map((item, i) =>
+      this.buildMenuBubble(
+        undefined,
+        undefined,
+        item,
+        (distances[i] / 1000).toFixed(2),
+      ),
+    );
+
+    const reshuffleQuickReply: messagingApi.QuickReply = {
+      items: [
+        {
+          type: 'action',
+          action: {
+            type: 'postback',
+            label: 'สุ่มใหม่',
+            data: 'action=quick_reshuffle',
+            displayText: 'สุ่มใหม่',
+          },
+        },
+      ],
+    };
+
+    if (bubbles.length > 0) {
+      await this.client.replyMessage({
+        replyToken,
+        messages: [
+          {
+            type: 'flex',
+            altText: 'ผลสุ่มด่วน',
+            contents: { type: 'carousel', contents: bubbles },
+          },
+          {
+            type: 'text',
+            text: 'ชอบรึป่าว? 🤔 กดสุ่มใหม่ได้นะ',
+            quickReply: reshuffleQuickReply,
+          },
+        ],
+      });
+    }
+  }
+
   private async handleViewRecipe(
     replyToken: string,
     menuId: string,
@@ -792,26 +867,19 @@ export class LineBotService {
     return '฿฿฿฿ (120 บาทขึ้นไป)';
   }
 
+  private transformCloudinaryUrl(url: string): string {
+    if (!url) return url;
+    return url.replace('/upload/', '/upload/w_800,q_auto,f_auto/');
+  }
+
   private buildMenuBubble(
-    tag: string,
-    colorTag: string,
+    tag: string | undefined,
+    colorTag: string | undefined,
     menu: ShopMenuItemDocument,
     distanceKm: string,
   ) {
-    return {
-      type: 'bubble' as const,
-      hero: {
-        type: 'image',
-        url: menu.menuImage,
-        size: 'full',
-        aspectRatio: '20:13',
-        aspectMode: 'cover',
-      },
-      body: {
-        type: 'box',
-        layout: 'vertical',
-        spacing: 'sm',
-        contents: [
+    const tagBox = tag
+      ? [
           {
             type: 'box',
             layout: 'vertical',
@@ -832,6 +900,24 @@ export class LineBotService {
             cornerRadius: '20px',
             width: '100px',
           },
+        ]
+      : [];
+
+    return {
+      type: 'bubble' as const,
+      hero: {
+        type: 'image',
+        url: this.transformCloudinaryUrl(menu.menuImage),
+        size: 'full',
+        aspectRatio: '20:13',
+        aspectMode: 'cover',
+      },
+      body: {
+        type: 'box',
+        layout: 'vertical',
+        spacing: 'sm',
+        contents: [
+          ...tagBox,
           {
             type: 'text',
             text: menu.menuName,
@@ -904,9 +990,9 @@ export class LineBotService {
             color: '#D97A2B',
             action: {
               type: 'postback',
-              label: '🍽️ ดูร้านที่มี',
+              label: '🍽️ แนะนำร้าน',
               data: `viewShops=${menu.menuId.toString()}`,
-              displayText: `ดูร้านที่มี ${menu.menuName}`,
+              displayText: `แนะนำร้าน ${menu.menuName}`,
             },
           },
           {
@@ -1001,7 +1087,7 @@ export class LineBotService {
       type: 'bubble' as const,
       hero: {
         type: 'image',
-        url: item.shopImage,
+        url: this.transformCloudinaryUrl(item.shopImage),
         size: 'full',
         aspectRatio: '20:13',
         aspectMode: 'cover',

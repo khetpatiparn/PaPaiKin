@@ -52,7 +52,17 @@ export class ShopMenuItemService {
   // {"userAnswer": {"q1": "SINGLE_DISH", "q2": "PORK", "q3": "DRY"}, "userLocation": {"latitude": 13.7259477, "longitude": 100.7707321}}
   async findMenuQuery(filter: GuidedMenuDto): Promise<ShopMenuItemDocument[]> {
     const INGREDIENT_MAP: Record<string, string[]> = {
-      PORK: ['หมู', 'หมูสับ', 'หมูกรอบ', 'หมูแดง', 'เนื้อหมู', 'ขาหมู', 'หมูสามชั้น', 'ตับ', 'ไส้กรอก'],
+      PORK: [
+        'หมู',
+        'หมูสับ',
+        'หมูกรอบ',
+        'หมูแดง',
+        'เนื้อหมู',
+        'ขาหมู',
+        'หมูสามชั้น',
+        'ตับ',
+        'ไส้กรอก',
+      ],
       CHICKEN: ['ไก่', 'อกไก่', 'สะโพกไก่', 'ปีกไก่', 'ไก่ต้ม'],
       BEEF: ['เนื้อ', 'เนื้อวัว'],
       SEAFOOD: ['กุ้ง', 'ปลา', 'ปลาหมึก', 'หอย', 'ปู'],
@@ -196,5 +206,72 @@ export class ShopMenuItemService {
   ): Promise<ShopMenuItemDocument[]> {
     const query = { menuId: dto.menuId };
     return this.shopMenuItemModel.find(query).exec();
+  }
+
+  async getQuickMenu(
+    userLocation: UserLocationDto,
+  ): Promise<{ items: ShopMenuItemDocument[]; distances: number[] }> {
+    const allItems = await this.shopMenuItemModel.find().exec();
+
+    const first = this.findRandomMenu(allItems, []);
+    const second = this.findRandomMenu(allItems, [first]);
+    const third = this.findRandomMenu(allItems, [first, second]);
+
+    const items = [first, second, third].filter(
+      (m): m is ShopMenuItemDocument => m !== null,
+    );
+    const distances = items.map((item) =>
+      this.calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        item.location.coordinates[1],
+        item.location.coordinates[0],
+      ),
+    );
+
+    return { items, distances };
+  }
+
+  async getRandomShops(
+    style: string | undefined,
+    maxDistance: number | undefined,
+    userLocation: UserLocationDto,
+  ): Promise<{ shops: ShopMenuItemDocument[]; distances: number[] }> {
+    // query ตาม style (category ของเมนูในร้าน)
+    const query: Record<string, any> = {};
+    if (style) query['attributes.category'] = style;
+    const items = await this.shopMenuItemModel.find(query).exec();
+
+    // group by shopName → เอา item แรกเป็นตัวแทนร้าน
+    const shopMap = new Map<string, ShopMenuItemDocument>();
+    for (const item of items) {
+      if (!shopMap.has(item.shopName)) shopMap.set(item.shopName, item);
+    }
+
+    // คำนวณ distance + filter ตาม maxDistance
+    let shopList = Array.from(shopMap.values()).map((item) => ({
+      item,
+      distance: this.calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        item.location.coordinates[1],
+        item.location.coordinates[0],
+      ),
+    }));
+    if (maxDistance) {
+      shopList = shopList.filter((s) => s.distance <= maxDistance);
+    }
+
+    // สุ่ม 3 ร้าน ไม่ซ้ำ
+    const selected: { item: ShopMenuItemDocument; distance: number }[] = [];
+    for (let i = 0; i < 3 && shopList.length > 0; i++) {
+      const idx = Math.floor(Math.random() * shopList.length);
+      selected.push(shopList.splice(idx, 1)[0]);
+    }
+
+    return {
+      shops: selected.map((s) => s.item),
+      distances: selected.map((s) => s.distance),
+    };
   }
 }
