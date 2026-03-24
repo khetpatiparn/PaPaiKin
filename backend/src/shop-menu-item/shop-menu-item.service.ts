@@ -52,7 +52,7 @@ export class ShopMenuItemService {
   // {"userAnswer": {"q1": "SINGLE_DISH", "q2": "PORK", "q3": "DRY"}, "userLocation": {"latitude": 13.7259477, "longitude": 100.7707321}}
   async findMenuQuery(filter: GuidedMenuDto): Promise<ShopMenuItemDocument[]> {
     const INGREDIENT_MAP: Record<string, string[]> = {
-      PORK: ['หมู', 'หมูสับ', 'หมูกรอบ', 'หมูแดง', 'เนื้อหมู'],
+      PORK: ['หมู', 'หมูสับ', 'หมูกรอบ', 'หมูแดง', 'เนื้อหมู', 'ขาหมู', 'หมูสามชั้น', 'ตับ', 'ไส้กรอก'],
       CHICKEN: ['ไก่', 'อกไก่', 'สะโพกไก่', 'ปีกไก่', 'ไก่ต้ม'],
       BEEF: ['เนื้อ', 'เนื้อวัว'],
       SEAFOOD: ['กุ้ง', 'ปลา', 'ปลาหมึก', 'หอย', 'ปู'],
@@ -60,7 +60,7 @@ export class ShopMenuItemService {
     };
     const COOKING_METHOD_MAP: Record<string, string[]> = {
       DRY: ['แห้ง', 'ผัด', 'ทอด', 'ย่าง', 'ยำ'],
-      SOUP: ['น้ำ', 'แกง', 'ต้ม', 'ซุป'],
+      SOUP: ['น้ำ', 'แกง', 'ต้ม', 'ซุป', 'ตุ๋น', 'ราด'],
     };
 
     interface shopMenuItemQuery {

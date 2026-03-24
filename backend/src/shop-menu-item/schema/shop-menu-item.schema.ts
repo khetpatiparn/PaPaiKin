@@ -36,10 +36,10 @@ export class ShopMenuItem {
   @Prop({ required: true, min: 0 })
   declare price: number;
 
-  @Prop({ required: true })
+  @Prop({ default: '' })
   declare menuImage: string;
 
-  @Prop({ required: true })
+  @Prop({ default: '' })
   declare shopImage: string;
 
   @Prop({ default: '' })
@@ -47,9 +47,6 @@ export class ShopMenuItem {
 
   @Prop({ default: '' })
   declare locationName: string;
-
-  @Prop({ default: '' })
-  declare promotion: string;
 
   @Prop({ type: AttributeSchema })
   declare attributes: Attribute;

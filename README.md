@@ -90,3 +90,7 @@
 ### To run back-end with nestjs :
 
 - use command `npm run start:dev`
+
+
+## To run rich menu
+- use command `npx ts-node -r tsconfig-paths/register scripts/setup-rich-menu.ts`

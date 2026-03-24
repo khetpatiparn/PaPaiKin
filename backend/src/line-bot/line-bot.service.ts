@@ -23,7 +23,7 @@ export class LineBotService {
   private readonly blobClient: messagingApi.MessagingApiBlobClient;
   private sessions = new Map<string, UserSession>();
 
-  private readonly Q1_OPTIONS = ['SINGLE_DISH', 'NOODLE', 'SIDE_DISH'];
+  private readonly Q1_OPTIONS = ['SINGLE_DISH', 'NOODLE', 'JAPANESE', 'SALAD'];
 
   constructor(
     private readonly configService: ConfigService,
@@ -102,7 +102,12 @@ export class LineBotService {
         session.currentStep = 'IDLE';
         session.answers = {};
 
-        await this.showMenuResults(replyToken, answers, { latitude, longitude }, userId);
+        await this.showMenuResults(
+          replyToken,
+          answers,
+          { latitude, longitude },
+          userId,
+        );
       } else if (messageEvent.message.type === 'image') {
         await this.animationLoading(userId, 20);
 
@@ -219,9 +224,9 @@ export class LineBotService {
                       type: 'button',
                       action: {
                         type: 'postback',
-                        label: '🍴 กับข้าว',
-                        data: 'q1=SIDE_DISH',
-                        displayText: 'เลือก กับข้าว',
+                        label: '🍱 ญี่ปุ่น',
+                        data: 'q1=JAPANESE',
+                        displayText: 'เลือก ญี่ปุ่น',
                       },
                       height: 'sm',
                       style: 'primary',
@@ -231,9 +236,9 @@ export class LineBotService {
                       type: 'button',
                       action: {
                         type: 'postback',
-                        label: '❔ อะไรก็ได้',
-                        data: 'q1=ANY',
-                        displayText: 'เลือก อะไรก็ได้',
+                        label: '🥗 ยำ/สลัด',
+                        data: 'q1=SALAD',
+                        displayText: 'เลือก ยำ/สลัด',
                       },
                       height: 'sm',
                       style: 'primary',
@@ -241,6 +246,19 @@ export class LineBotService {
                       margin: 'md',
                     },
                   ],
+                  margin: 'md',
+                },
+                {
+                  type: 'button',
+                  action: {
+                    type: 'postback',
+                    label: '❔ อะไรก็ได้',
+                    data: 'q1=ANY',
+                    displayText: 'เลือก อะไรก็ได้',
+                  },
+                  height: 'sm',
+                  style: 'primary',
+                  color: '#D97A2B',
                   margin: 'md',
                 },
                 {
@@ -490,7 +508,7 @@ export class LineBotService {
                   action: {
                     type: 'postback',
                     label: '❔อะไรก็ได้',
-                    data: 'q2=ANY',
+                    data: 'q3=ANY',
                     displayText: 'เลือก อะไรก็ได้',
                   },
                   height: 'sm',
@@ -552,7 +570,12 @@ export class LineBotService {
         session.answers = {};
         return this.askQ1(replyToken);
       }
-      return this.showMenuResults(replyToken, lastAnswers, lastLocation, userId);
+      return this.showMenuResults(
+        replyToken,
+        lastAnswers,
+        lastLocation,
+        userId,
+      );
     }
 
     if (params.has('q1') && session.currentStep !== 'Q1') return;
@@ -704,7 +727,7 @@ export class LineBotService {
           },
           {
             type: 'text',
-            text: 'ไม่ชอบรึป่าว? 🤔 กดสุ่มใหม่ได้เลยนะ',
+            text: 'ชอบรึป่าว? 🤔 กดสุ่มใหม่ได้นะ',
             quickReply: reshuffleQuickReply,
           },
         ],
@@ -973,34 +996,6 @@ export class LineBotService {
         ],
       },
     ];
-
-    if (item.promotion) {
-      bodyContents.push({
-        type: 'box',
-        layout: 'vertical',
-        margin: 'md',
-        backgroundColor: '#FFF3E0',
-        cornerRadius: '8px',
-        paddingAll: '10px',
-        contents: [
-          {
-            type: 'text',
-            text: `โปรโมชัน`,
-            size: 'xs',
-            weight: 'bold',
-            color: '#C44A3A',
-          },
-          {
-            type: 'text',
-            text: item.promotion,
-            size: 'sm',
-            color: '#D97A2B',
-            wrap: true,
-            margin: 'xs',
-          },
-        ],
-      });
-    }
 
     return {
       type: 'bubble' as const,

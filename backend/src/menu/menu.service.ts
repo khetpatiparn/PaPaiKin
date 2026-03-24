@@ -36,7 +36,7 @@ export class MenuService {
 
   async findByFilter(filter: ControlMenuDto): Promise<Menu[]> {
     const INGREDIENT_MAP: Record<string, string[]> = {
-      PORK: ['หมู', 'หมูสับ', 'หมูกรอบ', 'หมูแดง', 'เนื้อหมู'],
+      PORK: ['หมู', 'หมูสับ', 'หมูกรอบ', 'หมูแดง', 'เนื้อหมู', 'ขาหมู', 'หมูสามชั้น', 'ตับ', 'ไส้กรอก'],
       CHICKEN: ['ไก่', 'อกไก่', 'สะโพกไก่', 'ปีกไก่', 'ไก่ต้ม'],
       BEEF: ['เนื้อ', 'เนื้อวัว'],
       SEAFOOD: ['กุ้ง', 'ปลา', 'ปลาหมึก', 'หอย', 'ปู'],
@@ -44,7 +44,7 @@ export class MenuService {
     };
     const COOKING_METHOD_MAP: Record<string, string[]> = {
       DRY: ['แห้ง', 'ผัด', 'ทอด', 'ย่าง', 'ยำ'],
-      SOUP: ['น้ำ', 'แกง', 'ต้ม', 'ซุป'],
+      SOUP: ['น้ำ', 'แกง', 'ต้ม', 'ซุป', 'ตุ๋น', 'ราด'],
     };
 
     interface MenuQuery {

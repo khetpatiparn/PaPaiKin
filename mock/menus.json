@@ -1,122 +1,4162 @@
 [
   {
-    "_id": { "$oid": "65d4b0000000000000000001" },
-    "menuName": "ข้าวกะเพราหมูสับไข่ดาว",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2020/07/28/1d2c67645d9441f78f8447833446850c.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000001"
+    },
+    "menuName": "ข้าวแกงกระหรี่ไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_acghn5.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000002"
+    },
+    "menuName": "ข้าวไก่เทอริยากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328903/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4_qlgsq9.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ย่าง",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000003"
+    },
+    "menuName": "สปาเก็ตตี้",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330242/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_knwtkv.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูสับ",
+      "ไก่",
+      "กุ้ง",
+      "ไส้กรอก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000004"
+    },
+    "menuName": "ก๋วยเตี๋ยวคั่วไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328821/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88_s5k5w8.avif",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000005"
+    },
+    "menuName": "ก๋วยเตี๋ยวคั่วหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328821/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9_gmlaz3.avif",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000006"
+    },
+    "menuName": "ข้าวหน้าเบค่อน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329996/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B9%80%E0%B8%9A%E0%B8%84%E0%B9%88%E0%B8%AD%E0%B8%99_jp6s8q.jpg",
     "category": "SINGLE_DISH",
-    "ingredients": ["หมูสับ", "ใบกะเพรา", "พริก", "ไข่ไก่"],
-    "cookingMethod": ["ผัด"]
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ย่าง",
+      "ราด"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000002" },
-    "menuName": "Iced Latte (ลาเต้เย็น)",
-    "menuImage": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=500",
-    "category": "BEVERAGE",
-    "ingredients": [],
-    "cookingMethod": []
-  },
-  {
-    "_id": { "$oid": "65d4b0000000000000000003" },
-    "menuName": "ข้าวมันไก่ต้ม",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2019/08/17/5700201874944d15a519894751430045.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000007"
+    },
+    "menuName": "ข้าวไข่ข้นกุ้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328922/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87_mopwtk.jpg",
     "category": "SINGLE_DISH",
-    "ingredients": ["ไก่", "ข้าวมัน", "น้ำจิ้ม"],
-    "cookingMethod": ["แห้ง"]
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000004" },
-    "menuName": "Pork Chop Steak",
-    "menuImage": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=500",
+    "_id": {
+      "$oid": "65d4b0000000000000000008"
+    },
+    "menuName": "ข้าวยำไก่แซ่บ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329973/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B9%84%E0%B8%81%E0%B9%88%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A_vbfcq7.jpg",
     "category": "SINGLE_DISH",
-    "ingredients": ["หมู", "เฟรนช์ฟรายส์", "สลัด"],
-    "cookingMethod": ["ย่าง"]
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "ราด"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000005" },
-    "menuName": "Strawberry Bingsu",
-    "menuImage": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=500",
-    "category": "DESSERT",
-    "ingredients": [],
-    "cookingMethod": []
+    "_id": {
+      "$oid": "65d4b0000000000000000009"
+    },
+    "menuName": "ข้าวกระเพราหมูสับไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328868/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AA%E0%B8%B1%E0%B8%9A%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_zpe0ub.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ราด"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000006" },
+    "_id": {
+      "$oid": "65d4b0000000000000000010"
+    },
+    "menuName": "ข้าวหน้าหมูสไลด์",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329997/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AA%E0%B9%84%E0%B8%A5%E0%B8%94%E0%B9%8C_iwlcch.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000011"
+    },
+    "menuName": "โจ๊กหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330052/%E0%B9%82%E0%B8%88%E0%B9%8A%E0%B8%81%E0%B8%AB%E0%B8%A1%E0%B8%B9_squfus.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000012"
+    },
+    "menuName": "ไข่กระทะ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330051/%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%97%E0%B8%B0_mjsw7v.jpg",
+    "category": "SNACK",
+    "ingredients": [
+      "หมู",
+      "ไส้กรอก"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000013"
+    },
+    "menuName": "ข้าวไข่ข้นปูอัด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328929/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%9B%E0%B8%B9%E0%B8%AD%E0%B8%B1%E0%B8%94_etifwd.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปู"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000014"
+    },
+    "menuName": "ข้าวไข่ข้นต้มยำกุ้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328923/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87_bosvnu.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000015"
+    },
+    "menuName": "ข้าวกระเพราหมูกรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328858/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_oohlq2.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000016"
+    },
+    "menuName": "ข้าวผัดพริกแกงทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329928/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_l6f3th.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000017"
+    },
     "menuName": "ข้าวผัดหมู",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2019/11/26/f73f15fc02cf44d6bca6a1e17a5b2632.jpg",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329948/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%AB%E0%B8%A1%E0%B8%B9_vhc7xk.jpg",
     "category": "SINGLE_DISH",
-    "ingredients": ["หมูสับ", "ไข่ไก่", "ข้าวสวย"],
-    "cookingMethod": ["ผัด"]
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000007" },
-    "menuName": "ต้มยำหมูสับ",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2020/01/07/5d08b5c6e2634e27a0a7e90a4c35bbe5.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000018"
+    },
+    "menuName": "ข้าวผัดไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329894/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%84%E0%B8%81%E0%B9%88_vfqavw.png",
     "category": "SINGLE_DISH",
-    "ingredients": ["หมูสับ", "เห็ด", "มะเขือเทศ"],
-    "cookingMethod": ["ต้ม"]
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000008" },
-    "menuName": "ผัดไทยหมู",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2021/03/14/d1b92eb2bab74f1497b0e69db8a6b4c9.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000019"
+    },
+    "menuName": "ข้าวผัดทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329913/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_rew41p.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000020"
+    },
+    "menuName": "ข้าวผัดต้มยำทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329912/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_lfzyth.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000021"
+    },
+    "menuName": "ข้าวผัดผักบุ้งไฟแดงไม่มีเนื้อสัตว์",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329922/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9C%E0%B8%B1%E0%B8%81%E0%B8%9A%E0%B8%B8%E0%B9%89%E0%B8%87%E0%B9%84%E0%B8%9F%E0%B9%81%E0%B8%94%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%A1%E0%B8%B5%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C_eoorbt.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000022"
+    },
+    "menuName": "ข้าวผัดฉ่าหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329904/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%89%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9_ztt2gr.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000023"
+    },
+    "menuName": "ข้าวผัดฉ่าไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329903/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%89%E0%B9%88%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88_ltyeym.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000024"
+    },
+    "menuName": "ข้าวผัดฉ่าทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329903/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%89%E0%B9%88%E0%B8%B2%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_ziu8oj.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000025"
+    },
+    "menuName": "ข้าวหมูกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330012/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_ahoyty.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000026"
+    },
+    "menuName": "ข้าวไก่กระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328883/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_lc9rdz.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000027"
+    },
+    "menuName": "ก๋วยเตี๋ยวคั่วเนื้อ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328820/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD_mbgaff.jpg",
     "category": "NOODLE",
-    "ingredients": ["เนื้อหมู", "เส้นจันท์", "ถั่วงอก"],
-    "cookingMethod": ["ผัด"]
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000009" },
-    "menuName": "ยำวุ้นเส้นหมูสับ",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2020/05/11/c99c60e2f04143dbb0d5d295c08fe7d2.jpg",
-    "category": "SINGLE_DISH",
-    "ingredients": ["หมูสับ", "วุ้นเส้น", "มะเขือเทศ"],
-    "cookingMethod": ["ยำ"]
-  },
-  {
-    "_id": { "$oid": "65d4b0000000000000000010" },
-    "menuName": "ส้มตำไก่ย่าง",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2019/07/03/1a7bebc90e104f39b6a4a6d0a16f37d4.jpg",
-    "category": "SINGLE_DISH",
-    "ingredients": ["ไก่", "มะละกอ", "ถั่วลิสง"],
-    "cookingMethod": ["ยำ", "ย่าง"]
-  },
-  {
-    "_id": { "$oid": "65d4b0000000000000000011" },
-    "menuName": "ก๋วยเตี๋ยวเรือหมูตุ๋น",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2020/02/04/b0a51ef8eede4c3fa862cc1fb64e1c18.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000028"
+    },
+    "menuName": "ก๋วยเตี๋ยวคั่วทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328820/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_y5ooe5.jpg",
     "category": "NOODLE",
-    "ingredients": ["เนื้อหมู", "เส้นเล็ก", "ผักบุ้ง"],
-    "cookingMethod": ["ต้ม"]
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000012" },
-    "menuName": "ก๋วยเตี๋ยวต้มยำหมูสับ",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2020/03/10/c6c8dea3aba4428e84563a7fe38d5c1f.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000029"
+    },
+    "menuName": "ก๋วยเตี๋ยวคั่วเบคอน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328820/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B9%80%E0%B8%9A%E0%B8%84%E0%B8%AD%E0%B8%99_ncqpcj.jpg",
     "category": "NOODLE",
-    "ingredients": ["หมูสับ", "เส้นเล็ก", "ถั่วงอก"],
-    "cookingMethod": ["ต้ม"]
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000013" },
-    "menuName": "ข้าวแกงเขียวหวานไก่",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2020/06/15/c0e2bb9e2d3c4e44b4f9f6c8d8a2c4e6.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000030"
+    },
+    "menuName": "ผัดซีอิ๊วหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330126/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%8B%E0%B8%B5%E0%B8%AD%E0%B8%B4%E0%B9%8A%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9_tub5bx.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000031"
+    },
+    "menuName": "ผัดซีอิ๊วไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330126/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%8B%E0%B8%B5%E0%B8%AD%E0%B8%B4%E0%B9%8A%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88_hchtxd.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000032"
+    },
+    "menuName": "ผัดซีอิ๊วทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330126/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%8B%E0%B8%B5%E0%B8%AD%E0%B8%B4%E0%B9%8A%E0%B8%A7%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_lt1sqi.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000033"
+    },
+    "menuName": "ผัดมักกะโรนีหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330148/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B1%E0%B8%81%E0%B8%81%E0%B8%B0%E0%B9%82%E0%B8%A3%E0%B8%99%E0%B8%B5%E0%B8%AB%E0%B8%A1%E0%B8%B9_lz9spt.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000034"
+    },
+    "menuName": "ผัดมักกะโรนีไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330148/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B1%E0%B8%81%E0%B8%81%E0%B8%B0%E0%B9%82%E0%B8%A3%E0%B8%99%E0%B8%B5%E0%B9%84%E0%B8%81%E0%B9%88_yudgws.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000035"
+    },
+    "menuName": "สปาเก็ตตี้ขี้เมาหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330246/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%82%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%A1%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9_pdipne.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000036"
+    },
+    "menuName": "สปาเก็ตตี้ขี้เมาไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330216/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%82%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%A1%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88_siuu7y.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000037"
+    },
+    "menuName": "สุกี้แห้งหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330299/%E0%B8%AA%E0%B8%B8%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87%E0%B8%AB%E0%B8%A1%E0%B8%B9_lt9kb3.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000038"
+    },
+    "menuName": "สุกี้แห้งไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330298/%E0%B8%AA%E0%B8%B8%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87%E0%B9%84%E0%B8%81%E0%B9%88_ltypem.webp",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000039"
+    },
+    "menuName": "สุกี้แห้งทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330299/%E0%B8%AA%E0%B8%B8%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_youl4r.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000040"
+    },
+    "menuName": "สุกี้น้ำทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330267/%E0%B8%AA%E0%B8%B8%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_rlg2bo.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000041"
+    },
+    "menuName": "ผัดมาม่า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330149/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2_u5chnh.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "หมูสับ",
+      "ไก่",
+      "อกไก่",
+      "เนื้อ",
+      "กุ้ง",
+      "ปลา",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000042"
+    },
+    "menuName": "ราดหน้าหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330215/%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9_kh7keu.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000043"
+    },
+    "menuName": "ราดหน้าไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330213/%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88_matsp0.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000044"
+    },
+    "menuName": "ราดหน้าทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330214/%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_zwk88i.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000045"
+    },
+    "menuName": "ข้าวพริกเผาไก่กรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329950/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%80%E0%B8%9C%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_zu2xdw.png",
     "category": "SINGLE_DISH",
-    "ingredients": ["สะโพกไก่", "มะเขือ", "ใบโหระพา"],
-    "cookingMethod": ["แกง"]
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000014" },
-    "menuName": "ข้าวแกงส้มกุ้ง",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2019/12/20/a3b5c7d9e1f24680b2c4d6e8f0a1b3c5.jpg",
+    "_id": {
+      "$oid": "65d4b0000000000000000046"
+    },
+    "menuName": "ผัดมาม่าขี้เมาหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330174/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%82%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%A1%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9_j5ayfh.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000047"
+    },
+    "menuName": "ข้าวผัดพริกแกงหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329939/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%AB%E0%B8%A1%E0%B8%B9_qlrtv7.jpg",
     "category": "SINGLE_DISH",
-    "ingredients": ["กุ้ง", "ผัก", "น้ำแกงส้ม"],
-    "cookingMethod": ["แกง"]
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
   },
   {
-    "_id": { "$oid": "65d4b0000000000000000015" },
+    "_id": {
+      "$oid": "65d4b0000000000000000048"
+    },
+    "menuName": "ข้าวกระเพราไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328847/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88_q6ecjd.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000049"
+    },
+    "menuName": "ข้าวผัดผงกระหรี่ไก่กรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329916/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9C%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_voxetf.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000050"
+    },
+    "menuName": "ข้าวไก่ผัดเม็ดมะม่วง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328909/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%A1%E0%B9%87%E0%B8%94%E0%B8%A1%E0%B8%B0%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%87_qamvkz.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000051"
+    },
+    "menuName": "ข้าวกระเพราหมูตุ๋นไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328862/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%95%E0%B8%B8%E0%B9%8B%E0%B8%99%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_jkzxfk.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ตุ๋น"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000052"
+    },
+    "menuName": "ข้าวกระเพราหมูย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328863/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_t4bgen.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000053"
+    },
+    "menuName": "ข้าวไก่คาราเกะราดซอสไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328888/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%84%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%B0%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_eqctfq.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000054"
+    },
+    "menuName": "ข้าวกระเพราหมูตุ๋น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328858/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%95%E0%B8%B8%E0%B9%8B%E0%B8%99_pvkotf.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ตุ๋น"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000055"
+    },
+    "menuName": "ข้าวผัดคะน้าหมูกรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329894/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%84%E0%B8%B0%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_owzzgj.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000056"
+    },
+    "menuName": "ข้าวไข่ข้นเบคอน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328929/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B9%80%E0%B8%9A%E0%B8%84%E0%B8%AD%E0%B8%99_ueisr8.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000057"
+    },
+    "menuName": "ข้าวผัดผงกระหรี่ทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329922/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9C%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_izfxh6.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000058"
+    },
+    "menuName": "ข้าวไข่ข้นราดซอส",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328929/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA_csnimv.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู",
+      "หมูสับ",
+      "ไก่",
+      "อกไก่",
+      "เนื้อ",
+      "กุ้ง",
+      "ปลา",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000059"
+    },
+    "menuName": "ข้าวหมูกรอบคั่วพริกเกลือผงกระหรี่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330000/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%9C%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88_nvnofl.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000060"
+    },
+    "menuName": "ข้าวกระเพราไก่ทอดไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328848/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_aldvds.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000061"
+    },
+    "menuName": "ข้าวหมูกระเทียมไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330014/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_snszsk.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000062"
+    },
+    "menuName": "ข้าวกระเพราหมูยอไข่ดาว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328863/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%A2%E0%B8%AD%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%94%E0%B8%B2%E0%B8%A7_vh3jcs.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000063"
+    },
+    "menuName": "ข้าวผัดต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329904/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_kywken.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000064"
+    },
+    "menuName": "ข้าวผัดพริกแกงทะเลไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329929/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_wbcfhe.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000065"
+    },
+    "menuName": "ข้าวกระเพราทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328852/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_ux6z51.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000066"
+    },
+    "menuName": "ผัดมาม่าไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330149/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_bawubw.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000067"
+    },
+    "menuName": "สปาเก็ตตี้เขียวหวานไก่กรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330238/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%82%E0%B8%B5%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_wzveed.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000068"
+    },
+    "menuName": "ข้าวไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328890/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_w0mx8s.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000069"
+    },
+    "menuName": "ข้าวไก่ทอดซอสทงคัตสึ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328896/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%97%E0%B8%87%E0%B8%84%E0%B8%B1%E0%B8%95%E0%B8%AA%E0%B8%B6_rdgx1y.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000070"
+    },
+    "menuName": "ข้าวไก่ทอดซอสเทอริยากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328896/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4_r2dauk.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000071"
+    },
+    "menuName": "ข้าวไก่ทอดซอสกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328895/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_hvikno.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000072"
+    },
+    "menuName": "ข้าวหมูทอดซอสเผ็ด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330049/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%9C%E0%B9%87%E0%B8%94_vxmhn6.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000073"
+    },
+    "menuName": "ข้าวหมูทอดซอสทงคัตสึ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330026/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%97%E0%B8%87%E0%B8%84%E0%B8%B1%E0%B8%95%E0%B8%AA%E0%B8%B6_pqcpbg.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000074"
+    },
+    "menuName": "ข้าวหมูทอดซอสเทอริยากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330038/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4_djsfka.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000075"
+    },
+    "menuName": "ข้าวหมูทอดซอสกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330026/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_pz0hzf.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000076"
+    },
+    "menuName": "ข้าวแกงกระหรี่ไก่ย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_nawvgc.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000077"
+    },
+    "menuName": "ข้าวแกงกระหรี่หมูทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328877/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94_m4jhq2.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000078"
+    },
+    "menuName": "ข้าวไข่ข้นไส้กรอก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328936/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B9%84%E0%B8%AA%E0%B9%89%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%81_ifp1o0.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไส้กรอก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000079"
+    },
+    "menuName": "ข้าวไข่ข้นหมูสับ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328937/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AA%E0%B8%B1%E0%B8%9A_i5w9ig.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000080"
+    },
+    "menuName": "ข้าวไข่ข้นต้มยำไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328928/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_scuvaa.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000081"
+    },
+    "menuName": "ข้าวกระเพราไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328847/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_nflo2g.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000082"
+    },
+    "menuName": "ข้าวกระเพราหมูสับ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328864/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AA%E0%B8%B1%E0%B8%9A_oxlk39.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000083"
+    },
+    "menuName": "ข้าวหมูทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330025/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94_qychy0.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000084"
+    },
+    "menuName": "ข้าวแกงกะหรี่หมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328882/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B8%AB%E0%B8%A1%E0%B8%B9_drs2yp.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "แกง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000085"
+    },
+    "menuName": "ข้าวแกงกะหรี่ไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328877/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88_yrwa32.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000086"
+    },
+    "menuName": "ข้าวหน้าหมูสไลด์",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329997/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AA%E0%B9%84%E0%B8%A5%E0%B8%94%E0%B9%8C_iwlcch.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000087"
+    },
+    "menuName": "ข้าวคัตสึด้งหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328983/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B8%95%E0%B8%AA%E0%B8%B6%E0%B8%94%E0%B9%89%E0%B8%87%E0%B8%AB%E0%B8%A1%E0%B8%B9_k14iu8.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000088"
+    },
+    "menuName": "ข้าวมันไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329962/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_sbohdm.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000089"
+    },
+    "menuName": "ข้าวมันไก่ย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329973/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_imlcci.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000090"
+    },
+    "menuName": "ข้าวมันไก่ผสมต้มทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329963/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%9C%E0%B8%AA%E0%B8%A1%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%97%E0%B8%AD%E0%B8%94_ddvrqj.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่ต้ม",
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000091"
+    },
+    "menuName": "ข้าวมันไก่ผสมต้มย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329963/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%9C%E0%B8%AA%E0%B8%A1%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_iqyu9g.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่",
+      "ไก่ต้ม"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000092"
+    },
+    "menuName": "ข้าวมันไก่ผสมทอดย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329963/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%9C%E0%B8%AA%E0%B8%A1%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_ljiql0.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000093"
+    },
+    "menuName": "ข้าวมันไก่รวม 3 หน้า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329973/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A3%E0%B8%A7%E0%B8%A1_3_%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2_zlxzjo.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ทอด",
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000094"
+    },
+    "menuName": "ข้าวยำไก่ย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329973/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_ipwejw.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000095"
+    },
+    "menuName": "ข้าวยำไก่ต้ม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329973/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%95%E0%B9%89%E0%B8%A1_ebh7x6.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่ต้ม"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "ต้ม"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000096"
+    },
+    "menuName": "ข้าวไก่ทอดซอสกระเพรา",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328896/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2_nuwu3j.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000097"
+    },
+    "menuName": "ข้าวไก่ทอดซอสเผ็ดเกาหลี",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328897/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%9C%E0%B9%87%E0%B8%94%E0%B9%80%E0%B8%81%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B5_ljpvkv.jpg",
+    "category": "KOREAN",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000098"
+    },
+    "menuName": "ข้าวไก่ทอดซอสบาร์บีคิว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328896/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%9A%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%9A%E0%B8%B5%E0%B8%84%E0%B8%B4%E0%B8%A7_kdfjve.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000099"
+    },
+    "menuName": "ข้าวไก่ทอดซอสฮันนี่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328904/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%AE%E0%B8%B1%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%88_obogjw.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000100"
+    },
+    "menuName": "ข้าวไก่ทอดซอสโอโคโนมิยากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328903/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%82%E0%B8%AD%E0%B9%82%E0%B8%84%E0%B9%82%E0%B8%99%E0%B8%A1%E0%B8%B4%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4_nioydg.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000101"
+    },
+    "menuName": "ข้าวไก่ย่างซอสกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328910/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_uovz91.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000102"
+    },
+    "menuName": "ข้าวไก่ย่างซอสเทอริยากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328910/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4_yhmq2p.webp",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000103"
+    },
+    "menuName": "ข้าวหน้าไก่อบซอส",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329986/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%AD%E0%B8%9A%E0%B8%8B%E0%B8%AD%E0%B8%AA_bf1pet.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000104"
+    },
+    "menuName": "ข้าวหน้ามันปลาทู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329997/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%B9_y9sbvb.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000105"
+    },
+    "menuName": "ขนมจีนน้ำเงี้ยว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328844/%E0%B8%82%E0%B8%99%E0%B8%A1%E0%B8%88%E0%B8%B5%E0%B8%99%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B9%80%E0%B8%87%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%A7_ybdoyc.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "แกง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000106"
+    },
+    "menuName": "ข้าวหมูกรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329997/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_gd2brg.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000107"
+    },
+    "menuName": "ข้าวไก่กรอบผัดเม็ดมะม่วง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328883/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%A1%E0%B9%87%E0%B8%94%E0%B8%A1%E0%B8%B0%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%87_xs0aq6.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000108"
+    },
+    "menuName": "ข้าวผัดอเมริกัน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329949/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B9%80%E0%B8%A1%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B1%E0%B8%99_xm07jc.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่",
+      "ไส้กรอก"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000109"
+    },
+    "menuName": "ข้าวผัดห่อไข่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329950/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%AB%E0%B9%88%E0%B8%AD%E0%B9%84%E0%B8%82%E0%B9%88_i4bb5c.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู",
+      "หมูสับ",
+      "ไก่",
+      "อกไก่",
+      "เนื้อ",
+      "กุ้ง",
+      "ปลา",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000110"
+    },
+    "menuName": "ผัดมักกะโรนี",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330148/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B1%E0%B8%81%E0%B8%81%E0%B8%B0%E0%B9%82%E0%B8%A3%E0%B8%99%E0%B8%B5_remj3h.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "หมูสับ",
+      "ไก่",
+      "อกไก่",
+      "เนื้อ",
+      "กุ้ง",
+      "ปลา",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000111"
+    },
+    "menuName": "ข้าวกระเพรารวมมิตร",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328857/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%A1%E0%B8%B4%E0%B8%95%E0%B8%A3_zbwaqd.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู",
+      "หมูสับ",
+      "ไก่",
+      "อกไก่",
+      "เนื้อ",
+      "กุ้ง",
+      "ปลา",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000112"
+    },
+    "menuName": "ข้าวกระเพราเบคอน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328853/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%9A%E0%B8%84%E0%B8%AD%E0%B8%99_qn5up9.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสามชั้น"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000113"
+    },
+    "menuName": "ข้าวผัดพริกแกงรวมมิตร",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329939/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%A1%E0%B8%B4%E0%B8%95%E0%B8%A3_hlkj4u.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู",
+      "หมูสับ",
+      "ไก่",
+      "อกไก่",
+      "เนื้อ",
+      "กุ้ง",
+      "ปลา",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000114"
+    },
+    "menuName": "ข้าวมันไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329962/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88_hkn6qj.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่ต้ม"
+    ],
+    "cookingMethod": [
+      "ต้ม"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000115"
+    },
+    "menuName": "ข้าวขาหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328916/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9_tcl7zt.webp",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ขาหมู"
+    ],
+    "cookingMethod": [
+      "ตุ๋น",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000116"
+    },
     "menuName": "ข้าวหมูแดง",
-    "menuImage": "https://img.wongnai.com/p/1920x0/2020/08/05/a1b2c3d4e5f64789a0b1c2d3e4f5a6b7.jpg",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330014/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%81%E0%B8%94%E0%B8%87_z2xnzg.jpg",
     "category": "SINGLE_DISH",
-    "ingredients": ["หมูแดง", "ข้าวสวย", "ไข่ต้ม"],
-    "cookingMethod": ["ย่าง"]
+    "ingredients": [
+      "หมูแดง"
+    ],
+    "cookingMethod": [
+      "ย่าง",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000117"
+    },
+    "menuName": "ข้าวหมูแดงหมูกรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330016/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%81%E0%B8%94%E0%B8%87%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_fpbds6.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูแดง",
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ย่าง",
+      "ทอด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000118"
+    },
+    "menuName": "ข้าวหมูสามชั้นทอดน้ำปลา",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330039/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AA%E0%B8%B2%E0%B8%A1%E0%B8%8A%E0%B8%B1%E0%B9%89%E0%B8%99%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%9B%E0%B8%A5%E0%B8%B2_mpp0uk.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสามชั้น"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000119"
+    },
+    "menuName": "ก๋วยเตี๋ยวต้มยำน้ำข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328821/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%82%E0%B9%89%E0%B8%99_jtt2xw.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000120"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328828/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9_ulnhzd.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000121"
+    },
+    "menuName": "ก๋วยเตี๋ยวไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328821/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88_kberwz.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000122"
+    },
+    "menuName": "เย็นตาโฟ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330203/%E0%B9%80%E0%B8%A2%E0%B9%87%E0%B8%99%E0%B8%95%E0%B8%B2%E0%B9%82%E0%B8%9F_ayta8s.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ปลา",
+      "ปลาหมึก",
+      "เต้าหู้"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000123"
+    },
+    "menuName": "ก๋วยเตี๋ยวน้ำใส",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328822/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%AA_oinyyo.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000124"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมูตุ๋น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328828/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%95%E0%B8%B8%E0%B9%8B%E0%B8%99_cuzcnl.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "ตุ๋น"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000125"
+    },
+    "menuName": "ก๋วยเตี๋ยวไก่ตุ๋น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328820/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%95%E0%B8%B8%E0%B9%8B%E0%B8%99_vnoupm.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "ตุ๋น"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000126"
+    },
+    "menuName": "ข้าวผัดพริกหยวก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329948/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%AB%E0%B8%A2%E0%B8%A7%E0%B8%81_mpomic.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000127"
+    },
+    "menuName": "ข้าวผัดพริกแกงไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329928/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B9%84%E0%B8%81%E0%B9%88_qj2veo.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000128"
+    },
+    "menuName": "ข้าวผัดพริกเผาหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329941/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%80%E0%B8%9C%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9_iayloo.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000129"
+    },
+    "menuName": "ข้าวผัดพริกเผาไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329939/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%80%E0%B8%9C%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88_cbud6b.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000130"
+    },
+    "menuName": "ไข่เจียว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330052/%E0%B9%84%E0%B8%82%E0%B9%88%E0%B9%80%E0%B8%88%E0%B8%B5%E0%B8%A2%E0%B8%A7_cbixna.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000131"
+    },
+    "menuName": "ก๋วยเตี๋ยวน้ำตก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328822/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81_l2cfyj.webp",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000132"
+    },
+    "menuName": "ก๋วยเตี๋ยวต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328821/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_jhwxxe.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "ต้ม",
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000133"
+    },
+    "menuName": "ก๋วยเตี๋ยวน้ำตกต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328821/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_yhl8aa.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "เนื้อ",
+      "ไก่",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "ต้ม",
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000134"
+    },
+    "menuName": "ก๋วยเตี๋ยวแห้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328833/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87_rqnxot.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000135"
+    },
+    "menuName": "ก๋วยเตี๋ยวแห้งต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328835/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_hayuvv.png",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "แห้ง",
+      "ต้ม",
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000136"
+    },
+    "menuName": "มาม่าหมูตุ๋น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330174/%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%95%E0%B8%B8%E0%B9%8B%E0%B8%99_izi0n8.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "ตุ๋น"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000137"
+    },
+    "menuName": "ข้าวกระเพราหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328857/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9_qwelkx.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000138"
+    },
+    "menuName": "ก๋วยเตี๋ยวคั่วไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328821/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88_s5k5w8.avif",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000139"
+    },
+    "menuName": "สุกี้ไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330268/%E0%B8%AA%E0%B8%B8%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B9%84%E0%B8%81%E0%B9%88_uokfg5.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000140"
+    },
+    "menuName": "สุกี้หมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330268/%E0%B8%AA%E0%B8%B8%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B8%AB%E0%B8%A1%E0%B8%B9_lm3uca.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "น้ำ",
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000141"
+    },
+    "menuName": "ข้าวปลาราดพริก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81_qdklqy.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000142"
+    },
+    "menuName": "ผัดมาม่าขี้เมาไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330176/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%82%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%A1%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88_qq3mpv.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000143"
+    },
+    "menuName": "ข้าวปลาคัตสึ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329875/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%84%E0%B8%B1%E0%B8%95%E0%B8%AA%E0%B8%B6_teuscf.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000144"
+    },
+    "menuName": "ข้าวแกงกะหรี่ปลา",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328882/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B8%9B%E0%B8%A5%E0%B8%B2_m20xs8.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "แกง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000145"
+    },
+    "menuName": "ข้าวไข่ข้นไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328922/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88_ny90gc.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000146"
+    },
+    "menuName": "ข้าวไข่ข้นปลา",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328929/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%9B%E0%B8%A5%E0%B8%B2_yt6oew.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000147"
+    },
+    "menuName": "ข้าวกระเพราหมูทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328863/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94_ndn2am.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000148"
+    },
+    "menuName": "ข้าวกระเพราปลาทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328857/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%AD%E0%B8%94_cqyy7f.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000149"
+    },
+    "menuName": "ข้าวอกไก่ย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330051/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AD%E0%B8%81%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_ykrmmp.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "อกไก่"
+    ],
+    "cookingMethod": [
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000150"
+    },
+    "menuName": "ข้าวคอหมูย่าง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328938/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%84%E0%B8%AD%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87_thmb6y.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000151"
+    },
+    "menuName": "ข้าวลาบหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329985/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A5%E0%B8%B2%E0%B8%9A%E0%B8%AB%E0%B8%A1%E0%B8%B9_yat6bt.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000152"
+    },
+    "menuName": "ข้าวแกงกะหรี่ไก่ทอดไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328877/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_iqvejm.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000153"
+    },
+    "menuName": "ข้าวแกงเขียวหวานไก่ทอดไข่ข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328883/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B9%80%E0%B8%82%E0%B8%B5%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99_nsfurc.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000154"
+    },
+    "menuName": "ยำวุ้นเส้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330178/%E0%B8%A2%E0%B8%B3%E0%B8%A7%E0%B8%B8%E0%B9%89%E0%B8%99%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99_ncet8c.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "หมูสับ",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000155"
+    },
+    "menuName": "ยำมาม่า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330176/%E0%B8%A2%E0%B8%B3%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2_hsmbrb.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "หมูสับ",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000156"
+    },
+    "menuName": "ต้มเลือดหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330108/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B9%80%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%94%E0%B8%AB%E0%B8%A1%E0%B8%B9_sm4oex.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "หมู",
+      "ตับ"
+    ],
+    "cookingMethod": [
+      "ต้ม"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000157"
+    },
+    "menuName": "ผัดไทยกุ้งสด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330148/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%84%E0%B8%97%E0%B8%A2%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87%E0%B8%AA%E0%B8%94_frveh3.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000158"
+    },
+    "menuName": "ข้าวไข่เจียวทรงเครื่อง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328937/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B9%80%E0%B8%88%E0%B8%B5%E0%B8%A2%E0%B8%A7%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87_dq2ob8.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสับ",
+      "กุ้ง",
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000159"
+    },
+    "menuName": "ข้าวผัดแหนม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329949/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%81%E0%B8%AB%E0%B8%99%E0%B8%A1_tgld9b.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000160"
+    },
+    "menuName": "สปาเก็ตตี้ต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330242/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_knwtkv.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000161"
+    },
+    "menuName": "ข้าวขาหมูใส่ไข่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328922/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%83%E0%B8%AA%E0%B9%88%E0%B9%84%E0%B8%82%E0%B9%88_c2zp2y.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ขาหมู"
+    ],
+    "cookingMethod": [
+      "ตุ๋น",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000162"
+    },
+    "menuName": "ข้าวขาหมูคากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328917/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%84%E0%B8%B2%E0%B8%81%E0%B8%B4_vqiwh8.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ขาหมู"
+    ],
+    "cookingMethod": [
+      "ตุ๋น",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000163"
+    },
+    "menuName": "ข้าวขาหมูคาจัก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328917/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%84%E0%B8%B2%E0%B8%88%E0%B8%B1%E0%B8%81_jcho2u.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ขาหมู"
+    ],
+    "cookingMethod": [
+      "ตุ๋น",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000164"
+    },
+    "menuName": "ข้าวหมูอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330051/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AD%E0%B8%9A_due4dq.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000165"
+    },
+    "menuName": "ทงคัตสึราเมนหมูชาบู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330109/%E0%B8%97%E0%B8%87%E0%B8%84%E0%B8%B1%E0%B8%95%E0%B8%AA%E0%B8%B6%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%8A%E0%B8%B2%E0%B8%9A%E0%B8%B9_kc9gny.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000166"
+    },
+    "menuName": "โชยุราเมนหมูชาบู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330060/%E0%B9%82%E0%B8%8A%E0%B8%A2%E0%B8%B8%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%8A%E0%B8%B2%E0%B8%9A%E0%B8%B9_bxblms.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000167"
+    },
+    "menuName": "มิโซะราเมนหมูชาบู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330175/%E0%B8%A1%E0%B8%B4%E0%B9%82%E0%B8%8B%E0%B8%B0%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%8A%E0%B8%B2%E0%B8%9A%E0%B8%B9_gwk20s.webp",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000168"
+    },
+    "menuName": "ข้าวแกงกระหรี่ไก่คาราเกะ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328869/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%AB%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%84%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%B0_ko5w6v.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000169"
+    },
+    "menuName": "ไส้กรอกทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330299/%E0%B9%84%E0%B8%AA%E0%B9%89%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%81%E0%B8%97%E0%B8%AD%E0%B8%94_oyo07k.jpg",
+    "category": "SNACK",
+    "ingredients": [
+      "ไส้กรอก"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000170"
+    },
+    "menuName": "ข้าวหน้าไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329997/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88_dfahzg.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000171"
+    },
+    "menuName": "ข้าวกระเพราเนื้อ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328852/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD_spyfjg.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000172"
+    },
+    "menuName": "ข้าวผัดพริกแกงเนื้อ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329930/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD_rnn4p7.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000173"
+    },
+    "menuName": "ข้าวเนื้อผัดน้ำมันหอย",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329348/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B8%AB%E0%B8%AD%E0%B8%A2_lafmgn.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000174"
+    },
+    "menuName": "ข้าวเนื้อกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329293/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_ppvjrr.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000175"
+    },
+    "menuName": "ข้าวเนื้อหวาน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329875/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99_mdsvvr.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000176"
+    },
+    "menuName": "ข้าวผัดเนื้อ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329914/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD_uhsc6m.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000177"
+    },
+    "menuName": "ข้าวไก่ผัดน้ำมันหอย",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328904/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B8%AB%E0%B8%AD%E0%B8%A2_allq4n.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000178"
+    },
+    "menuName": "ข้าวไก่หวาน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328912/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99_kr1fcy.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000179"
+    },
+    "menuName": "ข้าวผัดพริกแกงกุ้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329924/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87_f608bs.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000180"
+    },
+    "menuName": "ข้าวผัดคะน้าไก่กรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329894/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%84%E0%B8%B0%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_tildao.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000181"
+    },
+    "menuName": "ข้าวกระเพรากุ้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328846/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87_m4kbbr.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000182"
+    },
+    "menuName": "ข้าวกุ้งผัดน้ำมันหอย",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328869/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%A1%E0%B8%B1%E0%B8%99%E0%B8%AB%E0%B8%AD%E0%B8%A2_qpsshq.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000183"
+    },
+    "menuName": "ข้าวกุ้งกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328868/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_z2nz5h.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000184"
+    },
+    "menuName": "ข้าวผัดกุ้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329894/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87_u0bolx.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000185"
+    },
+    "menuName": "ข้าวไข่ยัดไส้",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328937/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%94%E0%B9%84%E0%B8%AA%E0%B9%89_wgiaju.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000186"
+    },
+    "menuName": "ข้าวคลุกกะปิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328937/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%84%E0%B8%A5%E0%B8%B8%E0%B8%81%E0%B8%81%E0%B8%B0%E0%B8%9B%E0%B8%B4_z8iyie.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000187"
+    },
+    "menuName": "ขนมจีนน้ำยากะทิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328845/%E0%B8%82%E0%B8%99%E0%B8%A1%E0%B8%88%E0%B8%B5%E0%B8%99%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B0%E0%B8%97%E0%B8%B4_z3j2el.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000188"
+    },
+    "menuName": "ขนมจีนเขียวหวานไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328841/%E0%B8%82%E0%B8%99%E0%B8%A1%E0%B8%88%E0%B8%B5%E0%B8%99%E0%B9%80%E0%B8%82%E0%B8%B5%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88_yhs9bu.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000189"
+    },
+    "menuName": "ข้าวไก่ต้มน้ำปลา",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328889/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%9B%E0%B8%A5%E0%B8%B2_cclgg5.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่ต้ม"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000190"
+    },
+    "menuName": "ข้าวคั่วกลิ้งหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329292/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%81%E0%B8%A5%E0%B8%B4%E0%B9%89%E0%B8%87%E0%B8%AB%E0%B8%A1%E0%B8%B9_yq8qlg.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000191"
+    },
+    "menuName": "ข้าวพะแนงหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329951/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9E%E0%B8%B0%E0%B9%81%E0%B8%99%E0%B8%87%E0%B8%AB%E0%B8%A1%E0%B8%B9_fhvnal.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000192"
+    },
+    "menuName": "ข้าวผัดฉ่าปลาดุก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329904/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%89%E0%B9%88%E0%B8%B2%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B8%B8%E0%B8%81_igapqb.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000193"
+    },
+    "menuName": "ข้าวปลากระพงผัดต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329875/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%87%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_gt27lr.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000194"
+    },
+    "menuName": "ข้าวผัดพริกแกงปลากระพง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329937/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%87_yskjki.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000195"
+    },
+    "menuName": "ข้าวไก่คาราเกะราดซอส",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328888/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%84%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B8%B0%E0%B8%A3%E0%B8%B2%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA_qbu8qu.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด",
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000196"
+    },
+    "menuName": "ข้าวคั่วกลิ้งปลาทู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329291/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%81%E0%B8%A5%E0%B8%B4%E0%B9%89%E0%B8%87%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%B9_auifch.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000197"
+    },
+    "menuName": "ข้าวฉู่ฉี่ปลาทู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329291/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%89%E0%B8%B9%E0%B9%88%E0%B8%89%E0%B8%B5%E0%B9%88%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%B9_sny0p3.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000198"
+    },
+    "menuName": "ข้าวปลาแดงทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B9%81%E0%B8%94%E0%B8%87%E0%B8%97%E0%B8%AD%E0%B8%94_rnswgy.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000199"
+    },
+    "menuName": "ข้าวปลานิลทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%99%E0%B8%B4%E0%B8%A5%E0%B8%97%E0%B8%AD%E0%B8%94_rcsjte.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000200"
+    },
+    "menuName": "ข้าวชะอมปลาทู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329291/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%8A%E0%B8%B0%E0%B8%AD%E0%B8%A1%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%B9_puldfs.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000201"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมูต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328828/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_qhoydf.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000202"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมูน้ำใส",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328833/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%AA_jxzqmu.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000203"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมูน้ำข้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328833/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%82%E0%B9%89%E0%B8%99_wx9qmh.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000204"
+    },
+    "menuName": "บะหมี่เกี๊ยวหมูแดง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330125/%E0%B8%9A%E0%B8%B0%E0%B8%AB%E0%B8%A1%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%8A%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%81%E0%B8%94%E0%B8%87_n2yuhd.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูแดง"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000205"
+    },
+    "menuName": "บะหมี่เกี๊ยวไก่แซ่บ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330126/%E0%B8%9A%E0%B8%B0%E0%B8%AB%E0%B8%A1%E0%B8%B5%E0%B9%88%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%8A%E0%B8%A2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A_vec0sp.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000206"
+    },
+    "menuName": "ข้าวไก่แดง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328888/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B9%81%E0%B8%94%E0%B8%87_nn0hr0.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ราด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000207"
+    },
+    "menuName": "ข้าวไข่ข้นไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328922/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%82%E0%B9%89%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_nqm927.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000208"
+    },
+    "menuName": "ข้าวหมูกรอบคั่วพริกเกลือ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329997/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%A5%E0%B8%B7%E0%B8%AD_wohubd.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000209"
+    },
+    "menuName": "ข้าวปลาหมึกผัดไข่เค็ม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329893/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B6%E0%B8%81%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B9%80%E0%B8%84%E0%B9%87%E0%B8%A1_oeklbh.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000210"
+    },
+    "menuName": "ข้าวกุ้งขยี้ไข่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328869/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87%E0%B8%82%E0%B8%A2%E0%B8%B5%E0%B9%89%E0%B9%84%E0%B8%82%E0%B9%88_fbgyin.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000211"
+    },
+    "menuName": "สปาเก็ตตี้ขี้เมา",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330216/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%82%E0%B8%B5%E0%B9%89%E0%B9%80%E0%B8%A1%E0%B8%B2_utp1qe.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000212"
+    },
+    "menuName": "ก๋วยจั๊บญวนอุบล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328820/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B8%88%E0%B8%B1%E0%B9%8A%E0%B8%9A%E0%B8%8D%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%B8%E0%B8%9A%E0%B8%A5_cvwhs5.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูสับ"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000213"
+    },
+    "menuName": "ต้มแซ่บกระดูกหมูอ่อน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330073/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B9%E0%B8%81%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%AD%E0%B9%88%E0%B8%AD%E0%B8%99_il84kq.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000214"
+    },
+    "menuName": "ต้มซุปไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330073/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%8B%E0%B8%B8%E0%B8%9B%E0%B9%84%E0%B8%81%E0%B9%88_e8hzfz.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000215"
+    },
+    "menuName": "ต้มเล้งแซ่บ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330090/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B9%80%E0%B8%A5%E0%B9%89%E0%B8%87%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A_zfjl5b.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000216"
+    },
+    "menuName": "ต้มยำน้ำข้นหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330089/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%B9_jcajvw.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000217"
+    },
+    "menuName": "ต้มยำน้ำข้นไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330076/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%82%E0%B9%89%E0%B8%99%E0%B9%84%E0%B8%81%E0%B9%88_dgetwh.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000218"
+    },
+    "menuName": "ต้มยำน้ำข้นทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330090/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%82%E0%B9%89%E0%B8%99%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_ryhnvj.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา",
+      "หอย"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000219"
+    },
+    "menuName": "ต้มยำน้ำใสหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330089/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%AA%E0%B8%AB%E0%B8%A1%E0%B8%B9_q7kvjm.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000220"
+    },
+    "menuName": "ต้มยำน้ำใสไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330089/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%AA%E0%B9%84%E0%B8%81%E0%B9%88_hgtwej.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000221"
+    },
+    "menuName": "ต้มยำน้ำใสทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330089/%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%AA%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_vde7zb.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา",
+      "หอย"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "ซุป",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000222"
+    },
+    "menuName": "แกงอ่อมหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328840/%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%AD%E0%B9%88%E0%B8%AD%E0%B8%A1%E0%B8%AB%E0%B8%A1%E0%B8%B9_fyafhw.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000223"
+    },
+    "menuName": "แกงอ่อมไก่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328834/%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%AD%E0%B9%88%E0%B8%AD%E0%B8%A1%E0%B9%84%E0%B8%81%E0%B9%88_brkd1s.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000224"
+    },
+    "menuName": "แกงอ่อมเนื้อ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328838/%E0%B9%81%E0%B8%81%E0%B8%87%E0%B8%AD%E0%B9%88%E0%B8%AD%E0%B8%A1%E0%B9%80%E0%B8%99%E0%B8%B7%E0%B9%89%E0%B8%AD_w0vhzl.avif",
+    "category": "SOUP",
+    "ingredients": [
+      "เนื้อ"
+    ],
+    "cookingMethod": [
+      "แกง",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000225"
+    },
+    "menuName": "ไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328840/%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_n4itq1.jpg",
+    "category": "SNACK",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000226"
+    },
+    "menuName": "หมูทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330320/%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94_ekdcwu.jpg",
+    "category": "SNACK",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000227"
+    },
+    "menuName": "ยำรวมมิตร",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330176/%E0%B8%A2%E0%B8%B3%E0%B8%A3%E0%B8%A7%E0%B8%A1%E0%B8%A1%E0%B8%B4%E0%B8%95%E0%B8%A3_jylkej.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "กุ้ง",
+      "ปลาหมึก",
+      "ปลา",
+      "หอย"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000228"
+    },
+    "menuName": "น้ำตกหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330110/%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%AB%E0%B8%A1%E0%B8%B9_wma5nd.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000229"
+    },
+    "menuName": "ซุปหน่อไม้",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330072/%E0%B8%8B%E0%B8%B8%E0%B8%9B%E0%B8%AB%E0%B8%99%E0%B9%88%E0%B8%AD%E0%B9%84%E0%B8%A1%E0%B9%89_trzscj.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000230"
+    },
+    "menuName": "ส้มตำไทย",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330266/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B9%84%E0%B8%97%E0%B8%A2_ake8c4.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000231"
+    },
+    "menuName": "ข้าวหน้าไก่ทรงเครื่อง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329986/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%87_gpbbyj.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ราด",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000232"
+    },
+    "menuName": "ข้าวหมูตุ๋น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330025/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%95%E0%B8%B8%E0%B9%8B%E0%B8%99_vz6gts.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ตุ๋น",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000233"
+    },
+    "menuName": "ข้าวไก่อบสไปซี่",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328912/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%AD%E0%B8%9A%E0%B8%AA%E0%B9%84%E0%B8%9B%E0%B8%8B%E0%B8%B5%E0%B9%88_yvurfg.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000234"
+    },
+    "menuName": "ข้าวหมูทอดน้ำจิ้มแจ่ว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330039/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%88%E0%B8%B4%E0%B9%89%E0%B8%A1%E0%B9%81%E0%B8%88%E0%B9%88%E0%B8%A7_meujru.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000235"
+    },
+    "menuName": "ข้าวหมูทอดซอสเกาหลี",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330026/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%81%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B5_zr47c7.webp",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000236"
+    },
+    "menuName": "ข้าวปลาทอดซอสเกาหลี",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%81%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B5_hhvkmv.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000237"
+    },
+    "menuName": "ข้าวปลาทอดซอสเทอริยากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4_vzwv7a.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000238"
+    },
+    "menuName": "ข้าวไก่ทอดซอสหม่าล่า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328902/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2_kzlrwp.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000239"
+    },
+    "menuName": "ข้าวหมูทอดซอสหม่าล่า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330039/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2_xrdezb.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000240"
+    },
+    "menuName": "ข้าวปลาทอดซอสหม่าล่า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329876/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2_plltzh.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000241"
+    },
+    "menuName": "ข้าวน้ำตกไก่ทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329292/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%97%E0%B8%AD%E0%B8%94_rogwyp.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000242"
+    },
+    "menuName": "ข้าวน้ำตกหมู",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329293/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%AB%E0%B8%A1%E0%B8%B9_uv92h0.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000243"
+    },
+    "menuName": "ข้าวน้ำตกปลา",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329292/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%9B%E0%B8%A5%E0%B8%B2_lswjrm.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000244"
+    },
+    "menuName": "ข้าวน้ำตกทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329292/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_p2cyap.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "หอย",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000245"
+    },
+    "menuName": "ข้าวยำหมูแซ่บ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329985/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A_rhawql.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมู"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000246"
+    },
+    "menuName": "ข้าวยำหมูกรอบแซ่บ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329985/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A_qe5gw7.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000247"
+    },
+    "menuName": "ข้าวยำทะเลแซ่บ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329974/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A_atig4t.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "หอย",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000248"
+    },
+    "menuName": "ข้าวหมูกรอบคั่วพริกกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329997/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_ypldr6.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000249"
+    },
+    "menuName": "ข้าวทะเลทอดคั่วพริกกระเทียม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774329293/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B8%84%E0%B8%B1%E0%B9%88%E0%B8%A7%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B8%A2%E0%B8%A1_m0dnsk.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "หอย",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ผัด",
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000250"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมูกรอบต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328827/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_e5s5o3.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000251"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมูกรอบน้ำใส",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328827/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B9%83%E0%B8%AA_rj9k4i.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000252"
+    },
+    "menuName": "ก๋วยเตี๋ยวหมูกรอบแห้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328828/%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87_ny0hwm.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000253"
+    },
+    "menuName": "ยำก๋วยเตี๋ยวหมูกรอบแห้งต้มยำ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330191/%E0%B8%A2%E0%B8%B3%E0%B8%81%E0%B9%8B%E0%B8%A7%E0%B8%A2%E0%B9%80%E0%B8%95%E0%B8%B5%E0%B9%8B%E0%B8%A2%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87%E0%B8%95%E0%B9%89%E0%B8%A1%E0%B8%A2%E0%B8%B3_gdew0f.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ยำ",
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000254"
+    },
+    "menuName": "ผัดซีอิ๊วหมูกรอบ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330147/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%8B%E0%B8%B5%E0%B8%AD%E0%B8%B4%E0%B9%8A%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%9A_ti9n01.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมูกรอบ"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000255"
+    },
+    "menuName": "ลูกชิ้นกุ้งทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330213/%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%8A%E0%B8%B4%E0%B9%89%E0%B8%99%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87%E0%B8%97%E0%B8%AD%E0%B8%94_rx1nhr.jpg",
+    "category": "SNACK",
+    "ingredients": [
+      "กุ้ง"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000256"
+    },
+    "menuName": "ปลาเส้นทอด",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330125/%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B8%97%E0%B8%AD%E0%B8%94_osycx3.jpg",
+    "category": "SNACK",
+    "ingredients": [
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ทอด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000257"
+    },
+    "menuName": "ส้มตำปูปลาร้า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330268/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B8%9B%E0%B8%B9%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%A3%E0%B9%89%E0%B8%B2_hr6y5s.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ปู"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000258"
+    },
+    "menuName": "ส้มตำทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330239/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_k0nyfr.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "หอย",
+      "ปู"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000259"
+    },
+    "menuName": "ส้มตำซั่ว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330239/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B8%8B%E0%B8%B1%E0%B9%88%E0%B8%A7_sotbyy.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000260"
+    },
+    "menuName": "ส้มตำป่า",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330266/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B8%9B%E0%B9%88%E0%B8%B2_uegq9j.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000261"
+    },
+    "menuName": "ส้มตำขนมจีน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330238/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B8%82%E0%B8%99%E0%B8%A1%E0%B8%88%E0%B8%B5%E0%B8%99_onxuke.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000262"
+    },
+    "menuName": "ส้มตำไหลบัว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330266/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B9%84%E0%B8%AB%E0%B8%A5%E0%B8%9A%E0%B8%B1%E0%B8%A7_hdmk8m.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000263"
+    },
+    "menuName": "ตำแตง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330108/%E0%B8%95%E0%B8%B3%E0%B9%81%E0%B8%95%E0%B8%87_q4kkei.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000264"
+    },
+    "menuName": "ตำถั่ว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330109/%E0%B8%95%E0%B8%B3%E0%B8%96%E0%B8%B1%E0%B9%88%E0%B8%A7_yeouvt.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000265"
+    },
+    "menuName": "ส้มตำข้าวโพดไข่เค็ม",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330238/%E0%B8%AA%E0%B9%89%E0%B8%A1%E0%B8%95%E0%B8%B3%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B9%82%E0%B8%9E%E0%B8%94%E0%B9%84%E0%B8%82%E0%B9%88%E0%B9%80%E0%B8%84%E0%B9%87%E0%B8%A1_a1a34d.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000266"
+    },
+    "menuName": "ยำหมูยอ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330181/%E0%B8%A2%E0%B8%B3%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B8%A2%E0%B8%AD_fevdxs.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "ไส้กรอก"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000267"
+    },
+    "menuName": "สุกี้ทะเล",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774330268/%E0%B8%AA%E0%B8%B8%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B8%97%E0%B8%B0%E0%B9%80%E0%B8%A5_x28jxu.jpg",
+    "category": "SOUP",
+    "ingredients": [
+      "กุ้ง",
+      "ปลาหมึก",
+      "หอย",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ต้ม",
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000268"
+    },
+    "menuName": "ข้าวกระเพราขาหมูไข่ดาว",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774328851/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2%E0%B8%82%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%94%E0%B8%B2%E0%B8%A7_r4rcvq.jpg",
+    "category": "SINGLE_DISH",
+    "ingredients": [
+      "ขาหมู"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000269"
+    },
+    "menuName": "สปาเก็ตตี้ไวท์ซอส",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333150/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B9%84%E0%B8%A7%E0%B8%97%E0%B9%8C%E0%B8%8B%E0%B8%AD%E0%B8%AA_gjsa2p.avif",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "เห็ด"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000270"
+    },
+    "menuName": "สปาเก็ตตี้ซอสแดงไก่สับ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333149/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%8B%E0%B8%AD%E0%B8%AA%E0%B9%81%E0%B8%94%E0%B8%87%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%AA%E0%B8%B1%E0%B8%9A_f1ew0q.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "น้ำ"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000271"
+    },
+    "menuName": "สปาเก็ตตี้ผัดพริกแห้งไส้กรอก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333149/%E0%B8%AA%E0%B8%9B%E0%B8%B2%E0%B9%80%E0%B8%81%E0%B9%87%E0%B8%95%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B9%81%E0%B8%AB%E0%B9%89%E0%B8%87%E0%B9%84%E0%B8%AA%E0%B9%89%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%81_djmxd0.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไส้กรอก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000272"
+    },
+    "menuName": "บะหมี่ไก่ย่างเทอริยากิ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333149/%E0%B8%9A%E0%B8%B0%E0%B8%AB%E0%B8%A1%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%AD%E0%B8%A3%E0%B8%B4%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4_owuvwj.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "ย่าง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000273"
+    },
+    "menuName": "ผัดหมี่ฮกเกี้ยน",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333150/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%AB%E0%B8%A1%E0%B8%B5%E0%B9%88%E0%B8%AE%E0%B8%81%E0%B9%80%E0%B8%81%E0%B8%B5%E0%B9%89%E0%B8%A2%E0%B8%99_p7lzsv.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "หมู",
+      "กุ้ง",
+      "ปลาหมึก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000274"
+    },
+    "menuName": "ผัดมาม่าสาหร่ายไข่กุ้ง",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333148/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%B2%E0%B8%AB%E0%B8%A3%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B9%84%E0%B8%82%E0%B9%88%E0%B8%81%E0%B8%B8%E0%B9%89%E0%B8%87_auz3gb.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "กุ้ง",
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000275"
+    },
+    "menuName": "หมี่ไก่ฉีก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333150/%E0%B8%AB%E0%B8%A1%E0%B8%B5%E0%B9%88%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%89%E0%B8%B5%E0%B8%81_upbqfq.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไก่"
+    ],
+    "cookingMethod": [
+      "แห้ง"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000276"
+    },
+    "menuName": "ยากิโซบะ",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333149/%E0%B8%A2%E0%B8%B2%E0%B8%81%E0%B8%B4%E0%B9%82%E0%B8%8B%E0%B8%9A%E0%B8%B0_yul0gm.jpg",
+    "category": "JAPANESE",
+    "ingredients": [
+      "หมู",
+      "ไก่",
+      "กุ้ง",
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000277"
+    },
+    "menuName": "ผัดมาม่าสาหร่ายไส้กรอก",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333150/%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%B2%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%B2%E0%B8%AB%E0%B8%A3%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B9%84%E0%B8%AA%E0%B9%89%E0%B8%81%E0%B8%A3%E0%B8%AD%E0%B8%81_nkf9o4.jpg",
+    "category": "NOODLE",
+    "ingredients": [
+      "ไส้กรอก",
+      "ผัก"
+    ],
+    "cookingMethod": [
+      "ผัด"
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "65d4b0000000000000000278"
+    },
+    "menuName": "ยำลูกชิ้น",
+    "menuImage": "https://res.cloudinary.com/dtrhb5xvg/image/upload/v1774333150/%E0%B8%A2%E0%B8%B3%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%8A%E0%B8%B4%E0%B9%89%E0%B8%99_ozk8kr.jpg",
+    "category": "SALAD",
+    "ingredients": [
+      "หมู",
+      "เนื้อ",
+      "ปลา"
+    ],
+    "cookingMethod": [
+      "ยำ"
+    ]
   }
 ]
