@@ -237,19 +237,29 @@ export class ShopMenuItemService {
     maxDistance: number | undefined,
     userLocation: UserLocationDto,
   ): Promise<{ shops: ShopMenuItemDocument[]; distances: number[] }> {
-    // query ตาม style (category ของเมนูในร้าน)
-    const query: Record<string, any> = {};
-    if (style) query['attributes.category'] = style;
-    const items = await this.shopMenuItemModel.find(query).exec();
+    const allItems = await this.shopMenuItemModel.find().exec();
 
-    // group by shopName → เอา item แรกเป็นตัวแทนร้าน
     const shopMap = new Map<string, ShopMenuItemDocument>();
-    for (const item of items) {
+    for (const item of allItems) {
       if (!shopMap.has(item.shopName)) shopMap.set(item.shopName, item);
     }
 
-    // คำนวณ distance + filter ตาม maxDistance
-    let shopList = Array.from(shopMap.values()).map((item) => ({
+    const STYLE_MAP: Record<string, string[]> = {
+      JAPANESE: ['ญี่ปุ่น'],
+      ISAN: ['อีสาน'],
+      HALAL: ['ฮาลาล', 'อิสลาม'],
+      THAI: ['ตามสั่ง', 'แกง', 'ข้าว'],
+    };
+
+    let candidates = Array.from(shopMap.values());
+    if (style && STYLE_MAP[style]) {
+      const keywords = STYLE_MAP[style];
+      candidates = candidates.filter((item) =>
+        keywords.some((kw) => item.shopCategory.includes(kw)),
+      );
+    }
+
+    let shopList = candidates.map((item) => ({
       item,
       distance: this.calculateDistance(
         userLocation.latitude,
@@ -262,7 +272,6 @@ export class ShopMenuItemService {
       shopList = shopList.filter((s) => s.distance <= maxDistance);
     }
 
-    // สุ่ม 3 ร้าน ไม่ซ้ำ
     const selected: { item: ShopMenuItemDocument; distance: number }[] = [];
     for (let i = 0; i < 3 && shopList.length > 0; i++) {
       const idx = Math.floor(Math.random() * shopList.length);

@@ -7,13 +7,27 @@ import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.s
 import { GeminiService } from 'src/gemini/gemini.service';
 
 interface UserSession {
-  currentStep: 'IDLE' | 'Q1' | 'Q2' | 'Q3' | 'LOCATION' | 'QUICK_LOCATION';
+  currentStep:
+    | 'IDLE'
+    | 'Q1'
+    | 'Q2'
+    | 'Q3'
+    | 'LOCATION'
+    | 'QUICK_LOCATION'
+    | 'SHOP_Q1'
+    | 'SHOP_Q2'
+    | 'SHOP_LOCATION';
   answers: {
     q1?: string;
     q2?: string;
     q3?: string;
   };
+  shopAnswers: {
+    style?: string;
+    maxDistance?: number;
+  };
   lastAnswers?: { q1?: string; q2?: string; q3?: string };
+  lastShopAnswers?: { style?: string; maxDistance?: number };
   lastLocation?: { latitude: number; longitude: number };
 }
 
@@ -68,6 +82,7 @@ export class LineBotService {
       session = {
         currentStep: 'IDLE',
         answers: {},
+        shopAnswers: {},
       };
       this.sessions.set(userId, session);
     }
@@ -89,11 +104,15 @@ export class LineBotService {
           session.currentStep = 'QUICK_LOCATION';
           return this.askLocation(messageEvent.replyToken!);
         }
+
+        if (text === 'สุ่มร้าน') {
+          session.currentStep = 'SHOP_Q1';
+          session.shopAnswers = {};
+          return this.askShopQ1(messageEvent.replyToken!);
+        }
       } else if (messageEvent.message.type === 'location') {
-        if (
-          session.currentStep !== 'LOCATION' &&
-          session.currentStep !== 'QUICK_LOCATION'
-        ) {
+        const validSteps = ['LOCATION', 'QUICK_LOCATION', 'SHOP_LOCATION'];
+        if (!validSteps.includes(session.currentStep)) {
           await this.replyText(
             messageEvent.replyToken!,
             `เลือกเมนูบน Rich menu อีกครั้งเพื่อใช้งาน`,
@@ -103,14 +122,24 @@ export class LineBotService {
 
         const { latitude, longitude } = messageEvent.message;
         const replyToken = messageEvent.replyToken!;
-        const isQuick = session.currentStep === 'QUICK_LOCATION';
+        const step = session.currentStep;
 
         session.lastLocation = { latitude, longitude };
         session.currentStep = 'IDLE';
 
-        if (isQuick) {
+        if (step === 'QUICK_LOCATION') {
           await this.showQuickResult(
             replyToken,
+            { latitude, longitude },
+            userId,
+          );
+        } else if (step === 'SHOP_LOCATION') {
+          const shopAnswers = { ...session.shopAnswers };
+          session.lastShopAnswers = { ...shopAnswers };
+          session.shopAnswers = {};
+          await this.showShopResult(
+            replyToken,
+            shopAnswers,
             { latitude, longitude },
             userId,
           );
@@ -580,13 +609,25 @@ export class LineBotService {
     const session = this.sessions.get(userId)!;
     const params = new URLSearchParams(data);
 
-    if (params.has('action') && params.get('action') === 'quick_reshuffle') {
+    const action = params.get('action');
+
+    // reshuffle actions
+    if (action === 'quick_reshuffle') {
       const { lastLocation } = session;
       if (!lastLocation) return;
       return this.showQuickResult(replyToken, lastLocation, userId);
     }
-
-    if (params.has('action') && params.get('action') === 'reshuffle') {
+    if (action === 'shop_reshuffle') {
+      const { lastShopAnswers, lastLocation } = session;
+      if (!lastShopAnswers || !lastLocation) return;
+      return this.showShopResult(
+        replyToken,
+        lastShopAnswers,
+        lastLocation,
+        userId,
+      );
+    }
+    if (action === 'reshuffle') {
       const { lastAnswers, lastLocation } = session;
       if (!lastAnswers?.q1 || !lastLocation) {
         session.currentStep = 'Q1';
@@ -601,39 +642,14 @@ export class LineBotService {
       );
     }
 
-    if (params.has('q1') && session.currentStep !== 'Q1') return;
-    if (params.has('q2') && session.currentStep !== 'Q2') return;
-    if (params.has('q3') && session.currentStep !== 'Q3') return;
+    // สุ่มร้าน flow
+    if (params.has('shopQ1') || params.has('shopQ2')) {
+      return this.handleShopPostback(params, session, replyToken);
+    }
 
-    if (params.has('q1')) {
-      const q1Value = params.get('q1')!;
-
-      if (q1Value === 'SKIP') {
-        session.answers.q1 = this.pickRandom(this.Q1_OPTIONS);
-        session.answers.q2 = undefined;
-        session.answers.q3 = undefined;
-        session.currentStep = 'LOCATION';
-        await this.askLocation(replyToken);
-        return;
-      } else {
-        session.answers.q1 =
-          q1Value === 'ANY' ? this.pickRandom(this.Q1_OPTIONS) : q1Value;
-        console.log(' Q1 value:', session.answers.q1);
-        session.currentStep = 'Q2';
-        await this.askQ2(replyToken);
-      }
-    } else if (params.has('q2')) {
-      const q2Value = params.get('q2')!;
-      session.answers.q2 = q2Value === 'ANY' ? undefined : q2Value;
-      console.log(' Q2 value:', session.answers.q2);
-      session.currentStep = 'Q3';
-      await this.askQ3(replyToken);
-    } else if (params.has('q3')) {
-      const q3Value = params.get('q3')!;
-      session.answers.q3 = q3Value === 'ANY' ? undefined : q3Value;
-      console.log(' Q3 value:', session.answers.q3);
-      session.currentStep = 'LOCATION';
-      await this.askLocation(replyToken);
+    // สุ่มเมนู flow
+    if (params.has('q1') || params.has('q2') || params.has('q3')) {
+      return this.handleGuidedPostback(params, session, replyToken);
     }
 
     if (params.has('viewShops')) {
@@ -814,6 +830,385 @@ export class LineBotService {
           {
             type: 'text',
             text: 'ชอบรึป่าว? 🤔 กดสุ่มใหม่ได้นะ',
+            quickReply: reshuffleQuickReply,
+          },
+        ],
+      });
+    }
+  }
+
+  private async handleGuidedPostback(
+    params: URLSearchParams,
+    session: UserSession,
+    replyToken: string,
+  ) {
+    if (params.has('q1') && session.currentStep !== 'Q1') return;
+    if (params.has('q2') && session.currentStep !== 'Q2') return;
+    if (params.has('q3') && session.currentStep !== 'Q3') return;
+
+    if (params.has('q1')) {
+      const q1Value = params.get('q1')!;
+      if (q1Value === 'SKIP') {
+        session.answers.q1 = this.pickRandom(this.Q1_OPTIONS);
+        session.answers.q2 = undefined;
+        session.answers.q3 = undefined;
+        session.currentStep = 'LOCATION';
+        await this.askLocation(replyToken);
+        return;
+      }
+      session.answers.q1 =
+        q1Value === 'ANY' ? this.pickRandom(this.Q1_OPTIONS) : q1Value;
+      session.currentStep = 'Q2';
+      await this.askQ2(replyToken);
+    } else if (params.has('q2')) {
+      const q2Value = params.get('q2')!;
+      session.answers.q2 = q2Value === 'ANY' ? undefined : q2Value;
+      session.currentStep = 'Q3';
+      await this.askQ3(replyToken);
+    } else if (params.has('q3')) {
+      const q3Value = params.get('q3')!;
+      session.answers.q3 = q3Value === 'ANY' ? undefined : q3Value;
+      session.currentStep = 'LOCATION';
+      await this.askLocation(replyToken);
+    }
+  }
+
+  private async handleShopPostback(
+    params: URLSearchParams,
+    session: UserSession,
+    replyToken: string,
+  ) {
+    if (params.has('shopQ1') && session.currentStep !== 'SHOP_Q1') return;
+    if (params.has('shopQ2') && session.currentStep !== 'SHOP_Q2') return;
+
+    if (params.has('shopQ1')) {
+      const styleValue = params.get('shopQ1')!;
+      if (styleValue === 'SKIP') {
+        session.shopAnswers.style = undefined;
+        session.shopAnswers.maxDistance = undefined;
+        session.currentStep = 'SHOP_LOCATION';
+        await this.askLocation(replyToken);
+        return;
+      }
+      session.shopAnswers.style = styleValue === 'ANY' ? undefined : styleValue;
+      session.currentStep = 'SHOP_Q2';
+      await this.askShopQ2(replyToken);
+    } else if (params.has('shopQ2')) {
+      const distValue = params.get('shopQ2')!;
+      session.shopAnswers.maxDistance =
+        distValue === 'ANY' ? undefined : Number(distValue);
+      session.currentStep = 'SHOP_LOCATION';
+      await this.askLocation(replyToken);
+    }
+  }
+
+  private async askShopQ1(replyToken: string) {
+    await this.client.replyMessage({
+      replyToken,
+      messages: [
+        {
+          type: 'flex',
+          altText: 'ชอบร้านสไตล์ไหน?',
+          contents: {
+            type: 'bubble',
+            body: {
+              type: 'box',
+              layout: 'vertical',
+              contents: [
+                {
+                  type: 'text',
+                  text: 'คำถามข้อแรก',
+                  weight: 'bold',
+                  color: '#D97A2B',
+                  size: 'sm',
+                },
+                {
+                  type: 'text',
+                  text: 'เลือกสไตล์ร้านอาหาร',
+                  weight: 'bold',
+                  size: 'xl',
+                  margin: 'md',
+                },
+                {
+                  type: 'box',
+                  layout: 'vertical',
+                  contents: [
+                    {
+                      type: 'box',
+                      layout: 'vertical',
+                      contents: [],
+                      width: '50%',
+                      height: '6px',
+                      backgroundColor: '#D97A2B',
+                    },
+                  ],
+                  margin: 'sm',
+                  height: '6px',
+                  backgroundColor: '#F2D479',
+                  cornerRadius: 'lg',
+                },
+                {
+                  type: 'separator',
+                  margin: 'xxl',
+                },
+                {
+                  type: 'box',
+                  layout: 'horizontal',
+                  contents: [
+                    {
+                      type: 'button',
+                      action: {
+                        type: 'postback',
+                        label: '🍚 ตามสั่ง',
+                        data: 'shopQ1=THAI',
+                        displayText: 'เลือก ตามสั่ง',
+                      },
+                      style: 'primary',
+                      height: 'sm',
+                      color: '#D97A2B',
+                    },
+                    {
+                      type: 'button',
+                      action: {
+                        type: 'postback',
+                        label: '🍣 ญี่ปุ่น',
+                        data: 'shopQ1=JAPANESE',
+                        displayText: 'เลือก ญี่ปุ่น',
+                      },
+                      style: 'primary',
+                      height: 'sm',
+                      color: '#D97A2B',
+                      margin: 'md',
+                    },
+                  ],
+                  margin: 'md',
+                },
+                {
+                  type: 'box',
+                  layout: 'horizontal',
+                  contents: [
+                    {
+                      type: 'button',
+                      action: {
+                        type: 'postback',
+                        label: '🌶️ อีสาน',
+                        data: 'shopQ1=ISAN',
+                        displayText: 'เลือก อีสาน',
+                      },
+                      style: 'primary',
+                      height: 'sm',
+                      color: '#D97A2B',
+                    },
+                    {
+                      type: 'button',
+                      action: {
+                        type: 'postback',
+                        label: '🧆 ฮาลาล',
+                        data: 'shopQ1=HALAL',
+                        displayText: 'เลือก ฮาลาล',
+                      },
+                      style: 'primary',
+                      height: 'sm',
+                      color: '#D97A2B',
+                      margin: 'md',
+                    },
+                  ],
+                  margin: 'md',
+                },
+                {
+                  type: 'button',
+                  action: {
+                    type: 'postback',
+                    label: '❔ อะไรก็ได้',
+                    data: 'shopQ1=ANY',
+                    displayText: 'เลือก อะไรก็ได้',
+                  },
+                  height: 'sm',
+                  style: 'primary',
+                  color: '#D97A2B',
+                  margin: 'md',
+                },
+                {
+                  type: 'button',
+                  action: {
+                    type: 'postback',
+                    label: 'บอกมาเลยดีกว่า',
+                    data: 'shopQ1=SKIP',
+                    displayText: 'บอกมาเลยดีกว่า',
+                  },
+                  style: 'primary',
+                  margin: 'md',
+                  height: 'sm',
+                  color: '#6FAF4F',
+                },
+              ],
+            },
+            styles: {
+              footer: {
+                separator: true,
+              },
+            },
+          },
+        },
+      ],
+    });
+  }
+
+  private async askShopQ2(replyToken: string) {
+    await this.client.replyMessage({
+      replyToken,
+      messages: [
+        {
+          type: 'flex',
+          altText: 'อยากไปไกลแค่ไหน?',
+          contents: {
+            type: 'bubble',
+            body: {
+              type: 'box',
+              layout: 'vertical',
+              contents: [
+                {
+                  type: 'text',
+                  text: 'คำถามข้อสอง',
+                  weight: 'bold',
+                  color: '#D97A2B',
+                  size: 'sm',
+                },
+                {
+                  type: 'text',
+                  text: 'อยากไปไกลแค่ไหน?',
+                  weight: 'bold',
+                  size: 'xl',
+                  margin: 'md',
+                },
+                {
+                  type: 'box',
+                  layout: 'vertical',
+                  contents: [
+                    {
+                      type: 'box',
+                      layout: 'vertical',
+                      contents: [],
+                      width: '100%',
+                      height: '6px',
+                      backgroundColor: '#D97A2B',
+                    },
+                  ],
+                  margin: 'sm',
+                  height: '6px',
+                  backgroundColor: '#F2D479',
+                  cornerRadius: 'lg',
+                },
+                {
+                  type: 'separator',
+                  margin: 'xxl',
+                },
+                {
+                  type: 'button',
+                  action: {
+                    type: 'postback',
+                    label: '🚶 ใกล้ๆ (500m)',
+                    data: 'shopQ2=500',
+                    displayText: 'เลือก ใกล้ๆ 500m',
+                  },
+                  style: 'primary',
+                  height: 'sm',
+                  color: '#D97A2B',
+                  margin: 'md',
+                },
+                {
+                  type: 'button',
+                  action: {
+                    type: 'postback',
+                    label: '🚲 เดินได้ (1km)',
+                    data: 'shopQ2=1000',
+                    displayText: 'เลือก เดินได้ 1km',
+                  },
+                  style: 'primary',
+                  height: 'sm',
+                  color: '#D97A2B',
+                  margin: 'md',
+                },
+                {
+                  type: 'button',
+                  action: {
+                    type: 'postback',
+                    label: '❔ ไม่จำกัด',
+                    data: 'shopQ2=ANY',
+                    displayText: 'เลือก ไม่จำกัด',
+                  },
+                  height: 'sm',
+                  style: 'primary',
+                  color: '#D97A2B',
+                  margin: 'md',
+                },
+              ],
+            },
+            styles: {
+              footer: {
+                separator: true,
+              },
+            },
+          },
+        },
+      ],
+    });
+  }
+
+  private async showShopResult(
+    replyToken: string,
+    shopAnswers: { style?: string; maxDistance?: number },
+    location: { latitude: number; longitude: number },
+    userId: string,
+  ): Promise<void> {
+    await this.animationLoading(userId, 20);
+
+    const { shops, distances } = await this.shopMenuItemService.getRandomShops(
+      shopAnswers.style,
+      shopAnswers.maxDistance,
+      location,
+    );
+
+    const bubbles: any[] = shops.map((shop, i) =>
+      this.buildRestaurantBubble(shop, (distances[i] / 1000).toFixed(2)),
+    );
+
+    const reshuffleQuickReply: messagingApi.QuickReply = {
+      items: [
+        {
+          type: 'action',
+          action: {
+            type: 'postback',
+            label: 'สุ่มร้านใหม่',
+            data: 'action=shop_reshuffle',
+          },
+        },
+      ],
+    };
+
+    if (bubbles.length > 0) {
+      await this.client.replyMessage({
+        replyToken,
+        messages: [
+          {
+            type: 'flex',
+            altText: 'ผลการสุ่มร้าน',
+            contents: { type: 'carousel', contents: bubbles },
+          },
+          {
+            type: 'text',
+            text: 'ร้านนี้เป็นไง? 🤔 กดสุ่มร้านใหม่ได้นะ',
+            quickReply: reshuffleQuickReply,
+          },
+        ],
+      });
+    } else {
+      await this.client.replyMessage({
+        replyToken,
+        messages: [
+          {
+            type: 'text',
+            text: 'ไม่พบร้านที่ตรงกับเงื่อนไข ลองสุ่มใหม่อีกครั้ง',
             quickReply: reshuffleQuickReply,
           },
         ],
@@ -1012,7 +1407,7 @@ export class LineBotService {
     };
   }
 
-  private buildRestaurantBubble(item: ShopMenuItemDocument) {
+  private buildRestaurantBubble(item: ShopMenuItemDocument, distance?: string) {
     const lat = item.location.coordinates[1];
     const long = item.location.coordinates[0];
     const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}&travelmode=walking`;
@@ -1082,6 +1477,30 @@ export class LineBotService {
         ],
       },
     ];
+
+    if (distance) {
+      (bodyContents[2] as any).contents.push({
+        type: 'box',
+        layout: 'baseline',
+        contents: [
+          {
+            type: 'text',
+            text: 'ใกล้คุณ',
+            weight: 'bold',
+            flex: 3,
+            size: 'xs',
+            color: '#555555',
+          },
+          {
+            type: 'text',
+            text: `${distance} กม.`,
+            flex: 5,
+            color: '#888888',
+            size: 'sm',
+          },
+        ],
+      });
+    }
 
     return {
       type: 'bubble' as const,
