@@ -10,6 +10,7 @@ import { ShopModule } from './shop/shop.module';
 import { ShopMenuItemModule } from './shop-menu-item/shop-menu-item.module';
 import { Connection } from 'mongoose';
 import { LineBotModule } from './line-bot/line-bot.module';
+import { FoodDiaryModule } from './food-diary/food-diary.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { LineBotModule } from './line-bot/line-bot.module';
     ShopModule,
     ShopMenuItemModule,
     LineBotModule,
+    FoodDiaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

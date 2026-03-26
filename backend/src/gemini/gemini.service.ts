@@ -49,44 +49,45 @@ export class GeminiService {
     return 'ขออภัย ระบบดูสูตร ไม่พร้อมใช้งานในขณะนี้กรุณาลองใหม่ภายหลัง';
   }
 
-  async analyzeFood(image: string): Promise<string> {
-    const prompt = `วิเคราะห์รูปภาพอาหารนี้และบอกข้อมูลโภชนาการเป็นภาษาไทย 
+  async analyzeFood(image: string): Promise<{
+    displayText: string;
+    menuName: string;
+    calories: number;
+    nutrients: string;
+  }> {
+    const prompt = `วิเคราะห์รูปภาพอาหารนี้และบอกข้อมูลโภชนาการเป็นภาษาไทย ตอบเป็น JSON เท่านั้น
 
-    รูปแบบที่ต้องการ:
-    📸 เมนูที่พบในภาพ:
-    🍽️ [ชื่อเมนูที่ 1]
-    🍽️ [ชื่อเมนูที่ 2]
-    🍽️ [ชื่อเมนูที่ 3]
+    รูปแบบ JSON:
+    {
+      "menuName": "ชื่อเมนูทั้งหมดที่พบ คั่นด้วย , ",
+      "calories": ตัวเลขแคลอรี่รวม,
+      "carbs": ตัวเลขคาร์บ (กรัม),
+      "protein": ตัวเลขโปรตีน (กรัม),
+      "fat": ตัวเลขไขมัน (กรัม)
+    }`;
 
-    🔥 แคลอรี่รวมประมาณ: [ตัวเลข] kcal
-
-    📊 สารอาหารหลักโดยประมาณ:
-    🍚 คาร์บ: [ตัวเลข] g
-    🥩 โปรตีน: [ตัวเลข] g
-    🥑 ไขมัน: [ตัวเลข] g
-
-    ข้อกำหนดสำคัญ: 
-    - ตอบกระชับตามรูปแบบที่กำหนด
-    - ห้ามใช้เครื่องหมาย ** หรือ Markdown จัดรูปแบบตัวอักษรโดยเด็ดขาด
-    - ในส่วน "เมนูที่พบในภาพ" ให้ขึ้นบรรทัดใหม่และใช้เครื่องหมาย 🍽️ นำหน้าแต่ละเมนูเสมอ ห้ามใช้เครื่องหมายจุลภาค (,) คั่นเด็ดขาด`;
     for (const model of this.models) {
       try {
         this.logger.log(`trying model: ${model}`);
         const response = await this.ai.models.generateContent({
           model,
           contents: [
-            {
-              inlineData: {
-                mimeType: 'image/jpeg',
-                data: image,
-              },
-            },
-            {
-              text: prompt,
-            },
+            { inlineData: { mimeType: 'image/jpeg', data: image } },
+            { text: prompt },
           ],
+          config: { responseMimeType: 'application/json' },
         });
-        return response.text ?? 'ไม่สามารถวิเคราะห์อาหารได้';
+
+        const json = JSON.parse(response.text ?? '{}');
+        const nutrients = `🍚 คาร์บ: ${json.carbs ?? 0}g  🥩 โปรตีน: ${json.protein ?? 0}g  🥑 ไขมัน: ${json.fat ?? 0}g`;
+        const displayText = `📸 เมนูที่พบ: ${json.menuName}\n🔥 แคลอรี่รวม: ${json.calories ?? 0} kcal\n\n📊 สารอาหาร:\n${nutrients}`;
+
+        return {
+          displayText,
+          menuName: json.menuName ?? '',
+          calories: json.calories ?? 0,
+          nutrients,
+        };
       } catch (error: any) {
         if (error?.status === 429) {
           this.logger.warn(`${model} quota exceeded, trying next model...`);
@@ -95,6 +96,11 @@ export class GeminiService {
         throw error;
       }
     }
-    return 'ขออภัย ระบบวิเคราะห์อาหารไม่พร้อมใช้งาน';
+    return {
+      displayText: 'ขออภัย ระบบวิเคราะห์อาหารไม่พร้อมใช้งาน',
+      menuName: '',
+      calories: 0,
+      nutrients: '',
+    };
   }
 }

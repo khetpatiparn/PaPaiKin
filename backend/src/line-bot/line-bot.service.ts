@@ -5,6 +5,7 @@ import { buffer } from 'node:stream/consumers';
 import { ShopMenuItemService } from 'src/shop-menu-item/shop-menu-item.service';
 import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.schema';
 import { GeminiService } from 'src/gemini/gemini.service';
+import { FoodDiaryService } from 'src/food-diary/food-diary.service';
 
 interface UserSession {
   currentStep:
@@ -43,6 +44,7 @@ export class LineBotService {
     private readonly configService: ConfigService,
     private readonly shopMenuItemService: ShopMenuItemService,
     private readonly geminiService: GeminiService,
+    private readonly foodDiaryService: FoodDiaryService,
   ) {
     const channelAccessToken = this.configService.get<string>(
       'LINE_CHANNEL_ACCESS_TOKEN',
@@ -110,6 +112,11 @@ export class LineBotService {
           session.shopAnswers = {};
           return this.askShopQ1(messageEvent.replyToken!);
         }
+
+        if (text === 'สรุปมื้อ') {
+          await this.animationLoading(userId, 20);
+          return this.showDiarySummary(messageEvent.replyToken!, userId);
+        }
       } else if (messageEvent.message.type === 'location') {
         const validSteps = ['LOCATION', 'QUICK_LOCATION', 'SHOP_LOCATION'];
         if (!validSteps.includes(session.currentStep)) {
@@ -163,11 +170,25 @@ export class LineBotService {
         const buf = await buffer(stream);
         const imageBase64 = buf.toString('base64');
 
-        const result = await this.geminiService.analyzeFood(imageBase64);
+        const result: {
+          displayText: string;
+          menuName: string;
+          calories: number;
+          nutrients: string;
+        } = await this.geminiService.analyzeFood(imageBase64);
+
+        if (result.menuName && result.calories > 0) {
+          await this.foodDiaryService.save(
+            userId,
+            result.menuName,
+            result.calories,
+            result.nutrients,
+          );
+        }
 
         await this.client.replyMessage({
           replyToken: messageEvent.replyToken!,
-          messages: [{ type: 'text', text: result }],
+          messages: [{ type: 'text', text: result.displayText }],
         });
       }
     } else if (event.type === 'postback') {
@@ -318,11 +339,14 @@ export class LineBotService {
                   style: 'primary',
                   margin: 'md',
                   height: 'sm',
-                  color: '#6FAF4F',
+                  color: '#6B8E23',
                 },
               ],
             },
             styles: {
+              body: {
+                backgroundColor: '#FFF8F0',
+              },
               footer: {
                 separator: true,
               },
@@ -464,6 +488,9 @@ export class LineBotService {
             },
             size: 'mega',
             styles: {
+              body: {
+                backgroundColor: '#FFF8F0',
+              },
               footer: {
                 separator: true,
               },
@@ -566,6 +593,9 @@ export class LineBotService {
             },
             size: 'mega',
             styles: {
+              body: {
+                backgroundColor: '#FFF8F0',
+              },
               footer: {
                 separator: true,
               },
@@ -726,7 +756,7 @@ export class LineBotService {
       bubbles.push(
         this.buildMenuBubble(
           'เมนูประหยัด',
-          '#6FAF4F',
+          '#6B8E23',
           cheapestMenu,
           (distanceCards[1] / 1000).toFixed(2),
         ),
@@ -735,7 +765,7 @@ export class LineBotService {
       bubbles.push(
         this.buildMenuBubble(
           'เมนูใกล้ฉัน',
-          '#4C8CE4',
+          '#A0522D',
           nearestMenu,
           (distanceCards[2] / 1000).toFixed(2),
         ),
@@ -1039,11 +1069,14 @@ export class LineBotService {
                   style: 'primary',
                   margin: 'md',
                   height: 'sm',
-                  color: '#6FAF4F',
+                  color: '#6B8E23',
                 },
               ],
             },
             styles: {
+              body: {
+                backgroundColor: '#FFF8F0',
+              },
               footer: {
                 separator: true,
               },
@@ -1145,6 +1178,9 @@ export class LineBotService {
               ],
             },
             styles: {
+              body: {
+                backgroundColor: '#FFF8F0',
+              },
               footer: {
                 separator: true,
               },
@@ -1300,6 +1336,7 @@ export class LineBotService {
 
     return {
       type: 'bubble' as const,
+      styles: { body: { backgroundColor: '#FFF8F0' } },
       hero: {
         type: 'image',
         url: this.transformCloudinaryUrl(menu.menuImage),
@@ -1377,6 +1414,7 @@ export class LineBotService {
         type: 'box',
         layout: 'vertical',
         spacing: 'sm',
+        backgroundColor: '#FFF8F0',
         contents: [
           {
             type: 'button',
@@ -1394,7 +1432,7 @@ export class LineBotService {
             type: 'button',
             style: 'primary',
             height: 'sm',
-            color: '#6FAF4F',
+            color: '#6B8E23',
             action: {
               type: 'postback',
               label: '📖 ดูสูตร',
@@ -1504,6 +1542,7 @@ export class LineBotService {
 
     return {
       type: 'bubble' as const,
+      styles: { body: { backgroundColor: '#FFF8F0' } },
       hero: {
         type: 'image',
         url: this.transformCloudinaryUrl(item.shopImage),
@@ -1515,12 +1554,14 @@ export class LineBotService {
         type: 'box',
         layout: 'vertical',
         spacing: 'sm',
+        backgroundColor: '#FFF8F0',
         contents: bodyContents,
       },
       footer: {
         type: 'box',
         layout: 'vertical',
         spacing: 'sm',
+        backgroundColor: '#FFF8F0',
         contents: [
           {
             type: 'button',
@@ -1536,5 +1577,144 @@ export class LineBotService {
         ],
       },
     };
+  }
+
+  private async showDiarySummary(
+    replyToken: string,
+    userId: string,
+  ): Promise<void> {
+    const entries = await this.foodDiaryService.getTodaySummary(userId);
+
+    if (entries.length === 0) {
+      await this.replyText(
+        replyToken,
+        'วันนี้ยังไม่มีบันทึกมื้ออาหาร\nลองส่งรูปอาหารมาให้ดูสิ!',
+      );
+      return;
+    }
+
+    const totalCalories = entries.reduce((sum, e) => sum + e.calories, 0);
+
+    const mealRows: any[] = entries.map((entry, i) => ({
+      type: 'box',
+      layout: 'horizontal',
+      contents: [
+        {
+          type: 'text',
+          text: `${i + 1}.`,
+          flex: 1,
+          size: 'sm',
+          color: '#555555',
+        },
+        {
+          type: 'text',
+          text: entry.menuName,
+          flex: 5,
+          size: 'sm',
+          wrap: true,
+        },
+        {
+          type: 'text',
+          text: `${entry.calories}`,
+          flex: 2,
+          size: 'sm',
+          align: 'end',
+          color: '#D97A2B',
+          weight: 'bold',
+        },
+      ],
+      margin: 'sm',
+    }));
+
+    const today = new Date();
+    const dateStr = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear() + 543}`;
+
+    await this.client.replyMessage({
+      replyToken,
+      messages: [
+        {
+          type: 'flex',
+          altText: `สรุปมื้อวันนี้: ${totalCalories} kcal`,
+          contents: {
+            type: 'bubble',
+            body: {
+              type: 'box',
+              layout: 'vertical',
+              backgroundColor: '#FFF8F0',
+              contents: [
+                {
+                  type: 'text',
+                  text: `สรุปมื้อวันนี้`,
+                  color: '#C44A3A',
+                  weight: 'bold',
+                  size: 'xl',
+                },
+                {
+                  type: 'text',
+                  text: dateStr,
+                  color: '#999999',
+                  size: 'sm',
+                },
+                { type: 'separator', margin: 'lg' },
+                {
+                  type: 'box',
+                  layout: 'horizontal',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: '#',
+                      flex: 1,
+                      size: 'xs',
+                      color: '#999999',
+                    },
+                    {
+                      type: 'text',
+                      text: 'เมนู',
+                      flex: 5,
+                      size: 'xs',
+                      color: '#999999',
+                    },
+                    {
+                      type: 'text',
+                      text: 'kcal',
+                      flex: 2,
+                      size: 'xs',
+                      color: '#999999',
+                      align: 'end',
+                    },
+                  ],
+                  margin: 'lg',
+                },
+                ...mealRows,
+                { type: 'separator', margin: 'lg' },
+                {
+                  type: 'box',
+                  layout: 'horizontal',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: 'รวมวันนี้',
+                      weight: 'bold',
+                      size: 'md',
+                      flex: 6,
+                    },
+                    {
+                      type: 'text',
+                      text: `${totalCalories} kcal`,
+                      weight: 'bold',
+                      size: 'md',
+                      flex: 3,
+                      align: 'end',
+                      color: '#D97A2B',
+                    },
+                  ],
+                  margin: 'lg',
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
   }
 }
