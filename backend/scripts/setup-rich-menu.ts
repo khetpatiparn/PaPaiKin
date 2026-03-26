@@ -7,7 +7,8 @@ dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 const IMAGE_PATH =
   // 'C:/Users/patip/Desktop/practical project/rich pig/messageImage_1773947862374.jpg';
-  'C:/Users/patip/Desktop/practical project/rich pig/สุ่มเมนู.jpg';
+  // 'C:/Users/patip/Desktop/practical project/rich pig/สุ่มเมนู.jpg';
+  'C:/Users/patip/Desktop/practical project/rich pig/สุ่มเมนู (2).jpg';
 
 async function main() {
   const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN!;
@@ -20,21 +21,37 @@ async function main() {
   // 1. สร้าง Rich Menu โดยกำหนด area และ action แต่ละปุ่ม
   console.log('1. Creating rich menu...');
   const { richMenuId } = await client.createRichMenu(
-    // {
-    // size: { width: 1408, height: 768 },
-    // selected: true,
-    // name: 'PaPaiKin Main Menu',
-    // chatBarText: 'เมนู',
-    // areas: [
     //   {
-    //     bounds: { x: 0, y: 0, width: 704, height: 768 },
-    //     action: { type: 'message', text: 'สุ่มเมนู' },
+    //   size: {
+    //     width: 2500,
+    //     height: 1686,
     //   },
-    //   {
-    //     bounds: { x: 704, y: 0, width: 704, height: 768 },
-    //     action: { type: 'camera' },
-    //   },
-    // ],
+    //   selected: true,
+    //   name: 'PaPaiKin',
+    //   chatBarText: 'เมนู',
+    //   areas: [
+    //     {
+    //       bounds: {
+    //         x: 386,
+    //         y: 109,
+    //         width: 1001,
+    //         height: 1305,
+    //       },
+    //       action: {
+    //         type: 'message',
+    //         text: 'สุ่มเมนู',
+    //       },
+    //     },
+    //     {
+    //       bounds: {
+    //         x: 1427,
+    //         y: 110,
+    //         width: 857,
+    //         height: 1296,
+    //       },
+    //       action: { type: 'camera' },
+    //     },
+    //   ],
     // }
     {
       size: {
@@ -42,15 +59,15 @@ async function main() {
         height: 1686,
       },
       selected: true,
-      name: 'PaPaiKin',
+      name: 'Rich Menu 1',
       chatBarText: 'เมนู',
       areas: [
         {
           bounds: {
-            x: 386,
-            y: 109,
-            width: 1001,
-            height: 1305,
+            x: 9,
+            y: 17,
+            width: 1232,
+            height: 840,
           },
           action: {
             type: 'message',
@@ -59,10 +76,34 @@ async function main() {
         },
         {
           bounds: {
-            x: 1427,
-            y: 110,
-            width: 857,
-            height: 1296,
+            x: 1271,
+            y: 17,
+            width: 1211,
+            height: 836,
+          },
+          action: {
+            type: 'message',
+            text: 'สุ่มด่วน',
+          },
+        },
+        {
+          bounds: {
+            x: 9,
+            y: 895,
+            width: 1220,
+            height: 777,
+          },
+          action: {
+            type: 'message',
+            text: 'สุ่มร้าน',
+          },
+        },
+        {
+          bounds: {
+            x: 1300,
+            y: 891,
+            width: 1182,
+            height: 777,
           },
           action: { type: 'camera' },
         },
