@@ -1,29 +1,94 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ประวัติการกิน - PaPaiKin</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: sans-serif; background: #FFF8F0; padding: 16px; }
-    h1 { color: #C44A3A; margin-bottom: 4px; font-size: 22px; }
-    .subtitle { color: #999; font-size: 13px; margin-bottom: 16px; }
-    table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
-    th { background: #D97A2B; color: white; padding: 10px 8px; font-size: 12px; text-align: center; }
-    td { padding: 8px; font-size: 12px; text-align: center; border-bottom: 1px solid #f0e0d0; }
-    td:nth-child(2) { text-align: left; }
-    tr:last-child td { border-bottom: none; }
-    .total-row td { background: #FFF0E0; font-weight: bold; }
-    .loading { text-align: center; padding: 40px; color: #aaa; }
-    .empty { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background: #FFF8F0;
+      padding: 16px;
+    }
+
+    h1 {
+      color: #C44A3A;
+      margin-bottom: 4px;
+      font-size: 22px;
+    }
+
+    .subtitle {
+      color: #999;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th {
+      background: #D97A2B;
+      color: white;
+      padding: 10px 8px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    td {
+      padding: 8px;
+      font-size: 12px;
+      text-align: center;
+      border-bottom: 1px solid #f0e0d0;
+    }
+
+    td:nth-child(2) {
+      text-align: left;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .total-row td {
+      background: #FFF0E0;
+      font-weight: bold;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #aaa;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #aaa;
+      font-size: 14px;
+    }
   </style>
 </head>
+
 <body>
   <h1>🍽 ประวัติการกิน</h1>
   <p class="subtitle">ข้อมูลทั้งหมดที่บันทึกผ่าน PaPaiKin</p>
-  <div id="content"><p class="loading">กำลังโหลด...</p></div>
+  <div id="content">
+    <p class="loading">กำลังโหลด...</p>
+  </div>
 
   <script>
     const BACKEND_URL = 'https://d6ord7.instatunnel.my';
@@ -91,4 +156,5 @@
     });
   </script>
 </body>
+
 </html>

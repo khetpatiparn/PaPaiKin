@@ -7,7 +7,6 @@ import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.s
 import { GeminiService } from 'src/gemini/gemini.service';
 import { FoodDiaryService } from 'src/food-diary/food-diary.service';
 
-
 interface UserSession {
   currentStep:
     | 'IDLE'
@@ -46,7 +45,6 @@ export class LineBotService {
     private readonly shopMenuItemService: ShopMenuItemService,
     private readonly geminiService: GeminiService,
     private readonly foodDiaryService: FoodDiaryService,
-
   ) {
     const channelAccessToken = this.configService.get<string>(
       'LINE_CHANNEL_ACCESS_TOKEN',
@@ -1676,6 +1674,43 @@ export class LineBotService {
                   type: 'separator',
                   margin: 'lg',
                 },
+                {
+                  type: 'box',
+                  layout: 'horizontal',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: `#`,
+                      color: '#999999',
+                      flex: 1,
+                      size: 'sm',
+                    },
+                    {
+                      type: 'text',
+                      text: 'เมนู',
+                      color: '#999999',
+                      flex: 5,
+                      size: 'sm',
+                      wrap: true,
+                    },
+                    {
+                      type: 'text',
+                      text: `Protein`,
+                      color: '#999999',
+                      flex: 2,
+                      size: 'sm',
+                      align: 'end',
+                    },
+                    {
+                      type: 'text',
+                      text: `kcal`,
+                      flex: 2,
+                      size: 'sm',
+                      align: 'end',
+                      color: '#999999',
+                    },
+                  ],
+                },
                 ...mealRows,
                 {
                   type: 'separator',
@@ -1717,21 +1752,16 @@ export class LineBotService {
                   type: 'separator',
                 },
                 {
-                  type: 'text',
-                  text: 'ดูประวัติการกินทั้งหมด',
-                  size: 'sm',
-                  color: '#A0522D',
-                  margin: 'lg',
-                },
-                {
-                  type: 'text',
-                  text: connectUrl,
+                  type: 'button',
+                  style: 'primary',
+                  height: 'sm',
                   action: {
                     type: 'uri',
-                    label: 'action',
+                    label: 'ดูประวัติการกิน',
                     uri: connectUrl,
                   },
-                  color: '#0000FF',
+                  color: '#A0522D',
+                  margin: 'lg',
                 },
               ],
             },
