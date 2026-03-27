@@ -26,10 +26,10 @@
   <div id="content"><p class="loading">กำลังโหลด...</p></div>
 
   <script>
-    const BACKEND_URL = 'REPLACE_WITH_YOUR_TUNNEL_URL';
+    const BACKEND_URL = 'https://d6ord7.instatunnel.my';
 
     async function main() {
-      await liff.init({ liffId: 'REPLACE_WITH_LIFF_ID' });
+      await liff.init({ liffId: '2009619573-KoQIjGuU' });
       if (!liff.isLoggedIn()) { liff.login(); return; }
 
       const profile = await liff.getProfile();
