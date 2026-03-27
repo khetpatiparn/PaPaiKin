@@ -1,96 +1,155 @@
-# PaPaiKin
+# PaPaiKin (ปะไปกิน)
 
-## Logs & Todos
-
-### 23/2/2569
-
-- create branch (connect-db)
-
-### 24/2/2569
-
-- config docker compose
-- can connect mongo with mongoDB compass
-- can create schema & connect mongo db
-
-### 25/2/2569
-
-- make prototype control-menu page
-- edit schema => add field "category : string" in menus and shopMenuItems collection for mapping with UI control-menu(front) correctly
-- [x] build UI control menu page
-- [x] fix schema in backend for according Schema Diagram changed
-- [x] in coltrol menu page can send API data => category:string , ingredients: string[], cooking: string[] correctly
-
-### 28/2/2569
-
-- completed control-menu feature
-- changes DFD LV0 diagram 1.0 process call D2 Store instead D1 Store
-- [x] change calling collection from D1 store(menu collections) to D2 store(shopMenuItem colleciton) instead.
-
-### 1/3/2569
-
-- fix file stucture in frontend (move /components out of /app to src/components)
-- [x] fix file stucture in frontend (move /components out of /app to src/components)
-
-### 2/3/2569
-
-- [x] สร้างโครง navation and layout ของ Papaikin ผ่าน useRouter (FE)
-- adjust dfd lv0 เดิม(P1.0 ไปขอ request แล้วส่งมาที่ P1.0) => ใหม่(P1.0 รับแค่คำตอบแล้วส่งข้อมูลคำตอบใน query param ไปยัง P2.0)
-
-### 3/3/2569
-
-- [x] push data from control-menu into guided menu page (FE)
-- [x] can pull user current location
-
-### 4/3/2569
-
-- [x] permission location from user
-- [x] send data from guided menu page to backend
-- [x] frontend can pull data from backend
-
-### 9/3/2569
-- [x] improve guided menu feature
-
-### 10/3/2569
-- ปรับโปรเจกต์ใหม่ทั้งหมด ย้าย Frontend มาที่ Line แทน
-- ค้าง Expo ที่ restaurant-listing branch
-- สร้าง branch สำหรับทำ Line BOT ชื่อ line-bot
-
-### 11/3/2569
-- connected line webhook and messaging api
+LINE Bot ช่วยแนะนำเมนูอาหารและร้านอาหารใกล้เคียง พร้อมระบบติดตามแคลอรี่จากรูปภาพอาหาร
 
 ---
 
-## Todo Lists
+## Features
 
-- [] build UI guided menu page (FE)
+| Feature | รายละเอียด |
+|---|---|
+| สุ่มเมนู | ตอบคำถาม 3 ข้อ → แนะนำเมนู (ถูก / ใกล้ / สุ่ม) |
+| สุ่มด่วน | สุ่ม 3 ร้านทันที ไม่มีคำถาม |
+| สุ่มร้าน | เลือกสไตล์ + ระยะทางสูงสุด → แนะนำร้าน |
+| นับแคล | ส่งรูปอาหาร → Gemini วิเคราะห์โภชนาการ → บันทึกอัตโนมัติ |
+| สรุปมื้อ | ดูสรุปแคลอรี่วันนี้ + ปุ่มเปิด LIFF ดูประวัติย้อนหลัง |
 
-## Notes
+---
 
-### To connect mongodb in docker :
+## Tech Stack
 
-- open docker desktop
-- run start container with `docker compose up -d`
-- check all of container not loop restart
+```
+Backend   NestJS + MongoDB (Mongoose) + LINE Bot SDK + Google Gemini API
+Frontend  React + Vite + TypeScript + LIFF SDK + Axios
+Tunnel    instatunnel.my (expose local server to internet)
+Deploy    LIFF → Vercel
+```
 
-### To use mongosh shell // เน้นรัน mongosh ผ่าน docker ก่อนค่อยไปลอง install mongsh บน local ทีหลัง (หรือ on cloud ดีนะ)
+---
 
-- connected mongodb in docker
-- run `docker exec -it papaikin-db bash`
-- authentication with `mongosh -u <username> -p <password>`
-- check authend with `show collections`
+## Project Structure
 
-### To connect mongoDB compass
+```
+PaPaiKin/
+├── backend/
+│   └── src/
+│       ├── line-bot/        # Webhook + state machine หลักของ bot
+│       ├── food-diary/      # บันทึกและดึงประวัติการกิน
+│       ├── menu/            # ข้อมูลเมนูอาหาร
+│       ├── shop/            # ข้อมูลร้านอาหาร
+│       ├── shop-menu-item/  # เชื่อมร้าน + เมนู + พิกัด
+│       └── gemini/          # วิเคราะห์รูปอาหารด้วย AI
+└── liff-react/
+    └── src/
+        └── App.tsx          # หน้าแสดงประวัติการกินทั้งหมด
+```
 
-- use URI : `mongodb://myDatabaseUser:D1fficultP%40ssw0rd@mongodb0.example.com:27017/?authSource=admin`
+---
 
-### To run front-end with expo :
+## Conversation Flow
 
-- use command `npx expo start`
+```
+Rich Menu
+├── สุ่มเมนู  → Q1 (ประเภท) → Q2 (โปรตีน) → Q3 (วิธีทำ) → ขอ Location → แสดง 3 ตัวเลือก
+├── สุ่มด่วน  → ขอ Location → แสดง 3 ร้านสุ่ม
+├── สุ่มร้าน  → Q1 (สไตล์ร้าน) → Q2 (ระยะทางสูงสุด) → ขอ Location → แสดง 3 ร้าน
+├── นับแคล   → รับรูปภาพ → Gemini วิเคราะห์ → บันทึก FoodDiary → ส่งผลโภชนาการ
+└── สรุปมื้อ  → สรุปแคลอรี่วันนี้ + ปุ่มเปิด LIFF
+```
 
-### To run back-end with nestjs :
+---
 
-- use command `npm run start:dev`
+## API Endpoints
 
+| Method | Path | หน้าที่ |
+|---|---|---|
+| POST | `/line-bot/webhook` | รับ event จาก LINE |
+| GET | `/history/data?userId=` | ดึงประวัติการกินทั้งหมดของ user |
+| POST | `/menu` | เพิ่มเมนู |
+| GET | `/menu` | ดูเมนูทั้งหมด |
+| POST | `/menu/control-menu` | กรองเมนูด้วย Q1/Q2/Q3 |
+| POST | `/shop-menu-item` | เพิ่มเมนูของร้าน |
+| POST | `/shop-menu-item/guided-menu` | แนะนำ 3 ตัวเลือกตาม filter + location |
+| GET | `/shop-menu-item/restaurant-listing/:menuId` | หาร้านที่มีเมนูนั้น |
 
-## To run rich menu
-- use command `npx ts-node -r tsconfig-paths/register scripts/setup-rich-menu.ts`
+---
+
+## Database Collections
+
+| Collection | ข้อมูล |
+|---|---|
+| `menus` | เมนูอาหาร (ชื่อ, หมวดหมู่, วัตถุดิบ, วิธีทำ) |
+| `shops` | ร้านอาหาร (ชื่อ, รูป, พิกัด GeoJSON) |
+| `shopmenuitems` | เมนูประจำร้าน + พิกัด + ราคา (ใช้คำนวณ ใกล้/ถูก/สุ่ม) |
+| `fooddiaries` | บันทึกการกินของ user (lineUserId, เมนู, แคล, โปรตีน, คาร์บ, ไขมัน) |
+
+---
+
+## Getting Started
+
+### 1. ติดตั้ง Backend
+
+```bash
+cd backend
+npm install
+```
+
+สร้างไฟล์ `backend/.env`:
+
+```env
+DB_URI=mongodb://user:pass@localhost:27017/papaikin_db?authSource=admin
+
+LINE_CHANNEL_SECRET=...
+LINE_CHANNEL_ACCESS_TOKEN=...
+
+GEMINI_API_KEY=...
+
+SERVER_URL=https://liff.line.me/<LIFF_ID>
+```
+
+รัน:
+
+```bash
+npm run start:dev
+```
+
+### 2. เปิด Tunnel
+
+```bash
+instatunnel --port 3000
+```
+
+อัพเดท Webhook URL ใน LINE Developers Console → `https://<tunnel-url>/line-bot/webhook`
+
+### 3. ติดตั้ง LIFF Frontend
+
+```bash
+cd liff-react
+npm install
+npm run dev
+```
+
+Deploy บน Vercel แล้วตั้ง Endpoint URL ใน LINE LIFF settings
+
+### 4. Setup Rich Menu
+
+```bash
+cd backend
+npx ts-node -r tsconfig-paths/register scripts/setup-rich-menu.ts
+```
+
+### 5. MongoDB (Docker)
+
+```bash
+docker compose up -d
+```
+
+---
+
+## LIFF App
+
+- **LIFF ID**: `2009619573-KoQIjGuU`
+- **URL**: `https://liff.line.me/2009619573-KoQIjGuU`
+- **Deploy**: Vercel (`pa-pai-kin.vercel.app`)
+
+เปิดได้เฉพาะในแอป LINE เท่านั้น
