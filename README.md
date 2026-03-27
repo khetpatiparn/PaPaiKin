@@ -1,28 +1,28 @@
-# PaPaiKin (ปะไปกิน)
+# PaPaiKin
 
-LINE Bot ช่วยแนะนำเมนูอาหารและร้านอาหารใกล้เคียง พร้อมระบบติดตามแคลอรี่จากรูปภาพอาหาร
+A LINE Bot that recommends nearby food menus and restaurants, with a calorie tracking system powered by AI image analysis.
 
 ---
 
 ## Features
 
-| Feature | รายละเอียด |
+| Feature | Description |
 |---|---|
-| สุ่มเมนู | ตอบคำถาม 3 ข้อ → แนะนำเมนู (ถูก / ใกล้ / สุ่ม) |
-| สุ่มด่วน | สุ่ม 3 ร้านทันที ไม่มีคำถาม |
-| สุ่มร้าน | เลือกสไตล์ + ระยะทางสูงสุด → แนะนำร้าน |
-| นับแคล | ส่งรูปอาหาร → Gemini วิเคราะห์โภชนาการ → บันทึกอัตโนมัติ |
-| สรุปมื้อ | ดูสรุปแคลอรี่วันนี้ + ปุ่มเปิด LIFF ดูประวัติย้อนหลัง |
+| Random Menu | Answer 3 questions → get 3 recommendations (cheapest / nearest / random) |
+| Quick Random | Instantly get 3 random restaurants near you |
+| Random Restaurant | Choose style + max distance → get 3 restaurant options |
+| Calorie Counter | Send a food photo → Gemini AI analyzes nutrition → auto-saved |
+| Meal Summary | View today's calorie summary + open LIFF to see full history |
 
 ---
 
 ## Tech Stack
 
 ```
-Backend   NestJS + MongoDB (Mongoose) + LINE Bot SDK + Google Gemini API
-Frontend  React + Vite + TypeScript + LIFF SDK + Axios
-Tunnel    instatunnel.my (expose local server to internet)
-Deploy    LIFF → Vercel
+Backend    NestJS + MongoDB (Mongoose) + LINE Bot SDK + Google Gemini API
+Frontend   React + Vite + TypeScript + LIFF SDK + Axios
+Tunnel     instatunnel.my (expose local server to internet)
+Deploy     LIFF → Vercel
 ```
 
 ---
@@ -33,15 +33,15 @@ Deploy    LIFF → Vercel
 PaPaiKin/
 ├── backend/
 │   └── src/
-│       ├── line-bot/        # Webhook + state machine หลักของ bot
-│       ├── food-diary/      # บันทึกและดึงประวัติการกิน
-│       ├── menu/            # ข้อมูลเมนูอาหาร
-│       ├── shop/            # ข้อมูลร้านอาหาร
-│       ├── shop-menu-item/  # เชื่อมร้าน + เมนู + พิกัด
-│       └── gemini/          # วิเคราะห์รูปอาหารด้วย AI
+│       ├── line-bot/        # Webhook handler + bot state machine
+│       ├── food-diary/      # Save and retrieve food intake history
+│       ├── menu/            # Food menu data
+│       ├── shop/            # Restaurant data
+│       ├── shop-menu-item/  # Links shops + menus + geolocation
+│       └── gemini/          # AI food image analysis
 └── liff-react/
     └── src/
-        └── App.tsx          # หน้าแสดงประวัติการกินทั้งหมด
+        └── App.tsx          # Food history page (LIFF web app)
 ```
 
 ---
@@ -50,51 +50,51 @@ PaPaiKin/
 
 ```
 Rich Menu
-├── สุ่มเมนู  → Q1 (ประเภท) → Q2 (โปรตีน) → Q3 (วิธีทำ) → ขอ Location → แสดง 3 ตัวเลือก
-├── สุ่มด่วน  → ขอ Location → แสดง 3 ร้านสุ่ม
-├── สุ่มร้าน  → Q1 (สไตล์ร้าน) → Q2 (ระยะทางสูงสุด) → ขอ Location → แสดง 3 ร้าน
-├── นับแคล   → รับรูปภาพ → Gemini วิเคราะห์ → บันทึก FoodDiary → ส่งผลโภชนาการ
-└── สรุปมื้อ  → สรุปแคลอรี่วันนี้ + ปุ่มเปิด LIFF
+├── Random Menu       → Q1 (category) → Q2 (protein) → Q3 (cooking style) → Location → 3 options
+├── Quick Random      → Location → 3 random restaurants
+├── Random Restaurant → Q1 (style) → Q2 (max distance) → Location → 3 restaurants
+├── Calorie Counter   → Receive image → Gemini analysis → Save to FoodDiary → Reply with nutrition
+└── Meal Summary      → Today's calorie summary + LIFF button
 ```
 
 ---
 
 ## API Endpoints
 
-| Method | Path | หน้าที่ |
+| Method | Path | Description |
 |---|---|---|
-| POST | `/line-bot/webhook` | รับ event จาก LINE |
-| GET | `/history/data?userId=` | ดึงประวัติการกินทั้งหมดของ user |
-| POST | `/menu` | เพิ่มเมนู |
-| GET | `/menu` | ดูเมนูทั้งหมด |
-| POST | `/menu/control-menu` | กรองเมนูด้วย Q1/Q2/Q3 |
-| POST | `/shop-menu-item` | เพิ่มเมนูของร้าน |
-| POST | `/shop-menu-item/guided-menu` | แนะนำ 3 ตัวเลือกตาม filter + location |
-| GET | `/shop-menu-item/restaurant-listing/:menuId` | หาร้านที่มีเมนูนั้น |
+| POST | `/line-bot/webhook` | Receive events from LINE |
+| GET | `/history/data?userId=` | Get all food entries for a user |
+| POST | `/menu` | Create a menu |
+| GET | `/menu` | List all menus |
+| POST | `/menu/control-menu` | Filter menus by Q1/Q2/Q3 answers |
+| POST | `/shop-menu-item` | Create a shop menu item |
+| POST | `/shop-menu-item/guided-menu` | Get 3 recommendations by filter + location |
+| GET | `/shop-menu-item/restaurant-listing/:menuId` | Find all restaurants serving a menu |
 
 ---
 
 ## Database Collections
 
-| Collection | ข้อมูล |
+| Collection | Data |
 |---|---|
-| `menus` | เมนูอาหาร (ชื่อ, หมวดหมู่, วัตถุดิบ, วิธีทำ) |
-| `shops` | ร้านอาหาร (ชื่อ, รูป, พิกัด GeoJSON) |
-| `shopmenuitems` | เมนูประจำร้าน + พิกัด + ราคา (ใช้คำนวณ ใกล้/ถูก/สุ่ม) |
-| `fooddiaries` | บันทึกการกินของ user (lineUserId, เมนู, แคล, โปรตีน, คาร์บ, ไขมัน) |
+| `menus` | Food menus (name, category, ingredients, cooking method) |
+| `shops` | Restaurants (name, image, GeoJSON location) |
+| `shopmenuitems` | Menu items per shop with location + price (used for nearest/cheapest/random) |
+| `fooddiaries` | User food intake log (lineUserId, menu name, calories, protein, carb, fat) |
 
 ---
 
 ## Getting Started
 
-### 1. ติดตั้ง Backend
+### 1. Backend
 
 ```bash
 cd backend
 npm install
 ```
 
-สร้างไฟล์ `backend/.env`:
+Create `backend/.env`:
 
 ```env
 DB_URI=mongodb://user:pass@localhost:27017/papaikin_db?authSource=admin
@@ -107,21 +107,21 @@ GEMINI_API_KEY=...
 SERVER_URL=https://liff.line.me/<LIFF_ID>
 ```
 
-รัน:
+Run:
 
 ```bash
 npm run start:dev
 ```
 
-### 2. เปิด Tunnel
+### 2. Tunnel
 
 ```bash
 instatunnel --port 3000
 ```
 
-อัพเดท Webhook URL ใน LINE Developers Console → `https://<tunnel-url>/line-bot/webhook`
+Update the Webhook URL in LINE Developers Console to `https://<tunnel-url>/line-bot/webhook`
 
-### 3. ติดตั้ง LIFF Frontend
+### 3. LIFF Frontend
 
 ```bash
 cd liff-react
@@ -129,9 +129,9 @@ npm install
 npm run dev
 ```
 
-Deploy บน Vercel แล้วตั้ง Endpoint URL ใน LINE LIFF settings
+Deploy to Vercel and set the Endpoint URL in LINE LIFF settings.
 
-### 4. Setup Rich Menu
+### 4. Rich Menu Setup
 
 ```bash
 cd backend
@@ -152,4 +152,4 @@ docker compose up -d
 - **URL**: `https://liff.line.me/2009619573-KoQIjGuU`
 - **Deploy**: Vercel (`pa-pai-kin.vercel.app`)
 
-เปิดได้เฉพาะในแอป LINE เท่านั้น
+Can only be opened inside the LINE app.
