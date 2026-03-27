@@ -14,15 +14,26 @@ export class FoodDiaryService {
     lineUserId: string,
     menuName: string,
     calories: number,
-    nutrients: string,
+    protein: number,
+    carb: number,
+    fat: number,
   ): Promise<FoodDiaryDocument> {
     const entry = new this.foodDiaryModel({
       lineUserId,
       menuName,
       calories,
-      nutrients,
+      protein,
+      carb,
+      fat,
     });
     return entry.save();
+  }
+
+  async getAllEntries(lineUserId: string): Promise<FoodDiaryDocument[]> {
+    return this.foodDiaryModel
+      .find({ lineUserId })
+      .sort({ createdAt: 1 })
+      .exec();
   }
 
   async getTodaySummary(lineUserId: string): Promise<FoodDiaryDocument[]> {

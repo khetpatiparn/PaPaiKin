@@ -53,7 +53,9 @@ export class GeminiService {
     displayText: string;
     menuName: string;
     calories: number;
-    nutrients: string;
+    protein: number;
+    carb: number;
+    fat: number;
   }> {
     const prompt = `วิเคราะห์รูปภาพอาหารนี้และบอกข้อมูลโภชนาการเป็นภาษาไทย ตอบเป็น JSON เท่านั้น
 
@@ -86,7 +88,9 @@ export class GeminiService {
           displayText,
           menuName: json.menuName ?? '',
           calories: json.calories ?? 0,
-          nutrients,
+          protein: json.protein ?? 0,
+          carb: json.carbs ?? 0,
+          fat: json.fat ?? 0,
         };
       } catch (error: any) {
         if (error?.status === 429) {
@@ -100,7 +104,9 @@ export class GeminiService {
       displayText: 'ขออภัย ระบบวิเคราะห์อาหารไม่พร้อมใช้งาน',
       menuName: '',
       calories: 0,
-      nutrients: '',
+      protein: 0,
+      carb: 0,
+      fat: 0,
     };
   }
 }

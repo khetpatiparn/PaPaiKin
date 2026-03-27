@@ -7,6 +7,7 @@ import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.s
 import { GeminiService } from 'src/gemini/gemini.service';
 import { FoodDiaryService } from 'src/food-diary/food-diary.service';
 
+
 interface UserSession {
   currentStep:
     | 'IDLE'
@@ -45,6 +46,7 @@ export class LineBotService {
     private readonly shopMenuItemService: ShopMenuItemService,
     private readonly geminiService: GeminiService,
     private readonly foodDiaryService: FoodDiaryService,
+
   ) {
     const channelAccessToken = this.configService.get<string>(
       'LINE_CHANNEL_ACCESS_TOKEN',
@@ -174,7 +176,9 @@ export class LineBotService {
           displayText: string;
           menuName: string;
           calories: number;
-          nutrients: string;
+          protein: number;
+          carb: number;
+          fat: number;
         } = await this.geminiService.analyzeFood(imageBase64);
 
         if (result.menuName && result.calories > 0) {
@@ -182,7 +186,9 @@ export class LineBotService {
             userId,
             result.menuName,
             result.calories,
-            result.nutrients,
+            result.protein,
+            result.carb,
+            result.fat,
           );
         }
 
@@ -1593,7 +1599,10 @@ export class LineBotService {
       return;
     }
 
+    const connectUrl = `${process.env.SERVER_URL}/history?userId=${userId}`;
+
     const totalCalories = entries.reduce((sum, e) => sum + e.calories, 0);
+    const totalProtein = entries.reduce((sum, e) => sum + e.protein, 0);
 
     const mealRows: any[] = entries.map((entry, i) => ({
       type: 'box',
@@ -1612,6 +1621,15 @@ export class LineBotService {
           flex: 5,
           size: 'sm',
           wrap: true,
+        },
+        {
+          type: 'text',
+          text: `${entry.protein}`,
+          flex: 2,
+          size: 'sm',
+          color: '#D97A2B',
+          weight: 'bold',
+          align: 'end',
         },
         {
           type: 'text',
@@ -1636,15 +1654,14 @@ export class LineBotService {
           type: 'flex',
           altText: `สรุปมื้อวันนี้: ${totalCalories} kcal`,
           contents: {
-            type: 'bubble',
+            type: 'bubble' as const,
             body: {
               type: 'box',
               layout: 'vertical',
-              backgroundColor: '#FFF8F0',
               contents: [
                 {
                   type: 'text',
-                  text: `สรุปมื้อวันนี้`,
+                  text: 'สรุปมื้อวันนี้',
                   color: '#C44A3A',
                   weight: 'bold',
                   size: 'xl',
@@ -1655,38 +1672,15 @@ export class LineBotService {
                   color: '#999999',
                   size: 'sm',
                 },
-                { type: 'separator', margin: 'lg' },
                 {
-                  type: 'box',
-                  layout: 'horizontal',
-                  contents: [
-                    {
-                      type: 'text',
-                      text: '#',
-                      flex: 1,
-                      size: 'xs',
-                      color: '#999999',
-                    },
-                    {
-                      type: 'text',
-                      text: 'เมนู',
-                      flex: 5,
-                      size: 'xs',
-                      color: '#999999',
-                    },
-                    {
-                      type: 'text',
-                      text: 'kcal',
-                      flex: 2,
-                      size: 'xs',
-                      color: '#999999',
-                      align: 'end',
-                    },
-                  ],
+                  type: 'separator',
                   margin: 'lg',
                 },
                 ...mealRows,
-                { type: 'separator', margin: 'lg' },
+                {
+                  type: 'separator',
+                  margin: 'lg',
+                },
                 {
                   type: 'box',
                   layout: 'horizontal',
@@ -1694,23 +1688,60 @@ export class LineBotService {
                     {
                       type: 'text',
                       text: 'รวมวันนี้',
-                      weight: 'bold',
                       size: 'md',
+                      weight: 'bold',
                       flex: 6,
                     },
                     {
                       type: 'text',
-                      text: `${totalCalories} kcal`,
-                      weight: 'bold',
+                      text: `${totalProtein} g`,
+                      flex: 2,
                       size: 'md',
-                      flex: 3,
-                      align: 'end',
                       color: '#D97A2B',
+                      weight: 'bold',
+                      align: 'end',
+                    },
+                    {
+                      type: 'text',
+                      text: `${totalCalories} kcal`,
+                      size: 'md',
+                      color: '#D97A2B',
+                      weight: 'bold',
+                      flex: 4,
+                      align: 'end',
                     },
                   ],
                   margin: 'lg',
                 },
+                {
+                  type: 'separator',
+                },
+                {
+                  type: 'text',
+                  text: 'ดูประวัติการกินทั้งหมด',
+                  size: 'sm',
+                  color: '#A0522D',
+                  margin: 'lg',
+                },
+                {
+                  type: 'text',
+                  text: connectUrl,
+                  action: {
+                    type: 'uri',
+                    label: 'action',
+                    uri: connectUrl,
+                  },
+                  color: '#0000FF',
+                },
               ],
+            },
+            styles: {
+              body: {
+                backgroundColor: '#FFF8F0',
+              },
+              footer: {
+                separator: true,
+              },
             },
           },
         },

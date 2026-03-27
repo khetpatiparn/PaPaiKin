@@ -14,8 +14,16 @@ export class FoodDiary {
   @Prop({ required: true })
   declare calories: number;
 
-  @Prop({ default: '' })
-  declare nutrients: string;
+  @Prop({ required: true })
+  declare protein: number;
+
+  @Prop({ required: true })
+  declare carb: number;
+
+  @Prop({ required: true })
+  declare fat: number;
+
+  declare createdAt: Date;
 }
 
 export const FoodDiarySchema = SchemaFactory.createForClass(FoodDiary);
