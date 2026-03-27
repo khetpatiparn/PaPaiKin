@@ -79,7 +79,7 @@ function App() {
             {entries.map((e, i) => (
               <tr key={i}>
                 <td>{i + 1}</td>
-                <td className="left">{e.menuName}</td>
+                <td>{e.menuName}</td>
                 <td>{new Date(e.createdAt).toLocaleDateString()}</td>
                 <td>{e.calories}</td>
                 <td>{e.protein}</td>

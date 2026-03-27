@@ -41,7 +41,7 @@ td {
   border-bottom: 1px solid #f0e0d0;
 }
 
-td.left {
+td:nth-child(2) {
   text-align: left;
 }
 
