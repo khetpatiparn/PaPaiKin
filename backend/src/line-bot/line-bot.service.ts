@@ -1599,7 +1599,7 @@ export class LineBotService {
       return;
     }
 
-    const connectUrl = `${process.env.SERVER_URL}/history?userId=${userId}`;
+    const connectUrl = process.env.SERVER_URL!;
 
     const totalCalories = entries.reduce((sum, e) => sum + e.calories, 0);
     const totalProtein = entries.reduce((sum, e) => sum + e.protein, 0);
