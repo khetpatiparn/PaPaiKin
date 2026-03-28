@@ -6,6 +6,7 @@ import { ShopMenuItemService } from 'src/shop-menu-item/shop-menu-item.service';
 import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.schema';
 import { GeminiService } from 'src/gemini/gemini.service';
 import { FoodDiaryService } from 'src/food-diary/food-diary.service';
+import { UserProfileService } from 'src/user-profile/user-profile.service';
 
 interface UserSession {
   currentStep:
@@ -17,7 +18,15 @@ interface UserSession {
     | 'QUICK_LOCATION'
     | 'SHOP_Q1'
     | 'SHOP_Q2'
-    | 'SHOP_LOCATION';
+    | 'SHOP_LOCATION'
+    | 'ONBOARD_GOAL'
+    | 'ONBOARD_GENDER'
+    | 'ONBOARD_AGE'
+    | 'ONBOARD_WEIGHT'
+    | 'ONBOARD_HEIGHT'
+    | 'ONBOARD_ACTIVITY'
+    | 'ONBOARD_BODY_FAT';
+  profileChecked: boolean;
   answers: {
     q1?: string;
     q2?: string;
@@ -30,6 +39,15 @@ interface UserSession {
   lastAnswers?: { q1?: string; q2?: string; q3?: string };
   lastShopAnswers?: { style?: string; maxDistance?: number };
   lastLocation?: { latitude: number; longitude: number };
+  onboardData?: {
+    goal?: string;
+    gender?: string;
+    age?: number;
+    weight?: number;
+    height?: number;
+    activityLevel?: string;
+    bodyFatRange?: string;
+  };
 }
 
 @Injectable()
@@ -45,6 +63,7 @@ export class LineBotService {
     private readonly shopMenuItemService: ShopMenuItemService,
     private readonly geminiService: GeminiService,
     private readonly foodDiaryService: FoodDiaryService,
+    private readonly userProfileService: UserProfileService,
   ) {
     const channelAccessToken = this.configService.get<string>(
       'LINE_CHANNEL_ACCESS_TOKEN',
@@ -83,10 +102,27 @@ export class LineBotService {
     if (!session) {
       session = {
         currentStep: 'IDLE',
+        profileChecked: false,
         answers: {},
         shopAnswers: {},
       };
       this.sessions.set(userId, session);
+    }
+
+    // ตรวจ profile ครั้งแรก (เฉพาะเมื่อยังไม่เคยเช็ค และไม่ได้อยู่ใน onboarding)
+    if (!session.profileChecked && !session.currentStep.startsWith('ONBOARD')) {
+      const profile = await this.userProfileService.findByLineUserId(userId);
+      if (!profile) {
+        session.currentStep = 'ONBOARD_GOAL';
+        session.onboardData = {};
+        const replyToken =
+          event.type === 'message' || event.type === 'postback'
+            ? ((event as { replyToken?: string }).replyToken ?? null)
+            : null;
+        if (replyToken) return this.startOnboarding(replyToken, userId);
+        return;
+      }
+      session.profileChecked = true;
     }
 
     if (event.type === 'message') {
@@ -94,6 +130,16 @@ export class LineBotService {
 
       if (messageEvent.message.type === 'text') {
         const text = messageEvent.message.text;
+
+        // จัดการ onboarding text input (อายุ น้ำหนัก ส่วนสูง)
+        if (session.currentStep.startsWith('ONBOARD')) {
+          await this.handleOnboardingText(
+            messageEvent.replyToken!,
+            userId,
+            text,
+          );
+          return;
+        }
 
         if (text === 'สุ่มเมนู') {
           session.currentStep = 'Q1';
@@ -170,29 +216,153 @@ export class LineBotService {
         const buf = await buffer(stream);
         const imageBase64 = buf.toString('base64');
 
-        const result: {
-          displayText: string;
-          menuName: string;
-          calories: number;
-          protein: number;
-          carb: number;
-          fat: number;
-        } = await this.geminiService.analyzeFood(imageBase64);
+        const result = await this.geminiService.analyzeFood(imageBase64);
 
+        // save พร้อม mealType ที่คำนวณจากเวลาปัจจุบัน
+        let savedEntryId = '';
         if (result.menuName && result.calories > 0) {
-          await this.foodDiaryService.save(
+          const mealType = this.foodDiaryService.getMealTypeFromTime();
+          const saved = await this.foodDiaryService.save(
             userId,
             result.menuName,
             result.calories,
             result.protein,
             result.carb,
             result.fat,
+            result.cuisineType,
+            result.confidence,
+            mealType,
           );
+          savedEntryId = String(saved._id);
         }
+
+        // ดึง running total วันนี้
+        const todayEntries =
+          await this.foodDiaryService.getTodaySummary(userId);
+        const totalCalories = todayEntries.reduce(
+          (sum, e) => sum + e.calories,
+          0,
+        );
+        const totalProtein = todayEntries.reduce(
+          (sum, e) => sum + e.protein,
+          0,
+        );
 
         await this.client.replyMessage({
           replyToken: messageEvent.replyToken!,
-          messages: [{ type: 'text', text: result.displayText }],
+          messages: [
+            {
+              type: 'flex',
+              altText: `บันทึกแล้ว! ${result.menuName}`,
+              contents: {
+                type: 'bubble',
+                size: 'kilo',
+                body: {
+                  type: 'box',
+                  layout: 'vertical',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: '✅ บันทึกแล้ว!',
+                      weight: 'bold',
+                      size: 'md',
+                      color: '#1DB446',
+                    },
+                    {
+                      type: 'text',
+                      text: result.menuName,
+                      size: 'lg',
+                      weight: 'bold',
+                      margin: 'sm',
+                      wrap: true,
+                    },
+                    {
+                      type: 'separator',
+                      margin: 'lg',
+                    },
+                    {
+                      type: 'box',
+                      layout: 'vertical',
+                      margin: 'lg',
+                      contents: [
+                        {
+                          type: 'text',
+                          text: `🔥 ${result.calories} kcal  🥩 โปรตีน ${result.protein}g`,
+                          size: 'sm',
+                          color: '#555555',
+                        },
+                        {
+                          type: 'text',
+                          text: `🍚 คาร์บ ${result.carb}g  🥑 ไขมัน ${result.fat}g`,
+                          size: 'sm',
+                          color: '#555555',
+                          margin: 'sm',
+                        },
+                      ],
+                    },
+                    {
+                      type: 'separator',
+                      margin: 'lg',
+                    },
+                    {
+                      type: 'box',
+                      layout: 'vertical',
+                      margin: 'lg',
+                      contents: [
+                        {
+                          type: 'text',
+                          text: `📊 วันนี้รวม: ${totalCalories} kcal  โปรตีน ${totalProtein}g`,
+                          size: 'sm',
+                          weight: 'bold',
+                          color: '#D97A2B',
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+              quickReply: {
+                items: [
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '🌅 เช้า',
+                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=breakfast`,
+                      displayText: '🌅 เช้า',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '☀️ เที่ยง',
+                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=lunch`,
+                      displayText: '☀️ เที่ยง',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '🌙 เย็น',
+                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=dinner`,
+                      displayText: '🌙 เย็น',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '🍪 ของว่าง',
+                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=snack`,
+                      displayText: '🍪 ของว่าง',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
         });
       }
     } else if (event.type === 'postback') {
@@ -202,6 +372,14 @@ export class LineBotService {
         userId,
         postbackEvent.postback.data,
       );
+    } else if (event.type === 'follow') {
+      const profile = await this.userProfileService.findByLineUserId(userId);
+      if (!profile) {
+        session.currentStep = 'ONBOARD_GOAL';
+        session.onboardData = {};
+        return this.startOnboarding(event.replyToken, userId);
+      }
+      session.profileChecked = true;
     }
   }
 
@@ -644,6 +822,21 @@ export class LineBotService {
     const params = new URLSearchParams(data);
 
     const action = params.get('action');
+
+    // onboarding
+    if (action === 'onboard') {
+      return this.handleOnboardingPostback(replyToken, userId, params);
+    }
+
+    // เปลี่ยนมื้ออาหาร
+    if (action === 'change_meal_type') {
+      const entryId = params.get('entryId');
+      const mealType = params.get('mealType');
+      if (entryId && mealType) {
+        await this.foodDiaryService.updateMealType(entryId, mealType);
+      }
+      return;
+    }
 
     // reshuffle actions
     if (action === 'quick_reshuffle') {
@@ -1777,5 +1970,336 @@ export class LineBotService {
         },
       ],
     });
+  }
+
+  // ─── Onboarding ──────────────────────────────────────────────
+
+  private async startOnboarding(replyToken: string, userId: string) {
+    const session = this.sessions.get(userId)!;
+    session.currentStep = 'ONBOARD_GOAL';
+    await this.client.replyMessage({
+      replyToken,
+      messages: [
+        {
+          type: 'text',
+          text: '👋 สวัสดี! ขอถามข้อมูลสั้นๆ 7 ขั้นตอนเพื่อคำนวณเป้าหมายแคลอรี่ส่วนตัวของคุณนะ\n\n📌 ขั้นที่ 1/7\nเป้าหมายของคุณคืออะไร?',
+          quickReply: {
+            items: [
+              {
+                type: 'action',
+                action: {
+                  type: 'postback',
+                  label: '⬇️ ลดน้ำหนัก',
+                  data: 'action=onboard&step=goal&value=lose',
+                  displayText: 'ลดน้ำหนัก',
+                },
+              },
+              {
+                type: 'action',
+                action: {
+                  type: 'postback',
+                  label: '⚖️ คงน้ำหนัก',
+                  data: 'action=onboard&step=goal&value=maintain',
+                  displayText: 'คงน้ำหนัก',
+                },
+              },
+              {
+                type: 'action',
+                action: {
+                  type: 'postback',
+                  label: '⬆️ เพิ่มน้ำหนัก',
+                  data: 'action=onboard&step=goal&value=gain',
+                  displayText: 'เพิ่มน้ำหนัก',
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
+  }
+
+  private async handleOnboardingPostback(
+    replyToken: string,
+    userId: string,
+    params: URLSearchParams,
+  ) {
+    const session = this.sessions.get(userId)!;
+    const step = params.get('step');
+    const value = params.get('value');
+    if (!step || !value || !session.onboardData) return;
+
+    switch (step) {
+      case 'goal':
+        session.onboardData.goal = value;
+        session.currentStep = 'ONBOARD_GENDER';
+        await this.client.replyMessage({
+          replyToken,
+          messages: [
+            {
+              type: 'text',
+              text: '📌 ขั้นที่ 2/7\nเพศของคุณ?',
+              quickReply: {
+                items: [
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '👨 ชาย',
+                      data: 'action=onboard&step=gender&value=male',
+                      displayText: 'ชาย',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '👩 หญิง',
+                      data: 'action=onboard&step=gender&value=female',
+                      displayText: 'หญิง',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        });
+        break;
+
+      case 'gender':
+        session.onboardData.gender = value;
+        session.currentStep = 'ONBOARD_AGE';
+        await this.replyText(
+          replyToken,
+          '📌 ขั้นที่ 3/7\nอายุกี่ปี? (พิมพ์ตัวเลข เช่น 22)',
+        );
+        break;
+
+      case 'activity':
+        session.onboardData.activityLevel = value;
+        session.currentStep = 'ONBOARD_BODY_FAT';
+        await this.client.replyMessage({
+          replyToken,
+          messages: [
+            {
+              type: 'text',
+              text: '📌 ขั้นที่ 7/7\n% ไขมันในร่างกาย (ถ้าไม่รู้กด "ข้าม")',
+              quickReply: {
+                items: [
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: 'ข้าม',
+                      data: 'action=onboard&step=bodyFat&value=skip',
+                      displayText: 'ข้าม',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '10-15%',
+                      data: 'action=onboard&step=bodyFat&value=10-15%',
+                      displayText: '10-15%',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '16-20%',
+                      data: 'action=onboard&step=bodyFat&value=16-20%',
+                      displayText: '16-20%',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '21-25%',
+                      data: 'action=onboard&step=bodyFat&value=21-25%',
+                      displayText: '21-25%',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '26-30%',
+                      data: 'action=onboard&step=bodyFat&value=26-30%',
+                      displayText: '26-30%',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '31%+',
+                      data: 'action=onboard&step=bodyFat&value=31%+',
+                      displayText: '31%+',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        });
+        break;
+
+      case 'bodyFat':
+        session.onboardData.bodyFatRange = value === 'skip' ? '' : value;
+        return this.completeOnboarding(replyToken, userId);
+    }
+  }
+
+  private async handleOnboardingText(
+    replyToken: string,
+    userId: string,
+    text: string,
+  ) {
+    const session = this.sessions.get(userId)!;
+
+    switch (session.currentStep) {
+      case 'ONBOARD_AGE': {
+        const age = parseInt(text, 10);
+        if (isNaN(age) || age < 10 || age > 120) {
+          return this.replyText(
+            replyToken,
+            '⚠️ กรุณาพิมพ์อายุเป็นตัวเลข เช่น 22',
+          );
+        }
+        session.onboardData!.age = age;
+        session.currentStep = 'ONBOARD_WEIGHT';
+        return this.replyText(
+          replyToken,
+          '📌 ขั้นที่ 4/7\nน้ำหนักกี่ กก.? (พิมพ์ตัวเลข เช่น 65)',
+        );
+      }
+      case 'ONBOARD_WEIGHT': {
+        const weight = parseFloat(text);
+        if (isNaN(weight) || weight < 20 || weight > 300) {
+          return this.replyText(
+            replyToken,
+            '⚠️ กรุณาพิมพ์น้ำหนักเป็นตัวเลข เช่น 65',
+          );
+        }
+        session.onboardData!.weight = weight;
+        session.currentStep = 'ONBOARD_HEIGHT';
+        return this.replyText(
+          replyToken,
+          '📌 ขั้นที่ 5/7\nส่วนสูงกี่ ซม.? (พิมพ์ตัวเลข เช่น 170)',
+        );
+      }
+      case 'ONBOARD_HEIGHT': {
+        const height = parseFloat(text);
+        if (isNaN(height) || height < 50 || height > 250) {
+          return this.replyText(
+            replyToken,
+            '⚠️ กรุณาพิมพ์ส่วนสูงเป็นตัวเลข เช่น 170',
+          );
+        }
+        session.onboardData!.height = height;
+        session.currentStep = 'ONBOARD_ACTIVITY';
+        return this.client.replyMessage({
+          replyToken,
+          messages: [
+            {
+              type: 'text',
+              text: '📌 ขั้นที่ 6/7\nระดับกิจกรรมในชีวิตประจำวัน?',
+              quickReply: {
+                items: [
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '🪑 นั่งโต๊ะ',
+                      data: 'action=onboard&step=activity&value=sedentary',
+                      displayText: 'นั่งโต๊ะเป็นส่วนใหญ่',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '🚶 เดินเบาๆ',
+                      data: 'action=onboard&step=activity&value=light',
+                      displayText: 'เดินเบาๆ บางวัน',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '🏃 ออกกำลังสม่ำเสมอ',
+                      data: 'action=onboard&step=activity&value=moderate',
+                      displayText: 'ออกกำลังสม่ำเสมอ',
+                    },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'postback',
+                      label: '💪 ออกกำลังหนัก',
+                      data: 'action=onboard&step=activity&value=very_active',
+                      displayText: 'ออกกำลังหนักมาก',
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        });
+      }
+      default:
+        // ขั้นอื่นที่ใช้ quick reply ไม่ใช่ text
+        return this.replyText(replyToken, '⚠️ กรุณากดปุ่มเพื่อเลือก');
+    }
+  }
+
+  private async completeOnboarding(replyToken: string, userId: string) {
+    const session = this.sessions.get(userId)!;
+    const data = session.onboardData!;
+
+    if (
+      !data.goal ||
+      !data.gender ||
+      data.age === undefined ||
+      data.weight === undefined ||
+      data.height === undefined ||
+      !data.activityLevel
+    ) {
+      return this.replyText(replyToken, 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+    }
+
+    const profile = await this.userProfileService.createOrUpdate({
+      lineUserId: userId,
+      goal: data.goal as 'lose' | 'maintain' | 'gain',
+      gender: data.gender as 'male' | 'female',
+      age: data.age,
+      weight: data.weight,
+      height: data.height,
+      activityLevel: data.activityLevel as
+        | 'sedentary'
+        | 'light'
+        | 'moderate'
+        | 'very_active',
+      bodyFatRange: data.bodyFatRange ?? '',
+    });
+
+    session.profileChecked = true;
+    session.currentStep = 'IDLE';
+    session.onboardData = undefined;
+
+    const goalLabel: Record<string, string> = {
+      lose: 'ลดน้ำหนัก',
+      maintain: 'คงน้ำหนัก',
+      gain: 'เพิ่มน้ำหนัก',
+    };
+
+    await this.replyText(
+      replyToken,
+      `✅ ตั้งค่าเสร็จแล้ว!\n\n🎯 เป้าหมาย: ${goalLabel[data.goal]}\n🔥 แคลอรี่ต่อวัน: ${profile.dailyCalorieGoal} kcal\n🥩 โปรตีน: ${profile.dailyProteinGoal}g\n🍚 คาร์บ: ${profile.dailyCarbGoal}g\n🥑 ไขมัน: ${profile.dailyFatGoal}g\n\nเริ่มได้เลย! ถ่ายรูปอาหารแล้วส่งมาเลย 📸`,
+    );
   }
 }

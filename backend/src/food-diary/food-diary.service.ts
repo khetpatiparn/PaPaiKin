@@ -10,6 +10,18 @@ export class FoodDiaryService {
     private foodDiaryModel: Model<FoodDiary>,
   ) {}
 
+  getMealTypeFromTime(date: Date = new Date()): string {
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const time = hour * 60 + minute;
+
+    if (time >= 360 && time < 630) return 'breakfast'; // 06:00 - 10:30
+    if (time >= 630 && time < 870) return 'lunch'; // 10:30 - 14:30
+    if (time >= 870 && time < 1020) return 'snack'; // 14:30 - 17:00
+    if (time >= 1020 && time < 1260) return 'dinner'; // 17:00 - 21:00
+    return 'snack'; // 21:00 - 06:00
+  }
+
   async save(
     lineUserId: string,
     menuName: string,
@@ -17,6 +29,9 @@ export class FoodDiaryService {
     protein: number,
     carb: number,
     fat: number,
+    cuisineType: string = '',
+    confidence: number = 0,
+    mealType?: string,
   ): Promise<FoodDiaryDocument> {
     const entry = new this.foodDiaryModel({
       lineUserId,
@@ -25,8 +40,20 @@ export class FoodDiaryService {
       protein,
       carb,
       fat,
+      mealType: mealType ?? this.getMealTypeFromTime(),
+      cuisineType,
+      confidence,
     });
     return entry.save();
+  }
+
+  async updateMealType(
+    entryId: string,
+    mealType: string,
+  ): Promise<FoodDiaryDocument | null> {
+    return this.foodDiaryModel
+      .findByIdAndUpdate(entryId, { mealType }, { new: true })
+      .exec();
   }
 
   async getAllEntries(lineUserId: string): Promise<FoodDiaryDocument[]> {

@@ -56,6 +56,8 @@ export class GeminiService {
     protein: number;
     carb: number;
     fat: number;
+    cuisineType: string;
+    confidence: number;
   }> {
     const prompt = `วิเคราะห์รูปภาพอาหารนี้และบอกข้อมูลโภชนาการเป็นภาษาไทย ตอบเป็น JSON เท่านั้น
 
@@ -65,8 +67,14 @@ export class GeminiService {
       "calories": ตัวเลขแคลอรี่รวม,
       "carbs": ตัวเลขคาร์บ (กรัม),
       "protein": ตัวเลขโปรตีน (กรัม),
-      "fat": ตัวเลขไขมัน (กรัม)
-    }`;
+      "fat": ตัวเลขไขมัน (กรัม),
+      "cuisineType": "ประเภทอาหาร เช่น Thai, Japanese, Western, Chinese, Korean, Italian, Mixed, Other",
+      "confidence": ตัวเลข 0.0-1.0 ความมั่นใจในการวิเคราะห์ (1.0 = มั่นใจมาก, 0.0 = ไม่มั่นใจเลย)
+    }
+
+    หมายเหตุ:
+    - ถ้ามีหลายเมนูในรูปเดียว ให้รวมแคลอรี่และสารอาหารทั้งหมดเป็นยอดรวม
+    - ถ้าเมนูมาจากหลายประเภทอาหาร ให้ cuisineType = "Mixed"`;
 
     for (const model of this.models) {
       try {
@@ -80,7 +88,15 @@ export class GeminiService {
           config: { responseMimeType: 'application/json' },
         });
 
-        const json = JSON.parse(response.text ?? '{}');
+        const json = JSON.parse(response.text ?? '{}') as {
+          menuName?: string;
+          calories?: number;
+          carbs?: number;
+          protein?: number;
+          fat?: number;
+          cuisineType?: string;
+          confidence?: number;
+        };
         const nutrients = `🍚 คาร์บ: ${json.carbs ?? 0}g  🥩 โปรตีน: ${json.protein ?? 0}g  🥑 ไขมัน: ${json.fat ?? 0}g`;
         const displayText = `📸 เมนูที่พบ: ${json.menuName}\n🔥 แคลอรี่รวม: ${json.calories ?? 0} kcal\n\n📊 สารอาหาร:\n${nutrients}`;
 
@@ -91,6 +107,8 @@ export class GeminiService {
           protein: json.protein ?? 0,
           carb: json.carbs ?? 0,
           fat: json.fat ?? 0,
+          cuisineType: json.cuisineType ?? 'Other',
+          confidence: json.confidence ?? 0,
         };
       } catch (error: any) {
         if (error?.status === 429) {
@@ -107,6 +125,8 @@ export class GeminiService {
       protein: 0,
       carb: 0,
       fat: 0,
+      cuisineType: 'Other',
+      confidence: 0,
     };
   }
 }

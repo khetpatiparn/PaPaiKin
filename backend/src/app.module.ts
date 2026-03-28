@@ -11,6 +11,8 @@ import { ShopMenuItemModule } from './shop-menu-item/shop-menu-item.module';
 import { Connection } from 'mongoose';
 import { LineBotModule } from './line-bot/line-bot.module';
 import { FoodDiaryModule } from './food-diary/food-diary.module';
+import { UserProfileModule } from './user-profile/user-profile.module';
+import { NutritionModule } from './nutrition/nutrition.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { FoodDiaryModule } from './food-diary/food-diary.module';
     ShopMenuItemModule,
     LineBotModule,
     FoodDiaryModule,
+    UserProfileModule,
+    NutritionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

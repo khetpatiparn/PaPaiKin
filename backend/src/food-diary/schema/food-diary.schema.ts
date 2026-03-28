@@ -23,6 +23,19 @@ export class FoodDiary {
   @Prop({ required: true })
   declare fat: number;
 
+  @Prop({
+    type: String,
+    enum: ['breakfast', 'lunch', 'dinner', 'snack'],
+    required: true,
+  })
+  declare mealType: string;
+
+  @Prop({ type: String, default: '' })
+  declare cuisineType: string;
+
+  @Prop({ type: Number, default: 0, min: 0, max: 1 })
+  declare confidence: number;
+
   declare createdAt: Date;
 }
 
