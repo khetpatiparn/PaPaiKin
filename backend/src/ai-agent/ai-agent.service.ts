@@ -9,6 +9,7 @@ import {
 export interface AgentResponse {
   summary: string;
   needsLocation: boolean;
+  updatedHistory: Content[];
   restaurants: {
     name: string;
     vicinity: string;
@@ -17,7 +18,8 @@ export interface AgentResponse {
     isOpenNow: boolean | null;
     lat: number;
     lng: number;
-    reason: string; // Gemini อธิบายว่าทำไมแนะนำร้านนี้
+    reason: string;
+    photoUrl: string | null;
   }[];
 }
 
@@ -25,7 +27,12 @@ export interface AgentResponse {
 export class AiAgentService {
   private readonly logger = new Logger(AiAgentService.name);
   private readonly ai: GoogleGenAI;
-  private readonly models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+  private readonly models = [
+    'gemini-2.5-flash',
+    'gemini-2.5-flash-lite',
+    'gemini-2.0-flash',
+    'gemini-1.5-flash',
+  ];
 
   private readonly findNearbyRestaurantsTool = {
     functionDeclarations: [
@@ -76,6 +83,7 @@ export class AiAgentService {
     lineUserId: string,
     userMessage: string,
     location?: { lat: number; lng: number },
+    history?: Content[],
   ): Promise<AgentResponse> {
     // 1. เตรียมข้อมูล nutrition ก่อนส่งให้ Gemini
     const [gap, weekly] = await Promise.all([
@@ -97,27 +105,33 @@ export class AiAgentService {
       ? `ตำแหน่ง user: lat=${location.lat}, lng=${location.lng}`
       : 'user ไม่ได้แชร์ตำแหน่ง (ห้ามเรียก findNearbyRestaurants)';
 
-    const systemPrompt = `คุณคือผู้ช่วยด้านโภชนาการส่วนตัว ชื่อ PaPaiKin ตอบเป็นภาษาไทย กระชับ เป็นมิตร
+    const systemPrompt = `คุณคือผู้ช่วยโภชนาการส่วนตัว ตอบเป็นภาษาไทย เป็นกันเอง กระชับ ไม่ต้องพูดชื่อตัวเองในทุกประโยค
 
 ${nutritionContext}
 ${locationContext}
 
-ถ้า user ถามหาร้านอาหารและมีตำแหน่ง ให้เรียก findNearbyRestaurants โดยเลือก keyword ให้ตรงกับ macro ที่ขาดมากที่สุด
+กฎการตอบ:
+- ถ้า user ทักทายหรือพูดเล่นๆ → ทักกลับ 1 ประโยค แล้วแสดงรายการตัวอย่างที่ช่วยได้ในรูปแบบนี้เสมอ:\n"อยากให้เราช่วยเรื่องอะไรบอกมาได้เลย เช่น\n🍱 สรุปมื้อวันนี้ให้หน่อย\n🗺️ ช่วยหาร้านอาหาร\n📊 เราขาดสารอาหารอะไร\n🤔 กินอะไรดี\n🥗 แนะนำมื้อให้หน่อย\n💬 อื่นๆ"
+- ถ้า user ถามเรื่องอาหารหรือโภชนาการ → แสดงผลเป็นลิสต์ดูง่าย ต้องใส่ตัวเลขจริงเสมอ รูปแบบ:\n"วันนี้กินไปแล้ว:\n🔥 แคลอรี่: X/Y kcal (ขาดอีก Z kcal)\n🥩 โปรตีน: X/Y g (ขาดอีก Z g)\n🍚 คาร์บ: X/Y g (ขาดอีก Z g)\n🥑 ไขมัน: X/Y g (ขาดอีก Z g)"\nถ้ามีข้อมูลเมนูที่ user กินในวันนี้ → บอกด้วยสั้นๆ เช่น "มื้อที่บันทึก: ข้าวผัด, ไข่ต้ม" แต่ถ้าไม่มีก็ไม่ต้องบอก
+- ใช้บรรทัดใหม่ (\n\n) แบ่งย่อหน้า ไม่เขียนต่อกันยาว
+- ถ้า user ถามหาร้านและมีตำแหน่ง → เรียก findNearbyRestaurants เลือก keyword ตาม macro ที่ขาดมากที่สุด
 
 ตอบกลับเป็น JSON รูปแบบนี้เท่านั้น:
 {
-  "summary": "อธิบาย nutrition gap วันนี้และเหตุผลที่แนะนำ (ภาษาไทย)",
+  "summary": "ข้อความตอบกลับ (ภาษาไทย ใช้ \\n\\n แบ่งย่อหน้า)",
   "needsLocation": false,
   "restaurants": [
-    { "name": "ชื่อร้านที่ได้จาก tool", "reason": "เหตุผลที่แนะนำ" }
+    { "name": "ชื่อร้านที่ได้จาก tool", "reason": "บอกว่าร้านนี้เด่นเรื่องอะไร + ตอบโจทย์ macro ที่ขาดอย่างไร เช่น 'เมนูอกไก่ย่างโปรตีนสูง ช่วยเติม 45g ที่ขาดได้มากกว่าครึ่ง'" }
   ]
 }
 กฎของ needsLocation:
-- true เฉพาะเมื่อ user ถามหาร้านอาหาร/ขอให้แนะนำที่กิน แต่ไม่มีตำแหน่ง
-- false ทุกกรณีอื่น (ทักทาย ถามโภชนาการ ถามทั่วไป หรือมีตำแหน่งแล้ว)
+- ถ้า locationContext มีพิกัด (lat=...) → needsLocation ต้องเป็น false เสมอ และเรียก findNearbyRestaurants ได้เลย ห้ามถามตำแหน่งซ้ำ
+- true เฉพาะเมื่อ user ถามหาร้านอาหาร/ขอให้แนะนำที่กิน และ locationContext บอกว่าไม่มีตำแหน่ง
+- false ทุกกรณีอื่น (ทักทาย ถามโภชนาการ ถามทั่วไป)
 ถ้าไม่มีร้านให้แนะนำ ให้ restaurants เป็น []`;
 
     const contents: Content[] = [
+      ...(history ?? []).slice(-12),
       {
         role: 'user',
         parts: [{ text: `${systemPrompt}\n\nคำถาม: ${userMessage}` }],
@@ -131,7 +145,6 @@ ${locationContext}
           contents,
           config: {
             tools: [this.findNearbyRestaurantsTool],
-            responseMimeType: 'application/json',
           },
         });
 
@@ -183,17 +196,29 @@ ${locationContext}
             contents,
             config: {
               tools: [this.findNearbyRestaurantsTool],
-              responseMimeType: 'application/json',
             },
           });
         }
 
-        // 3. parse JSON สุดท้าย
-        const raw = JSON.parse(response.text ?? '{}') as {
+        // 3. parse JSON สุดท้าย (strip markdown code block ถ้ามี)
+        const rawText = (response.text ?? '{}')
+          .trim()
+          .replace(/^```json\s*/i, '')
+          .replace(/^```\s*/i, '')
+          .replace(/\s*```$/i, '')
+          .trim();
+
+        let raw: {
           summary?: string;
           needsLocation?: boolean;
           restaurants?: { name?: string; reason?: string }[];
         };
+        try {
+          raw = JSON.parse(rawText);
+        } catch {
+          // Gemini ตอบ plain text ไม่ใช่ JSON → ใช้เป็น summary โดยตรง
+          raw = { summary: rawText, needsLocation: false, restaurants: [] };
+        }
 
         // รวม place details จาก function call ล่าสุดกลับเข้า restaurants
         const lastPlaces: PlaceResult[] = contents
@@ -210,9 +235,15 @@ ${locationContext}
 
         const placeMap = new Map(lastPlaces.map((p) => [p.name, p]));
 
+        // เก็บ turn ปัจจุบันเข้า history (model response ล่าสุด)
+        if (response.candidates?.[0]?.content) {
+          contents.push(response.candidates[0].content as Content);
+        }
+
         return {
           summary: raw.summary ?? '',
           needsLocation: raw.needsLocation ?? false,
+          updatedHistory: contents.slice(-12),
           restaurants: (raw.restaurants ?? []).map((r) => {
             const place = placeMap.get(r.name ?? '');
             return {
@@ -224,6 +255,7 @@ ${locationContext}
               lat: place?.lat ?? 0,
               lng: place?.lng ?? 0,
               reason: r.reason ?? '',
+              photoUrl: place?.photoUrl ?? null,
             };
           }),
         };
@@ -236,6 +268,6 @@ ${locationContext}
       }
     }
 
-    return { summary: 'ขออภัย ระบบไม่พร้อมใช้งานในขณะนี้', needsLocation: false, restaurants: [] };
+    return { summary: 'ขออภัย ระบบไม่พร้อมใช้งานในขณะนี้', needsLocation: false, updatedHistory: [], restaurants: [] };
   }
 }

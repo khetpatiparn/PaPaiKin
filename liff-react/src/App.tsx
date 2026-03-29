@@ -4,7 +4,7 @@ import liff from '@line/liff'
 import './App.css'
 
 const LIFF_ID = '2009619573-KoQIjGuU'
-const BACKEND_URL = 'https://ytkkdl.instatunnel.my'
+const BACKEND_URL = 'https://7gn1g5.instatunnel.my'
 
 interface FoodEntry {
   menuName: string

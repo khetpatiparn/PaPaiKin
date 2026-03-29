@@ -8,6 +8,7 @@ import { GeminiService } from 'src/gemini/gemini.service';
 import { FoodDiaryService } from 'src/food-diary/food-diary.service';
 import { UserProfileService } from 'src/user-profile/user-profile.service';
 import { AiAgentService, AgentResponse } from 'src/ai-agent/ai-agent.service';
+import { type Content } from '@google/genai';
 
 interface UserSession {
   currentStep:
@@ -30,6 +31,7 @@ interface UserSession {
     | 'ONBOARD_BODY_FAT';
   profileChecked: boolean;
   pendingAgentMessage?: string;
+  agentHistory?: Content[];
   answers: {
     q1?: string;
     q2?: string;
@@ -1522,6 +1524,16 @@ export class LineBotService {
     return '฿฿฿฿ (120 บาทขึ้นไป)';
   }
 
+  private getPlacePriceLevelText(level: number): string {
+    const map: Record<number, string> = {
+      1: '฿ (ต่ำกว่า 100฿)',
+      2: '฿฿ (100-300฿)',
+      3: '฿฿฿ (300-500฿)',
+      4: '฿฿฿฿ (500฿+)',
+    };
+    return map[level] ?? '-';
+  }
+
   private transformCloudinaryUrl(url: string): string {
     if (!url) return url;
     return url.replace('/upload/', '/upload/w_800,q_auto,f_auto/');
@@ -2349,8 +2361,11 @@ export class LineBotService {
         userId,
         userMessage,
         location,
+        session.agentHistory,
       );
-    } catch {
+      session.agentHistory = agentResponse.updatedHistory;
+    } catch (err) {
+      console.error('[handleAgentChat] error:', err);
       await this.replyText(
         replyToken,
         'ขออภัย เกิดข้อผิดพลาด ลองใหม่อีกครั้งนะ',
@@ -2406,9 +2421,7 @@ export class LineBotService {
     restaurant: AgentResponse['restaurants'][number],
   ) {
     const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${restaurant.lat},${restaurant.lng}&travelmode=walking`;
-    const priceLevelText =
-      (['ฟรี', '฿', '฿฿', '฿฿฿', '฿฿฿฿'] as const)[restaurant.priceLevel] ??
-      '-';
+    const priceLevelText = this.getPlacePriceLevelText(restaurant.priceLevel);
     const openText =
       restaurant.isOpenNow === true
         ? '🟢 เปิดอยู่'
@@ -2416,9 +2429,19 @@ export class LineBotService {
           ? '🔴 ปิดแล้ว'
           : '-';
 
+    const PLACEHOLDER_IMAGE =
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80';
+
     return {
       type: 'bubble' as const,
       styles: { body: { backgroundColor: '#FFF8F0' } },
+      hero: {
+        type: 'image',
+        url: restaurant.photoUrl ?? PLACEHOLDER_IMAGE,
+        size: 'full',
+        aspectRatio: '20:13',
+        aspectMode: 'cover',
+      },
       body: {
         type: 'box',
         layout: 'vertical',

@@ -11,6 +11,7 @@ export interface PlaceResult {
   isOpenNow: boolean | null; // null = ไม่มีข้อมูล
   lat: number;
   lng: number;
+  photoUrl: string | null; // null = ไม่มีรูป
 }
 
 @Injectable()
@@ -54,6 +55,7 @@ export class GooglePlacesService {
         price_level?: number;
         opening_hours?: { open_now: boolean };
         geometry: { location: { lat: number; lng: number } };
+        photos?: { photo_reference: string }[];
       }[];
       status: string;
     };
@@ -76,6 +78,9 @@ export class GooglePlacesService {
         isOpenNow: r.opening_hours?.open_now ?? null,
         lat: r.geometry.location.lat,
         lng: r.geometry.location.lng,
+        photoUrl: r.photos?.[0]?.photo_reference
+          ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${r.photos[0].photo_reference}&key=${this.apiKey}`
+          : null,
       }));
   }
 }
