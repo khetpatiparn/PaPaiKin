@@ -7,6 +7,7 @@ import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.s
 import { GeminiService } from 'src/gemini/gemini.service';
 import { FoodDiaryService } from 'src/food-diary/food-diary.service';
 import { UserProfileService } from 'src/user-profile/user-profile.service';
+import { AiAgentService, AgentResponse } from 'src/ai-agent/ai-agent.service';
 
 interface UserSession {
   currentStep:
@@ -19,6 +20,7 @@ interface UserSession {
     | 'SHOP_Q1'
     | 'SHOP_Q2'
     | 'SHOP_LOCATION'
+    | 'AGENT_LOCATION'
     | 'ONBOARD_GOAL'
     | 'ONBOARD_GENDER'
     | 'ONBOARD_AGE'
@@ -27,6 +29,7 @@ interface UserSession {
     | 'ONBOARD_ACTIVITY'
     | 'ONBOARD_BODY_FAT';
   profileChecked: boolean;
+  pendingAgentMessage?: string;
   answers: {
     q1?: string;
     q2?: string;
@@ -64,6 +67,7 @@ export class LineBotService {
     private readonly geminiService: GeminiService,
     private readonly foodDiaryService: FoodDiaryService,
     private readonly userProfileService: UserProfileService,
+    private readonly aiAgentService: AiAgentService,
   ) {
     const channelAccessToken = this.configService.get<string>(
       'LINE_CHANNEL_ACCESS_TOKEN',
@@ -163,8 +167,25 @@ export class LineBotService {
           await this.animationLoading(userId, 20);
           return this.showDiarySummary(messageEvent.replyToken!, userId);
         }
+
+        // Free-text → AI Agent (เฉพาะเมื่ออยู่ใน IDLE)
+        if (session.currentStep === 'IDLE') {
+          await this.animationLoading(userId, 20);
+          await this.handleAgentChat(
+            messageEvent.replyToken!,
+            userId,
+            text,
+            session,
+          );
+          return;
+        }
       } else if (messageEvent.message.type === 'location') {
-        const validSteps = ['LOCATION', 'QUICK_LOCATION', 'SHOP_LOCATION'];
+        const validSteps = [
+          'LOCATION',
+          'QUICK_LOCATION',
+          'SHOP_LOCATION',
+          'AGENT_LOCATION',
+        ];
         if (!validSteps.includes(session.currentStep)) {
           await this.replyText(
             messageEvent.replyToken!,
@@ -180,7 +201,13 @@ export class LineBotService {
         session.lastLocation = { latitude, longitude };
         session.currentStep = 'IDLE';
 
-        if (step === 'QUICK_LOCATION') {
+        if (step === 'AGENT_LOCATION') {
+          const pending = session.pendingAgentMessage ?? '';
+          session.pendingAgentMessage = undefined;
+          await this.animationLoading(userId, 20);
+          await this.handleAgentChat(replyToken, userId, pending, session);
+          return;
+        } else if (step === 'QUICK_LOCATION') {
           await this.showQuickResult(
             replyToken,
             { latitude, longitude },
@@ -2301,5 +2328,214 @@ export class LineBotService {
       replyToken,
       `✅ ตั้งค่าเสร็จแล้ว!\n\n🎯 เป้าหมาย: ${goalLabel[data.goal]}\n🔥 แคลอรี่ต่อวัน: ${profile.dailyCalorieGoal} kcal\n🥩 โปรตีน: ${profile.dailyProteinGoal}g\n🍚 คาร์บ: ${profile.dailyCarbGoal}g\n🥑 ไขมัน: ${profile.dailyFatGoal}g\n\nเริ่มได้เลย! ถ่ายรูปอาหารแล้วส่งมาเลย 📸`,
     );
+  }
+
+  private async handleAgentChat(
+    replyToken: string,
+    userId: string,
+    userMessage: string,
+    session: UserSession,
+  ): Promise<void> {
+    const location = session.lastLocation
+      ? {
+          lat: session.lastLocation.latitude,
+          lng: session.lastLocation.longitude,
+        }
+      : undefined;
+
+    let agentResponse: AgentResponse;
+    try {
+      agentResponse = await this.aiAgentService.chat(
+        userId,
+        userMessage,
+        location,
+      );
+    } catch {
+      await this.replyText(
+        replyToken,
+        'ขออภัย เกิดข้อผิดพลาด ลองใหม่อีกครั้งนะ',
+      );
+      return;
+    }
+
+    // Agent บอกว่าต้องการ location แต่ยังไม่มี → เก็บ pending แล้วขอ location
+    if (agentResponse.needsLocation && !location) {
+      session.currentStep = 'AGENT_LOCATION';
+      session.pendingAgentMessage = userMessage;
+      await this.client.replyMessage({
+        replyToken,
+        messages: [
+          {
+            type: 'text',
+            text: `${agentResponse.summary}\n\nแชร์ตำแหน่งเพื่อหาร้านใกล้คุณได้เลย 📍`,
+            quickReply: {
+              items: [
+                {
+                  type: 'action',
+                  action: { type: 'location', label: '📍 แชร์ตำแหน่ง' },
+                },
+              ],
+            },
+          },
+        ],
+      });
+      return;
+    }
+
+    const messages: any[] = [
+      { type: 'text', text: agentResponse.summary || 'ไม่มีข้อมูล' },
+    ];
+
+    if (agentResponse.restaurants.length > 0) {
+      messages.push({
+        type: 'flex',
+        altText: 'ร้านอาหารแนะนำ',
+        contents: {
+          type: 'carousel',
+          contents: agentResponse.restaurants.map((r) =>
+            this.buildAgentRestaurantBubble(r),
+          ),
+        },
+      });
+    }
+
+    await this.client.replyMessage({ replyToken, messages });
+  }
+
+  private buildAgentRestaurantBubble(
+    restaurant: AgentResponse['restaurants'][number],
+  ) {
+    const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${restaurant.lat},${restaurant.lng}&travelmode=walking`;
+    const priceLevelText =
+      (['ฟรี', '฿', '฿฿', '฿฿฿', '฿฿฿฿'] as const)[restaurant.priceLevel] ??
+      '-';
+    const openText =
+      restaurant.isOpenNow === true
+        ? '🟢 เปิดอยู่'
+        : restaurant.isOpenNow === false
+          ? '🔴 ปิดแล้ว'
+          : '-';
+
+    return {
+      type: 'bubble' as const,
+      styles: { body: { backgroundColor: '#FFF8F0' } },
+      body: {
+        type: 'box',
+        layout: 'vertical',
+        spacing: 'sm',
+        backgroundColor: '#FFF8F0',
+        contents: [
+          {
+            type: 'text',
+            text: restaurant.name,
+            weight: 'bold',
+            size: 'lg',
+            wrap: true,
+          },
+          {
+            type: 'text',
+            text: restaurant.vicinity || '-',
+            color: '#999999',
+            size: 'sm',
+            wrap: true,
+          },
+          {
+            type: 'box',
+            layout: 'vertical',
+            margin: 'sm',
+            spacing: 'xs',
+            contents: [
+              {
+                type: 'box',
+                layout: 'baseline',
+                contents: [
+                  {
+                    type: 'text',
+                    text: '⭐ คะแนน',
+                    weight: 'bold',
+                    flex: 3,
+                    size: 'xs',
+                    color: '#555555',
+                  },
+                  {
+                    type: 'text',
+                    text: restaurant.rating ? String(restaurant.rating) : '-',
+                    flex: 5,
+                    color: '#888888',
+                    size: 'sm',
+                  },
+                ],
+              },
+              {
+                type: 'box',
+                layout: 'baseline',
+                contents: [
+                  {
+                    type: 'text',
+                    text: '💰 ราคา',
+                    weight: 'bold',
+                    flex: 3,
+                    size: 'xs',
+                    color: '#555555',
+                  },
+                  {
+                    type: 'text',
+                    text: priceLevelText,
+                    flex: 5,
+                    color: '#888888',
+                    size: 'sm',
+                  },
+                ],
+              },
+              {
+                type: 'box',
+                layout: 'baseline',
+                contents: [
+                  {
+                    type: 'text',
+                    text: '🕐 สถานะ',
+                    weight: 'bold',
+                    flex: 3,
+                    size: 'xs',
+                    color: '#555555',
+                  },
+                  {
+                    type: 'text',
+                    text: openText,
+                    flex: 5,
+                    size: 'sm',
+                    color: '#888888',
+                  },
+                ],
+              },
+              { type: 'separator', margin: 'sm' },
+              {
+                type: 'text',
+                text: restaurant.reason,
+                size: 'sm',
+                color: '#D97A2B',
+                wrap: true,
+                margin: 'sm',
+              },
+            ],
+          },
+        ],
+      },
+      footer: {
+        type: 'box',
+        layout: 'vertical',
+        spacing: 'sm',
+        backgroundColor: '#FFF8F0',
+        contents: [
+          {
+            type: 'button',
+            style: 'primary',
+            height: 'sm',
+            color: '#D97A2B',
+            action: { type: 'uri', label: 'ดูเส้นทาง', uri: mapUrl },
+          },
+        ],
+      },
+    };
   }
 }

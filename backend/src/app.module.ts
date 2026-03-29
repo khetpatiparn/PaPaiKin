@@ -13,6 +13,8 @@ import { LineBotModule } from './line-bot/line-bot.module';
 import { FoodDiaryModule } from './food-diary/food-diary.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { NutritionModule } from './nutrition/nutrition.module';
+import { GooglePlacesModule } from './google-places/google-places.module';
+import { AiAgentModule } from './ai-agent/ai-agent.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { NutritionModule } from './nutrition/nutrition.module';
     FoodDiaryModule,
     UserProfileModule,
     NutritionModule,
+    GooglePlacesModule,
+    AiAgentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

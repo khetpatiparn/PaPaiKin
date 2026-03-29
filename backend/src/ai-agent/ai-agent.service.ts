@@ -8,6 +8,7 @@ import {
 
 export interface AgentResponse {
   summary: string;
+  needsLocation: boolean;
   restaurants: {
     name: string;
     vicinity: string;
@@ -106,10 +107,14 @@ ${locationContext}
 ตอบกลับเป็น JSON รูปแบบนี้เท่านั้น:
 {
   "summary": "อธิบาย nutrition gap วันนี้และเหตุผลที่แนะนำ (ภาษาไทย)",
+  "needsLocation": false,
   "restaurants": [
     { "name": "ชื่อร้านที่ได้จาก tool", "reason": "เหตุผลที่แนะนำ" }
   ]
 }
+กฎของ needsLocation:
+- true เฉพาะเมื่อ user ถามหาร้านอาหาร/ขอให้แนะนำที่กิน แต่ไม่มีตำแหน่ง
+- false ทุกกรณีอื่น (ทักทาย ถามโภชนาการ ถามทั่วไป หรือมีตำแหน่งแล้ว)
 ถ้าไม่มีร้านให้แนะนำ ให้ restaurants เป็น []`;
 
     const contents: Content[] = [
@@ -186,6 +191,7 @@ ${locationContext}
         // 3. parse JSON สุดท้าย
         const raw = JSON.parse(response.text ?? '{}') as {
           summary?: string;
+          needsLocation?: boolean;
           restaurants?: { name?: string; reason?: string }[];
         };
 
@@ -206,6 +212,7 @@ ${locationContext}
 
         return {
           summary: raw.summary ?? '',
+          needsLocation: raw.needsLocation ?? false,
           restaurants: (raw.restaurants ?? []).map((r) => {
             const place = placeMap.get(r.name ?? '');
             return {
@@ -229,6 +236,6 @@ ${locationContext}
       }
     }
 
-    return { summary: 'ขออภัย ระบบไม่พร้อมใช้งานในขณะนี้', restaurants: [] };
+    return { summary: 'ขออภัย ระบบไม่พร้อมใช้งานในขณะนี้', needsLocation: false, restaurants: [] };
   }
 }
