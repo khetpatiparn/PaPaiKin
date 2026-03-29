@@ -1,0 +1,48 @@
+import axios from 'axios'
+
+export const BACKEND_URL = 'https://7gn1g5.instatunnel.my'
+
+export interface FoodEntry {
+  menuName: string
+  calories: number
+  protein: number
+  carb: number
+  fat: number
+  createdAt: string
+}
+
+export interface UserProfile {
+  lineUserId: string
+  goal: 'lose' | 'maintain' | 'gain'
+  gender: 'male' | 'female'
+  age: number
+  weight: number
+  height: number
+  activityLevel: 'sedentary' | 'light' | 'moderate' | 'very_active'
+  bodyFatRange?: string
+  dailyCalorieGoal: number
+  dailyProteinGoal: number
+  dailyCarbGoal: number
+  dailyFatGoal: number
+}
+
+export interface UpdateProfileDto {
+  goal: 'lose' | 'maintain' | 'gain'
+  gender: 'male' | 'female'
+  age: number
+  weight: number
+  height: number
+  activityLevel: 'sedentary' | 'light' | 'moderate' | 'very_active'
+  bodyFatRange?: string
+}
+
+export const api = {
+  getHistory: (userId: string) =>
+    axios.get<FoodEntry[]>(`${BACKEND_URL}/history/data`, { params: { userId } }).then(r => r.data),
+
+  getProfile: (userId: string) =>
+    axios.get<UserProfile>(`${BACKEND_URL}/user-profile`, { params: { userId } }).then(r => r.data),
+
+  updateProfile: (userId: string, dto: UpdateProfileDto) =>
+    axios.put<UserProfile>(`${BACKEND_URL}/user-profile`, dto, { params: { userId } }).then(r => r.data),
+}

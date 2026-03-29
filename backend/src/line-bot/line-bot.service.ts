@@ -756,8 +756,7 @@ export class LineBotService {
       dailyFatGoal: number;
     },
   ): Promise<void> {
-    // TODO: เปลี่ยน LIFF_DASHBOARD_URL เป็น URL จริงเมื่อ LIFF Dashboard พร้อม (ตอนนี้แค่ประวัติ ยังไม่มีหน้าตั้งค่าโปรไฟล์)
-    const LIFF_DASHBOARD_URL = 'https://liff.line.me/placeholder';
+    const LIFF_DASHBOARD_URL = 'https://liff.line.me/2009619573-KoQIjGuU';
 
     await this.client.replyMessage({
       replyToken,

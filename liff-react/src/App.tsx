@@ -1,38 +1,39 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import liff from '@line/liff'
+import { api } from './api'
+import type { UserProfile, FoodEntry } from './api'
+import Dashboard from './pages/Dashboard'
+import History from './pages/History'
+import ProfileEditor from './pages/ProfileEditor'
 import './App.css'
 
 const LIFF_ID = '2009619573-KoQIjGuU'
-const BACKEND_URL = 'https://7gn1g5.instatunnel.my'
 
-interface FoodEntry {
-  menuName: string
-  calories: number
-  protein: number
-  carb: number
-  fat: number
-  createdAt: string
-}
+type Tab = 'dashboard' | 'history' | 'profile'
 
 function App() {
+  const [userId, setUserId] = useState<string | null>(null)
+  const [profile, setProfile] = useState<UserProfile | null>(null)
   const [entries, setEntries] = useState<FoodEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [tab, setTab] = useState<Tab>('dashboard')
 
   useEffect(() => {
     async function init() {
       try {
         await liff.init({ liffId: LIFF_ID })
-        if (!liff.isLoggedIn()) {
-          liff.login()
-          return
-        }
-        const profile = await liff.getProfile()
-        const res = await axios.get<FoodEntry[]>(`${BACKEND_URL}/history/data`, {
-          params: { userId: profile.userId },
-        })
-        setEntries(res.data)
+        if (!liff.isLoggedIn()) { liff.login(); return }
+        const lineProfile = await liff.getProfile()
+        const uid = lineProfile.userId
+        setUserId(uid)
+
+        const [profileData, historyData] = await Promise.all([
+          api.getProfile(uid),
+          api.getHistory(uid),
+        ])
+        setProfile(profileData)
+        setEntries(historyData)
       } catch (err: any) {
         setError(err.message)
       } finally {
@@ -42,62 +43,39 @@ function App() {
     init()
   }, [])
 
-  if (loading) return <p className="center">กำลังโหลด...</p>
-  if (error) return <p className="center">เกิดข้อผิดพลาด: {error}</p>
+  if (loading) return <div className="center-screen"><p>กำลังโหลด...</p></div>
+  if (error) return <div className="center-screen"><p>เกิดข้อผิดพลาด: {error}</p></div>
+  if (!profile) return <div className="center-screen"><p>ไม่พบข้อมูลโปรไฟล์<br />กรุณาตั้งค่าผ่าน LINE ก่อน</p></div>
 
-  const total = entries.reduce(
-    (acc, e) => ({
-      calories: acc.calories + e.calories,
-      protein: acc.protein + e.protein,
-      carb: acc.carb + e.carb,
-      fat: acc.fat + e.fat,
-    }),
-    { calories: 0, protein: 0, carb: 0, fat: 0 }
-  )
+  const today = new Date().toDateString()
+  const todayEntries = entries.filter(e => new Date(e.createdAt).toDateString() === today)
 
   return (
-    <>
-      <h1>ประวัติการกิน</h1>
-      <p className="subtitle">ข้อมูลทั้งหมดที่บันทึกผ่าน PaPaiKin</p>
+    <div className="app">
+      <div className="content">
+        {tab === 'dashboard' && <Dashboard profile={profile} todayEntries={todayEntries} />}
+        {tab === 'history' && <History entries={entries} />}
+        {tab === 'profile' && userId && (
+          <ProfileEditor
+            userId={userId}
+            profile={profile}
+            onSaved={(updated) => setProfile(updated)}
+          />
+        )}
+      </div>
 
-      {entries.length === 0 ? (
-        <p className="center">ยังไม่มีประวัติการกิน<br />ลองส่งรูปอาหารใน LINE ดูสิ!</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>เมนู</th>
-              <th>วันที่</th>
-              <th>แคล</th>
-              <th>โปรตีน</th>
-              <th>คาร์บ</th>
-              <th>ไขมัน</th>
-            </tr>
-          </thead>
-          <tbody>
-            {entries.map((e, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{e.menuName}</td>
-                <td>{new Date(e.createdAt).toLocaleDateString()}</td>
-                <td>{e.calories}</td>
-                <td>{e.protein}</td>
-                <td>{e.carb}</td>
-                <td>{e.fat}</td>
-              </tr>
-            ))}
-            <tr className="total-row">
-              <td colSpan={3}>รวมทั้งหมด</td>
-              <td>{total.calories}</td>
-              <td>{total.protein}</td>
-              <td>{total.carb}</td>
-              <td>{total.fat}</td>
-            </tr>
-          </tbody>
-        </table>
-      )}
-    </>
+      <nav className="bottom-nav">
+        <button className={tab === 'dashboard' ? 'active' : ''} onClick={() => setTab('dashboard')}>
+          <span>📊</span><span>Dashboard</span>
+        </button>
+        <button className={tab === 'history' ? 'active' : ''} onClick={() => setTab('history')}>
+          <span>📋</span><span>ประวัติ</span>
+        </button>
+        <button className={tab === 'profile' ? 'active' : ''} onClick={() => setTab('profile')}>
+          <span>⚙️</span><span>โปรไฟล์</span>
+        </button>
+      </nav>
+    </div>
   )
 }
 

@@ -1,29 +1,196 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: sans-serif;
   background: #FFF8F0;
-  padding: 16px;
   margin: 0;
+  padding: 0;
 }
 
-h1 {
-  color: #C44A3A;
-  font-size: 22px;
-  margin-bottom: 4px;
+/* Layout */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.subtitle {
+.content {
+  flex: 1;
+  padding-bottom: 70px;
+}
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: white;
+  border-top: 1px solid #e8d8c8;
+  display: flex;
+  z-index: 100;
+}
+
+.bottom-nav button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 10px;
   color: #999;
+  padding: 6px 0;
+}
+
+.bottom-nav button span:first-child {
+  font-size: 20px;
+}
+
+.bottom-nav button.active {
+  color: #D97A2B;
+}
+
+/* Page */
+.page {
+  padding: 16px;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 4px;
+}
+
+.page-subtitle {
+  font-size: 12px;
+  color: #999;
+  margin: 0 0 16px;
+}
+
+/* Profile badge */
+.profile-badge {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  border-radius: 10px;
+  padding: 10px 14px;
   font-size: 13px;
+  color: #555;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
   margin-bottom: 16px;
 }
 
+/* Macro grid */
+.macro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.macro-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.macro-chart {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.macro-pct {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.macro-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.macro-name {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 2px;
+}
+
+.macro-consumed {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+}
+
+.macro-remaining {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* Today list */
+.today-list {
+  background: white;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.today-list h3 {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 10px;
+}
+
+.today-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #f5ece0;
+  font-size: 13px;
+}
+
+.today-item:last-child {
+  border-bottom: none;
+}
+
+.today-menu {
+  color: #333;
+}
+
+.today-cal {
+  color: #D97A2B;
+  font-weight: bold;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+/* History table */
 table {
   width: 100%;
   border-collapse: collapse;
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
 }
 
 th {
@@ -54,9 +221,73 @@ tr:last-child td {
   font-weight: bold;
 }
 
-.center {
-  text-align: center;
-  padding: 40px;
-  color: #aaa;
+/* Profile form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form label {
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+  margin-top: 4px;
+}
+
+.form input,
+.form select {
+  padding: 10px 12px;
+  border: 1px solid #e0d0c0;
+  border-radius: 8px;
   font-size: 14px;
+  background: white;
+  color: #333;
+  width: 100%;
+}
+
+.save-btn {
+  margin-top: 12px;
+  padding: 14px;
+  background: #D97A2B;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.saved-badge {
+  background: #e8f8e8;
+  color: #2a7a2a;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Utilities */
+.center-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  padding: 24px;
+}
+
+.empty-hint {
+  text-align: center;
+  color: #bbb;
+  font-size: 13px;
+  margin-top: 40px;
+  line-height: 1.8;
 }
