@@ -50,7 +50,6 @@ export class GeminiService {
   }
 
   async analyzeFood(image: string): Promise<{
-    displayText: string;
     menuName: string;
     calories: number;
     protein: number;
@@ -97,11 +96,7 @@ export class GeminiService {
           cuisineType?: string;
           confidence?: number;
         };
-        const nutrients = `🍚 คาร์บ: ${json.carbs ?? 0}g  🥩 โปรตีน: ${json.protein ?? 0}g  🥑 ไขมัน: ${json.fat ?? 0}g`;
-        const displayText = `📸 เมนูที่พบ: ${json.menuName}\n🔥 แคลอรี่รวม: ${json.calories ?? 0} kcal\n\n📊 สารอาหาร:\n${nutrients}`;
-
         return {
-          displayText,
           menuName: json.menuName ?? '',
           calories: json.calories ?? 0,
           protein: json.protein ?? 0,
@@ -119,7 +114,6 @@ export class GeminiService {
       }
     }
     return {
-      displayText: 'ขออภัย ระบบวิเคราะห์อาหารไม่พร้อมใช้งาน',
       menuName: '',
       calories: 0,
       protein: 0,
@@ -128,5 +122,5 @@ export class GeminiService {
       cuisineType: 'Other',
       confidence: 0,
     };
-  }
+  } // used
 }

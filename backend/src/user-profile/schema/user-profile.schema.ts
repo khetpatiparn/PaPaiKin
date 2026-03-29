@@ -21,10 +21,10 @@ export class UserProfile {
   declare age: number;
 
   @Prop({ required: true, min: 20, max: 300 })
-  declare weight: number; // kg
+  declare weight: number;
 
   @Prop({ required: true, min: 50, max: 250 })
-  declare height: number; // cm
+  declare height: number;
 
   @Prop({
     type: String,
@@ -34,20 +34,19 @@ export class UserProfile {
   declare activityLevel: string;
 
   @Prop({ type: String, default: '' })
-  declare bodyFatRange: string; // e.g. "16-20%"
+  declare bodyFatRange: string;
 
-  // คำนวณจาก TDEE + goal แล้วเก็บไว้
   @Prop({ required: true, min: 500 })
   declare dailyCalorieGoal: number;
 
   @Prop({ required: true, min: 0 })
-  declare dailyProteinGoal: number; // g
+  declare dailyProteinGoal: number;
 
   @Prop({ required: true, min: 0 })
-  declare dailyCarbGoal: number; // g
+  declare dailyCarbGoal: number;
 
   @Prop({ required: true, min: 0 })
-  declare dailyFatGoal: number; // g
+  declare dailyFatGoal: number;
 
   declare createdAt: Date;
   declare updatedAt: Date;

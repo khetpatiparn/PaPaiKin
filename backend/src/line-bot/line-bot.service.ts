@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { messagingApi, webhook } from '@line/bot-sdk';
 import { buffer } from 'node:stream/consumers';
-import { ShopMenuItemService } from 'src/shop-menu-item/shop-menu-item.service';
-import { ShopMenuItemDocument } from 'src/shop-menu-item/schema/shop-menu-item.schema';
 import { GeminiService } from 'src/gemini/gemini.service';
 import { FoodDiaryService } from 'src/food-diary/food-diary.service';
 import { UserProfileService } from 'src/user-profile/user-profile.service';
@@ -13,14 +11,6 @@ import { type Content } from '@google/genai';
 interface UserSession {
   currentStep:
     | 'IDLE'
-    | 'Q1'
-    | 'Q2'
-    | 'Q3'
-    | 'LOCATION'
-    | 'QUICK_LOCATION'
-    | 'SHOP_Q1'
-    | 'SHOP_Q2'
-    | 'SHOP_LOCATION'
     | 'AGENT_LOCATION'
     | 'ONBOARD_GOAL'
     | 'ONBOARD_GENDER'
@@ -32,17 +22,6 @@ interface UserSession {
   profileChecked: boolean;
   pendingAgentMessage?: string;
   agentHistory?: Content[];
-  answers: {
-    q1?: string;
-    q2?: string;
-    q3?: string;
-  };
-  shopAnswers: {
-    style?: string;
-    maxDistance?: number;
-  };
-  lastAnswers?: { q1?: string; q2?: string; q3?: string };
-  lastShopAnswers?: { style?: string; maxDistance?: number };
   lastLocation?: { latitude: number; longitude: number };
   onboardData?: {
     goal?: string;
@@ -61,11 +40,8 @@ export class LineBotService {
   private readonly blobClient: messagingApi.MessagingApiBlobClient;
   private sessions = new Map<string, UserSession>();
 
-  private readonly Q1_OPTIONS = ['SINGLE_DISH', 'NOODLE', 'JAPANESE', 'SALAD'];
-
   constructor(
     private readonly configService: ConfigService,
-    private readonly shopMenuItemService: ShopMenuItemService,
     private readonly geminiService: GeminiService,
     private readonly foodDiaryService: FoodDiaryService,
     private readonly userProfileService: UserProfileService,
@@ -84,20 +60,6 @@ export class LineBotService {
     });
   }
 
-  private async animationLoading(userId: string, loadingSec: number) {
-    await this.client.showLoadingAnimation({
-      chatId: userId,
-      loadingSeconds: loadingSec,
-    });
-  }
-
-  private async replyText(replyToken: string, text: string): Promise<void> {
-    await this.client.replyMessage({
-      replyToken: replyToken,
-      messages: [{ type: 'text', text }],
-    });
-  }
-
   async handleEvent(event: webhook.Event): Promise<void> {
     const userId = event.source?.type === 'user' ? event.source.userId : null;
     if (!userId) {
@@ -109,13 +71,11 @@ export class LineBotService {
       session = {
         currentStep: 'IDLE',
         profileChecked: false,
-        answers: {},
-        shopAnswers: {},
       };
       this.sessions.set(userId, session);
     }
 
-    // ตรวจ profile ครั้งแรก (เฉพาะเมื่อยังไม่เคยเช็ค และไม่ได้อยู่ใน onboarding)
+    // onboarding
     if (!session.profileChecked && !session.currentStep.startsWith('ONBOARD')) {
       const profile = await this.userProfileService.findByLineUserId(userId);
       if (!profile) {
@@ -137,7 +97,7 @@ export class LineBotService {
       if (messageEvent.message.type === 'text') {
         const text = messageEvent.message.text;
 
-        // จัดการ onboarding text input (อายุ น้ำหนัก ส่วนสูง)
+        //  handle onboarding text input
         if (session.currentStep.startsWith('ONBOARD')) {
           await this.handleOnboardingText(
             messageEvent.replyToken!,
@@ -147,24 +107,7 @@ export class LineBotService {
           return;
         }
 
-        if (text === 'สุ่มเมนู') {
-          session.currentStep = 'Q1';
-          session.answers = {};
-          await this.animationLoading(userId, 20);
-          return this.askQ1(messageEvent.replyToken!);
-        }
-
-        if (text === 'สุ่มด่วน') {
-          session.currentStep = 'QUICK_LOCATION';
-          return this.askLocation(messageEvent.replyToken!);
-        }
-
-        if (text === 'สุ่มร้าน') {
-          session.currentStep = 'SHOP_Q1';
-          session.shopAnswers = {};
-          return this.askShopQ1(messageEvent.replyToken!);
-        }
-
+        // Diary Summary
         if (text === 'สรุปมื้อ') {
           await this.animationLoading(userId, 20);
           return this.showDiarySummary(messageEvent.replyToken!, userId);
@@ -182,13 +125,7 @@ export class LineBotService {
           return;
         }
       } else if (messageEvent.message.type === 'location') {
-        const validSteps = [
-          'LOCATION',
-          'QUICK_LOCATION',
-          'SHOP_LOCATION',
-          'AGENT_LOCATION',
-        ];
-        if (!validSteps.includes(session.currentStep)) {
+        if (session.currentStep !== 'AGENT_LOCATION') {
           await this.replyText(
             messageEvent.replyToken!,
             `เลือกเมนูบน Rich menu อีกครั้งเพื่อใช้งาน`,
@@ -198,201 +135,33 @@ export class LineBotService {
 
         const { latitude, longitude } = messageEvent.message;
         const replyToken = messageEvent.replyToken!;
-        const step = session.currentStep;
 
         session.lastLocation = { latitude, longitude };
         session.currentStep = 'IDLE';
 
-        if (step === 'AGENT_LOCATION') {
-          const pending = session.pendingAgentMessage ?? '';
-          session.pendingAgentMessage = undefined;
-          await this.animationLoading(userId, 20);
-          await this.handleAgentChat(replyToken, userId, pending, session);
-          return;
-        } else if (step === 'QUICK_LOCATION') {
-          await this.showQuickResult(
-            replyToken,
-            { latitude, longitude },
-            userId,
-          );
-        } else if (step === 'SHOP_LOCATION') {
-          const shopAnswers = { ...session.shopAnswers };
-          session.lastShopAnswers = { ...shopAnswers };
-          session.shopAnswers = {};
-          await this.showShopResult(
-            replyToken,
-            shopAnswers,
-            { latitude, longitude },
-            userId,
-          );
-        } else {
-          const answers = { ...session.answers };
-          session.lastAnswers = { ...answers };
-          session.answers = {};
-          await this.showMenuResults(
-            replyToken,
-            answers,
-            { latitude, longitude },
-            userId,
-          );
-        }
+        const pending = session.pendingAgentMessage ?? '';
+        session.pendingAgentMessage = undefined;
+        await this.animationLoading(userId, 20);
+        await this.handleAgentChat(replyToken, userId, pending, session);
+        return;
       } else if (messageEvent.message.type === 'image') {
         await this.animationLoading(userId, 20);
 
-        const stream = await this.blobClient.getMessageContent(
+        const imageBase64 = await this.fetchImageAsBase64(
           messageEvent.message.id,
         );
-        const buf = await buffer(stream);
-        const imageBase64 = buf.toString('base64');
 
         const result = await this.geminiService.analyzeFood(imageBase64);
 
-        // save พร้อม mealType ที่คำนวณจากเวลาปัจจุบัน
-        let savedEntryId = '';
-        if (result.menuName && result.calories > 0) {
-          const mealType = this.foodDiaryService.getMealTypeFromTime();
-          const saved = await this.foodDiaryService.save(
-            userId,
-            result.menuName,
-            result.calories,
-            result.protein,
-            result.carb,
-            result.fat,
-            result.cuisineType,
-            result.confidence,
-            mealType,
-          );
-          savedEntryId = String(saved._id);
-        }
+        const savedEntryId = await this.saveFoodDiaryEntry(userId, result);
 
-        // ดึง running total วันนี้
-        const todayEntries =
-          await this.foodDiaryService.getTodaySummary(userId);
-        const totalCalories = todayEntries.reduce(
-          (sum, e) => sum + e.calories,
-          0,
+        await this.replyFoodSavedCard(
+          messageEvent.replyToken!,
+          userId,
+          result,
+          savedEntryId,
         );
-        const totalProtein = todayEntries.reduce(
-          (sum, e) => sum + e.protein,
-          0,
-        );
-
-        await this.client.replyMessage({
-          replyToken: messageEvent.replyToken!,
-          messages: [
-            {
-              type: 'flex',
-              altText: `บันทึกแล้ว! ${result.menuName}`,
-              contents: {
-                type: 'bubble',
-                size: 'kilo',
-                body: {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'text',
-                      text: '✅ บันทึกแล้ว!',
-                      weight: 'bold',
-                      size: 'md',
-                      color: '#1DB446',
-                    },
-                    {
-                      type: 'text',
-                      text: result.menuName,
-                      size: 'lg',
-                      weight: 'bold',
-                      margin: 'sm',
-                      wrap: true,
-                    },
-                    {
-                      type: 'separator',
-                      margin: 'lg',
-                    },
-                    {
-                      type: 'box',
-                      layout: 'vertical',
-                      margin: 'lg',
-                      contents: [
-                        {
-                          type: 'text',
-                          text: `🔥 ${result.calories} kcal  🥩 โปรตีน ${result.protein}g`,
-                          size: 'sm',
-                          color: '#555555',
-                        },
-                        {
-                          type: 'text',
-                          text: `🍚 คาร์บ ${result.carb}g  🥑 ไขมัน ${result.fat}g`,
-                          size: 'sm',
-                          color: '#555555',
-                          margin: 'sm',
-                        },
-                      ],
-                    },
-                    {
-                      type: 'separator',
-                      margin: 'lg',
-                    },
-                    {
-                      type: 'box',
-                      layout: 'vertical',
-                      margin: 'lg',
-                      contents: [
-                        {
-                          type: 'text',
-                          text: `📊 วันนี้รวม: ${totalCalories} kcal  โปรตีน ${totalProtein}g`,
-                          size: 'sm',
-                          weight: 'bold',
-                          color: '#D97A2B',
-                        },
-                      ],
-                    },
-                  ],
-                },
-              },
-              quickReply: {
-                items: [
-                  {
-                    type: 'action',
-                    action: {
-                      type: 'postback',
-                      label: '🌅 เช้า',
-                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=breakfast`,
-                      displayText: '🌅 เช้า',
-                    },
-                  },
-                  {
-                    type: 'action',
-                    action: {
-                      type: 'postback',
-                      label: '☀️ เที่ยง',
-                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=lunch`,
-                      displayText: '☀️ เที่ยง',
-                    },
-                  },
-                  {
-                    type: 'action',
-                    action: {
-                      type: 'postback',
-                      label: '🌙 เย็น',
-                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=dinner`,
-                      displayText: '🌙 เย็น',
-                    },
-                  },
-                  {
-                    type: 'action',
-                    action: {
-                      type: 'postback',
-                      label: '🍪 ของว่าง',
-                      data: `action=change_meal_type&entryId=${savedEntryId}&mealType=snack`,
-                      displayText: '🍪 ของว่าง',
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        });
+        // checked
       }
     } else if (event.type === 'postback') {
       const postbackEvent = event;
@@ -400,6 +169,7 @@ export class LineBotService {
         postbackEvent.replyToken!,
         userId,
         postbackEvent.postback.data,
+        // checked
       );
     } else if (event.type === 'follow') {
       const profile = await this.userProfileService.findByLineUserId(userId);
@@ -412,452 +182,19 @@ export class LineBotService {
     }
   }
 
-  private async askQ1(replyToken: string) {
-    await this.client.replyMessage({
-      replyToken,
-      messages: [
-        {
-          type: 'flex',
-          altText: 'อยากกินแบบไหนหรอ?',
-          contents: {
-            type: 'bubble',
-            body: {
-              type: 'box',
-              layout: 'vertical',
-              contents: [
-                {
-                  type: 'text',
-                  text: 'คำถามข้อแรก',
-                  weight: 'bold',
-                  color: '#D97A2B',
-                  size: 'sm',
-                },
-                {
-                  type: 'text',
-                  text: 'เลือกประเภทอาหาร',
-                  weight: 'bold',
-                  size: 'xl',
-                  margin: 'md',
-                },
-                {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'box',
-                      layout: 'vertical',
-                      contents: [],
-                      width: '33%',
-                      height: '6px',
-                      backgroundColor: '#D97A2B',
-                    },
-                  ],
-                  margin: 'sm',
-                  height: '6px',
-                  backgroundColor: '#F2D479',
-                  cornerRadius: 'lg',
-                },
-                {
-                  type: 'separator',
-                  margin: 'xxl',
-                },
-                {
-                  type: 'box',
-                  layout: 'horizontal',
-                  contents: [
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🍛 จานเดียว',
-                        data: 'q1=SINGLE_DISH',
-                        displayText: 'เลือก จานเดียว',
-                      },
-                      style: 'primary',
-                      height: 'sm',
-                      color: '#D97A2B',
-                    },
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🍜 เส้น',
-                        data: 'q1=NOODLE',
-                        displayText: 'เลือก เส้น',
-                      },
-                      style: 'primary',
-                      height: 'sm',
-                      color: '#D97A2B',
-                      margin: 'md',
-                    },
-                  ],
-                  margin: 'md',
-                  justifyContent: 'flex-start',
-                },
-                {
-                  type: 'box',
-                  layout: 'horizontal',
-                  contents: [
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🍱 ญี่ปุ่น',
-                        data: 'q1=JAPANESE',
-                        displayText: 'เลือก ญี่ปุ่น',
-                      },
-                      height: 'sm',
-                      style: 'primary',
-                      color: '#D97A2B',
-                    },
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🥗 ยำ/สลัด',
-                        data: 'q1=SALAD',
-                        displayText: 'เลือก ยำ/สลัด',
-                      },
-                      height: 'sm',
-                      style: 'primary',
-                      color: '#D97A2B',
-                      margin: 'md',
-                    },
-                  ],
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '❔ อะไรก็ได้',
-                    data: 'q1=ANY',
-                    displayText: 'เลือก อะไรก็ได้',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: 'บอกมาเลยดีกว่า',
-                    data: 'q1=SKIP',
-                    displayText: 'บอกมาเลยดีกว่า',
-                  },
-                  style: 'primary',
-                  margin: 'md',
-                  height: 'sm',
-                  color: '#6B8E23',
-                },
-              ],
-            },
-            styles: {
-              body: {
-                backgroundColor: '#FFF8F0',
-              },
-              footer: {
-                separator: true,
-              },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  private async askQ2(replyToken: string) {
-    await this.client.replyMessage({
-      replyToken,
-      messages: [
-        {
-          type: 'flex',
-          altText: 'แล้วพวกเนื้อสัตว์หล่ะ',
-          contents: {
-            type: 'bubble',
-            body: {
-              type: 'box',
-              layout: 'vertical',
-              contents: [
-                {
-                  type: 'text',
-                  text: 'คำถามข้อสอง',
-                  weight: 'bold',
-                  color: '#D97A2B',
-                  size: 'sm',
-                },
-                {
-                  type: 'text',
-                  text: 'เลือกเนื้อสัตว์ที่ชอบ',
-                  weight: 'bold',
-                  size: 'xl',
-                  margin: 'md',
-                },
-                {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'box',
-                      layout: 'vertical',
-                      contents: [],
-                      width: '66%',
-                      height: '6px',
-                      backgroundColor: '#D97A2B',
-                    },
-                  ],
-                  margin: 'sm',
-                  height: '6px',
-                  backgroundColor: '#F2D479',
-                  cornerRadius: 'lg',
-                },
-                {
-                  type: 'separator',
-                  margin: 'xxl',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '🐷 หมู',
-                    data: 'q2=PORK',
-                    displayText: 'เลือก หมู',
-                  },
-                  style: 'primary',
-                  height: 'sm',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '🐔 ไก่',
-                    data: 'q2=CHICKEN',
-                    displayText: 'เลือก ไก่',
-                  },
-                  style: 'primary',
-                  height: 'sm',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '🥩 เนื้อ',
-                    data: 'q2=BEEF',
-                    displayText: 'เลือก เนื้อ',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '🌊 ทะเล',
-                    data: 'q2=SEAFOOD',
-                    displayText: 'เลือก ทะเล',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '🥬 มังสวิรัติ',
-                    data: 'q2=VEGETARIAN',
-                    displayText: 'เลือก มังสวิรัติ',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '❔อะไรก็ได้',
-                    data: 'q2=ANY',
-                    displayText: 'เลือก อะไรก็ได้',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-              ],
-            },
-            size: 'mega',
-            styles: {
-              body: {
-                backgroundColor: '#FFF8F0',
-              },
-              footer: {
-                separator: true,
-              },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  private async askQ3(replyToken: string) {
-    await this.client.replyMessage({
-      replyToken,
-      messages: [
-        {
-          type: 'flex',
-          altText: 'ให้เสิร์ฟแบบไหนดี',
-          contents: {
-            type: 'bubble',
-            body: {
-              type: 'box',
-              layout: 'vertical',
-              contents: [
-                {
-                  type: 'text',
-                  text: 'คำถามข้อสุดท้าย',
-                  weight: 'bold',
-                  color: '#D97A2B',
-                  size: 'sm',
-                },
-                {
-                  type: 'text',
-                  text: 'เลือกรูปแบบที่อยากทาน',
-                  weight: 'bold',
-                  size: 'xl',
-                  margin: 'md',
-                },
-                {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'box',
-                      layout: 'vertical',
-                      contents: [],
-                      width: '99%',
-                      height: '6px',
-                      backgroundColor: '#D97A2B',
-                    },
-                  ],
-                  margin: 'sm',
-                  height: '6px',
-                  backgroundColor: '#F2D479',
-                  cornerRadius: 'lg',
-                },
-                {
-                  type: 'separator',
-                  margin: 'xxl',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: 'แบบแห้ง (ผัด/ทอด/ย่าง/ยำ)',
-                    data: 'q3=DRY',
-                    displayText: 'เลือก แบบแห้ง',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: 'แบบน้ำ (แกง/ต้ม/ซุป)',
-                    data: 'q3=SOUP',
-                    displayText: 'เลือก แบบน้ำ',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '❔อะไรก็ได้',
-                    data: 'q3=ANY',
-                    displayText: 'เลือก อะไรก็ได้',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-              ],
-            },
-            size: 'mega',
-            styles: {
-              body: {
-                backgroundColor: '#FFF8F0',
-              },
-              footer: {
-                separator: true,
-              },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  private pickRandom(options: string[]): string {
-    const index = Math.floor(Math.random() * options.length);
-    return options[index];
-  }
-
-  private async askLocation(replyToken: string) {
-    await this.client.replyMessage({
-      replyToken,
-      messages: [
-        {
-          type: 'text',
-          text: 'ปุ่มข้างล่างนี่..ช่วยกดมันหน่อยสิ เพื่อส่งตำแหน่งมาให้เรา 👇',
-          quickReply: {
-            items: [
-              {
-                type: 'action',
-                action: { type: 'location', label: 'ส่งตำแหน่ง' },
-              },
-            ],
-          },
-        },
-      ],
-    });
-  }
-
   private async handlePostback(
     replyToken: string,
     userId: string,
     data: string,
   ) {
-    const session = this.sessions.get(userId)!;
     const params = new URLSearchParams(data);
 
     const action = params.get('action');
 
-    // onboarding
     if (action === 'onboard') {
       return this.handleOnboardingPostback(replyToken, userId, params);
     }
 
-    // เปลี่ยนมื้ออาหาร
     if (action === 'change_meal_type') {
       const entryId = params.get('entryId');
       const mealType = params.get('mealType');
@@ -867,661 +204,7 @@ export class LineBotService {
       return;
     }
 
-    // reshuffle actions
-    if (action === 'quick_reshuffle') {
-      const { lastLocation } = session;
-      if (!lastLocation) return;
-      return this.showQuickResult(replyToken, lastLocation, userId);
-    }
-    if (action === 'shop_reshuffle') {
-      const { lastShopAnswers, lastLocation } = session;
-      if (!lastShopAnswers || !lastLocation) return;
-      return this.showShopResult(
-        replyToken,
-        lastShopAnswers,
-        lastLocation,
-        userId,
-      );
-    }
-    if (action === 'reshuffle') {
-      const { lastAnswers, lastLocation } = session;
-      if (!lastAnswers?.q1 || !lastLocation) {
-        session.currentStep = 'Q1';
-        session.answers = {};
-        return this.askQ1(replyToken);
-      }
-      return this.showMenuResults(
-        replyToken,
-        lastAnswers,
-        lastLocation,
-        userId,
-      );
-    }
-
-    // สุ่มร้าน flow
-    if (params.has('shopQ1') || params.has('shopQ2')) {
-      return this.handleShopPostback(params, session, replyToken);
-    }
-
-    // สุ่มเมนู flow
-    if (params.has('q1') || params.has('q2') || params.has('q3')) {
-      return this.handleGuidedPostback(params, session, replyToken);
-    }
-
-    if (params.has('viewShops')) {
-      const menuId = params.get('viewShops');
-      if (!menuId) return;
-
-      await this.animationLoading(userId, 20);
-      const restaurants = await this.shopMenuItemService.findRestaurantByMenu({
-        menuId,
-      });
-
-      if (restaurants.length === 0) {
-        await this.replyText(
-          replyToken,
-          ' เราขอโทษด้วยจริงๆ ไม่พบร้านที่ขายเมนูนี้ในระบบ',
-        );
-        return;
-      }
-
-      const bubbles: any[] = restaurants.map((restaurant) =>
-        this.buildRestaurantBubble(restaurant),
-      );
-
-      if (bubbles.length > 0) {
-        console.log('restaurant bubbles:', JSON.stringify(bubbles, null, 2));
-        await this.client.replyMessage({
-          replyToken,
-          messages: [
-            {
-              type: 'flex',
-              altText: 'ร้านที่ขายเมนูนี้',
-              contents: {
-                type: 'carousel',
-                contents: bubbles,
-              },
-            },
-          ],
-        });
-      }
-    } else if (params.has('viewRecipe')) {
-      const menuId = params.get('viewRecipe');
-      if (!menuId) return;
-
-      await this.handleViewRecipe(replyToken, menuId, userId);
-    }
     return;
-  }
-
-  private async showMenuResults(
-    replyToken: string,
-    answers: { q1?: string; q2?: string; q3?: string },
-    location: { latitude: number; longitude: number },
-    userId: string,
-  ): Promise<void> {
-    await this.animationLoading(userId, 20);
-
-    const result = await this.shopMenuItemService.getGuidedMenu({
-      userAnswer: { q1: answers.q1!, q2: answers.q2!, q3: answers.q3! },
-      userLocation: location,
-    });
-    const { randomMenu, cheapestMenu, nearestMenu, distanceCards } = result;
-
-    const bubbles: any[] = [];
-    if (randomMenu && distanceCards[0] !== null)
-      bubbles.push(
-        this.buildMenuBubble(
-          'เมนูแนะนำ',
-          '#C44A3A',
-          randomMenu,
-          (distanceCards[0] / 1000).toFixed(2),
-        ),
-      );
-    if (cheapestMenu && distanceCards[1] !== null)
-      bubbles.push(
-        this.buildMenuBubble(
-          'เมนูประหยัด',
-          '#6B8E23',
-          cheapestMenu,
-          (distanceCards[1] / 1000).toFixed(2),
-        ),
-      );
-    if (nearestMenu && distanceCards[2] !== null)
-      bubbles.push(
-        this.buildMenuBubble(
-          'เมนูใกล้ฉัน',
-          '#A0522D',
-          nearestMenu,
-          (distanceCards[2] / 1000).toFixed(2),
-        ),
-      );
-
-    const reshuffleQuickReply: messagingApi.QuickReply = {
-      items: [
-        {
-          type: 'action',
-          action: {
-            type: 'postback',
-            label: 'สุ่มใหม่',
-            data: 'action=reshuffle',
-            displayText: 'สุ่มใหม่',
-          },
-        },
-      ],
-    };
-
-    if (bubbles.length > 0) {
-      await this.client.replyMessage({
-        replyToken,
-        messages: [
-          {
-            type: 'flex',
-            altText: 'ผลการสุ่ม',
-            contents: { type: 'carousel', contents: bubbles },
-          },
-          {
-            type: 'text',
-            text: 'ชอบรึป่าว? 🤔 กดสุ่มใหม่ได้นะ',
-            quickReply: reshuffleQuickReply,
-          },
-        ],
-      });
-    } else {
-      await this.client.replyMessage({
-        replyToken,
-        messages: [
-          {
-            type: 'text',
-            text: 'ไม่พบเมนู ลองสุ่มใหม่อีกครั้ง',
-            quickReply: reshuffleQuickReply,
-          },
-        ],
-      });
-    }
-  }
-
-  private async showQuickResult(
-    replyToken: string,
-    location: { latitude: number; longitude: number },
-    userId: string,
-  ): Promise<void> {
-    await this.animationLoading(userId, 20);
-
-    const { items, distances } =
-      await this.shopMenuItemService.getQuickMenu(location);
-
-    const bubbles: any[] = items.map((item, i) =>
-      this.buildMenuBubble(
-        undefined,
-        undefined,
-        item,
-        (distances[i] / 1000).toFixed(2),
-      ),
-    );
-
-    const reshuffleQuickReply: messagingApi.QuickReply = {
-      items: [
-        {
-          type: 'action',
-          action: {
-            type: 'postback',
-            label: 'สุ่มใหม่',
-            data: 'action=quick_reshuffle',
-            displayText: 'สุ่มใหม่',
-          },
-        },
-      ],
-    };
-
-    if (bubbles.length > 0) {
-      await this.client.replyMessage({
-        replyToken,
-        messages: [
-          {
-            type: 'flex',
-            altText: 'ผลสุ่มด่วน',
-            contents: { type: 'carousel', contents: bubbles },
-          },
-          {
-            type: 'text',
-            text: 'ชอบรึป่าว? 🤔 กดสุ่มใหม่ได้นะ',
-            quickReply: reshuffleQuickReply,
-          },
-        ],
-      });
-    }
-  }
-
-  private async handleGuidedPostback(
-    params: URLSearchParams,
-    session: UserSession,
-    replyToken: string,
-  ) {
-    if (params.has('q1') && session.currentStep !== 'Q1') return;
-    if (params.has('q2') && session.currentStep !== 'Q2') return;
-    if (params.has('q3') && session.currentStep !== 'Q3') return;
-
-    if (params.has('q1')) {
-      const q1Value = params.get('q1')!;
-      if (q1Value === 'SKIP') {
-        session.answers.q1 = this.pickRandom(this.Q1_OPTIONS);
-        session.answers.q2 = undefined;
-        session.answers.q3 = undefined;
-        session.currentStep = 'LOCATION';
-        await this.askLocation(replyToken);
-        return;
-      }
-      session.answers.q1 =
-        q1Value === 'ANY' ? this.pickRandom(this.Q1_OPTIONS) : q1Value;
-      session.currentStep = 'Q2';
-      await this.askQ2(replyToken);
-    } else if (params.has('q2')) {
-      const q2Value = params.get('q2')!;
-      session.answers.q2 = q2Value === 'ANY' ? undefined : q2Value;
-      session.currentStep = 'Q3';
-      await this.askQ3(replyToken);
-    } else if (params.has('q3')) {
-      const q3Value = params.get('q3')!;
-      session.answers.q3 = q3Value === 'ANY' ? undefined : q3Value;
-      session.currentStep = 'LOCATION';
-      await this.askLocation(replyToken);
-    }
-  }
-
-  private async handleShopPostback(
-    params: URLSearchParams,
-    session: UserSession,
-    replyToken: string,
-  ) {
-    if (params.has('shopQ1') && session.currentStep !== 'SHOP_Q1') return;
-    if (params.has('shopQ2') && session.currentStep !== 'SHOP_Q2') return;
-
-    if (params.has('shopQ1')) {
-      const styleValue = params.get('shopQ1')!;
-      if (styleValue === 'SKIP') {
-        session.shopAnswers.style = undefined;
-        session.shopAnswers.maxDistance = undefined;
-        session.currentStep = 'SHOP_LOCATION';
-        await this.askLocation(replyToken);
-        return;
-      }
-      session.shopAnswers.style = styleValue === 'ANY' ? undefined : styleValue;
-      session.currentStep = 'SHOP_Q2';
-      await this.askShopQ2(replyToken);
-    } else if (params.has('shopQ2')) {
-      const distValue = params.get('shopQ2')!;
-      session.shopAnswers.maxDistance =
-        distValue === 'ANY' ? undefined : Number(distValue);
-      session.currentStep = 'SHOP_LOCATION';
-      await this.askLocation(replyToken);
-    }
-  }
-
-  private async askShopQ1(replyToken: string) {
-    await this.client.replyMessage({
-      replyToken,
-      messages: [
-        {
-          type: 'flex',
-          altText: 'ชอบร้านสไตล์ไหน?',
-          contents: {
-            type: 'bubble',
-            body: {
-              type: 'box',
-              layout: 'vertical',
-              contents: [
-                {
-                  type: 'text',
-                  text: 'คำถามข้อแรก',
-                  weight: 'bold',
-                  color: '#D97A2B',
-                  size: 'sm',
-                },
-                {
-                  type: 'text',
-                  text: 'เลือกสไตล์ร้านอาหาร',
-                  weight: 'bold',
-                  size: 'xl',
-                  margin: 'md',
-                },
-                {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'box',
-                      layout: 'vertical',
-                      contents: [],
-                      width: '50%',
-                      height: '6px',
-                      backgroundColor: '#D97A2B',
-                    },
-                  ],
-                  margin: 'sm',
-                  height: '6px',
-                  backgroundColor: '#F2D479',
-                  cornerRadius: 'lg',
-                },
-                {
-                  type: 'separator',
-                  margin: 'xxl',
-                },
-                {
-                  type: 'box',
-                  layout: 'horizontal',
-                  contents: [
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🍚 ตามสั่ง',
-                        data: 'shopQ1=THAI',
-                        displayText: 'เลือก ตามสั่ง',
-                      },
-                      style: 'primary',
-                      height: 'sm',
-                      color: '#D97A2B',
-                    },
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🍣 ญี่ปุ่น',
-                        data: 'shopQ1=JAPANESE',
-                        displayText: 'เลือก ญี่ปุ่น',
-                      },
-                      style: 'primary',
-                      height: 'sm',
-                      color: '#D97A2B',
-                      margin: 'md',
-                    },
-                  ],
-                  margin: 'md',
-                },
-                {
-                  type: 'box',
-                  layout: 'horizontal',
-                  contents: [
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🌶️ อีสาน',
-                        data: 'shopQ1=ISAN',
-                        displayText: 'เลือก อีสาน',
-                      },
-                      style: 'primary',
-                      height: 'sm',
-                      color: '#D97A2B',
-                    },
-                    {
-                      type: 'button',
-                      action: {
-                        type: 'postback',
-                        label: '🧆 ฮาลาล',
-                        data: 'shopQ1=HALAL',
-                        displayText: 'เลือก ฮาลาล',
-                      },
-                      style: 'primary',
-                      height: 'sm',
-                      color: '#D97A2B',
-                      margin: 'md',
-                    },
-                  ],
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '❔ อะไรก็ได้',
-                    data: 'shopQ1=ANY',
-                    displayText: 'เลือก อะไรก็ได้',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: 'บอกมาเลยดีกว่า',
-                    data: 'shopQ1=SKIP',
-                    displayText: 'บอกมาเลยดีกว่า',
-                  },
-                  style: 'primary',
-                  margin: 'md',
-                  height: 'sm',
-                  color: '#6B8E23',
-                },
-              ],
-            },
-            styles: {
-              body: {
-                backgroundColor: '#FFF8F0',
-              },
-              footer: {
-                separator: true,
-              },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  private async askShopQ2(replyToken: string) {
-    await this.client.replyMessage({
-      replyToken,
-      messages: [
-        {
-          type: 'flex',
-          altText: 'อยากไปไกลแค่ไหน?',
-          contents: {
-            type: 'bubble',
-            body: {
-              type: 'box',
-              layout: 'vertical',
-              contents: [
-                {
-                  type: 'text',
-                  text: 'คำถามข้อสอง',
-                  weight: 'bold',
-                  color: '#D97A2B',
-                  size: 'sm',
-                },
-                {
-                  type: 'text',
-                  text: 'อยากไปไกลแค่ไหน?',
-                  weight: 'bold',
-                  size: 'xl',
-                  margin: 'md',
-                },
-                {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'box',
-                      layout: 'vertical',
-                      contents: [],
-                      width: '100%',
-                      height: '6px',
-                      backgroundColor: '#D97A2B',
-                    },
-                  ],
-                  margin: 'sm',
-                  height: '6px',
-                  backgroundColor: '#F2D479',
-                  cornerRadius: 'lg',
-                },
-                {
-                  type: 'separator',
-                  margin: 'xxl',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '🚶 ใกล้ๆ (500m)',
-                    data: 'shopQ2=500',
-                    displayText: 'เลือก ใกล้ๆ 500m',
-                  },
-                  style: 'primary',
-                  height: 'sm',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '🚲 เดินได้ (1km)',
-                    data: 'shopQ2=1000',
-                    displayText: 'เลือก เดินได้ 1km',
-                  },
-                  style: 'primary',
-                  height: 'sm',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-                {
-                  type: 'button',
-                  action: {
-                    type: 'postback',
-                    label: '❔ ไม่จำกัด',
-                    data: 'shopQ2=ANY',
-                    displayText: 'เลือก ไม่จำกัด',
-                  },
-                  height: 'sm',
-                  style: 'primary',
-                  color: '#D97A2B',
-                  margin: 'md',
-                },
-              ],
-            },
-            styles: {
-              body: {
-                backgroundColor: '#FFF8F0',
-              },
-              footer: {
-                separator: true,
-              },
-            },
-          },
-        },
-      ],
-    });
-  }
-
-  private async showShopResult(
-    replyToken: string,
-    shopAnswers: { style?: string; maxDistance?: number },
-    location: { latitude: number; longitude: number },
-    userId: string,
-  ): Promise<void> {
-    await this.animationLoading(userId, 20);
-
-    const { shops, distances } = await this.shopMenuItemService.getRandomShops(
-      shopAnswers.style,
-      shopAnswers.maxDistance,
-      location,
-    );
-
-    const bubbles: any[] = shops.map((shop, i) =>
-      this.buildRestaurantBubble(shop, (distances[i] / 1000).toFixed(2)),
-    );
-
-    const reshuffleQuickReply: messagingApi.QuickReply = {
-      items: [
-        {
-          type: 'action',
-          action: {
-            type: 'postback',
-            label: 'สุ่มร้านใหม่',
-            data: 'action=shop_reshuffle',
-          },
-        },
-      ],
-    };
-
-    if (bubbles.length > 0) {
-      await this.client.replyMessage({
-        replyToken,
-        messages: [
-          {
-            type: 'flex',
-            altText: 'ผลการสุ่มร้าน',
-            contents: { type: 'carousel', contents: bubbles },
-          },
-          {
-            type: 'text',
-            text: 'ร้านนี้เป็นไง? 🤔 กดสุ่มร้านใหม่ได้นะ',
-            quickReply: reshuffleQuickReply,
-          },
-        ],
-      });
-    } else {
-      await this.client.replyMessage({
-        replyToken,
-        messages: [
-          {
-            type: 'text',
-            text: 'ไม่พบร้านที่ตรงกับเงื่อนไข ลองสุ่มใหม่อีกครั้ง',
-            quickReply: reshuffleQuickReply,
-          },
-        ],
-      });
-    }
-  }
-
-  private async handleViewRecipe(
-    replyToken: string,
-    menuId: string,
-    userId: string,
-  ): Promise<void> {
-    const item = await this.shopMenuItemService.findOneByMenuId(menuId);
-
-    if (!item) {
-      await this.client.replyMessage({
-        replyToken,
-        messages: [{ type: 'text', text: 'ไม่พบข้อมูลเมนูนี้' }],
-      });
-      return;
-    }
-
-    const contextPrompt = [
-      item.menuName,
-      item.attributes?.ingredients?.length
-        ? `วัตถุดิบ: ${item.attributes.ingredients.join(', ')}`
-        : '',
-      item.attributes?.cookingMethod?.length
-        ? `วิธีทำ: ${item.attributes.cookingMethod.join(', ')}`
-        : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
-
-    await this.animationLoading(userId, 10);
-
-    const recipe = await this.geminiService.generateRecipe(contextPrompt);
-
-    await this.client.replyMessage({
-      replyToken,
-      messages: [
-        { type: 'text', text: `📖 สูตร: ${item.menuName}\n\n${recipe}` },
-      ],
-    });
-  }
-
-  private getPriceLevel(price: number): string {
-    if (price <= 40) return '฿ (ต่ำกว่า 40 บาท)';
-    if (price <= 70) return '฿฿ (40 - 70 บาท)';
-    if (price <= 120) return '฿฿฿ (70 - 120 บาท)';
-    return '฿฿฿฿ (120 บาทขึ้นไป)';
   }
 
   private getPlacePriceLevelText(level: number): string {
@@ -1534,286 +217,7 @@ export class LineBotService {
     return map[level] ?? '-';
   }
 
-  private transformCloudinaryUrl(url: string): string {
-    if (!url) return url;
-    return url.replace('/upload/', '/upload/w_800,q_auto,f_auto/');
-  }
-
-  private buildMenuBubble(
-    tag: string | undefined,
-    colorTag: string | undefined,
-    menu: ShopMenuItemDocument,
-    distanceKm: string,
-  ) {
-    const tagBox = tag
-      ? [
-          {
-            type: 'box',
-            layout: 'vertical',
-            contents: [
-              {
-                type: 'text',
-                text: tag,
-                align: 'center',
-                color: '#ffffff',
-                size: 'sm',
-                weight: 'bold',
-              },
-            ],
-            backgroundColor: colorTag,
-            paddingAll: '5px',
-            paddingStart: '12px',
-            paddingEnd: '12px',
-            cornerRadius: '20px',
-            width: '100px',
-          },
-        ]
-      : [];
-
-    return {
-      type: 'bubble' as const,
-      styles: { body: { backgroundColor: '#FFF8F0' } },
-      hero: {
-        type: 'image',
-        url: this.transformCloudinaryUrl(menu.menuImage),
-        size: 'full',
-        aspectRatio: '20:13',
-        aspectMode: 'cover',
-      },
-      body: {
-        type: 'box',
-        layout: 'vertical',
-        spacing: 'sm',
-        contents: [
-          ...tagBox,
-          {
-            type: 'text',
-            text: menu.menuName,
-            weight: 'bold',
-            size: 'xl',
-            margin: 'sm',
-            wrap: true,
-          },
-          {
-            type: 'box',
-            layout: 'vertical',
-            margin: 'sm',
-            spacing: 'xs',
-            contents: [
-              {
-                type: 'box',
-                layout: 'baseline',
-                contents: [
-                  {
-                    type: 'text',
-                    text: 'ช่วงราคา',
-                    weight: 'bold',
-                    flex: 3,
-                    size: 'xs',
-                    color: '#555555',
-                  },
-                  {
-                    type: 'text',
-                    text: this.getPriceLevel(menu.price),
-                    flex: 5,
-                    color: '#888888',
-                    size: 'sm',
-                  },
-                ],
-              },
-              {
-                type: 'box',
-                layout: 'baseline',
-                contents: [
-                  {
-                    type: 'text',
-                    text: 'ใกล้คุณ',
-                    weight: 'bold',
-                    flex: 3,
-                    size: 'xs',
-                    color: '#555555',
-                  },
-                  {
-                    type: 'text',
-                    text: `${distanceKm} กม.`,
-                    flex: 5,
-                    color: '#888888',
-                    size: 'sm',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-      footer: {
-        type: 'box',
-        layout: 'vertical',
-        spacing: 'sm',
-        backgroundColor: '#FFF8F0',
-        contents: [
-          {
-            type: 'button',
-            style: 'primary',
-            height: 'sm',
-            color: '#D97A2B',
-            action: {
-              type: 'postback',
-              label: '🍽️ แนะนำร้าน',
-              data: `viewShops=${menu.menuId.toString()}`,
-              displayText: `แนะนำร้าน ${menu.menuName}`,
-            },
-          },
-          {
-            type: 'button',
-            style: 'primary',
-            height: 'sm',
-            color: '#6B8E23',
-            action: {
-              type: 'postback',
-              label: '📖 ดูสูตร',
-              data: `viewRecipe=${menu.menuId.toString()}`,
-              displayText: `ดูสูตร ${menu.menuName}`,
-            },
-          },
-        ],
-      },
-    };
-  }
-
-  private buildRestaurantBubble(item: ShopMenuItemDocument, distance?: string) {
-    const lat = item.location.coordinates[1];
-    const long = item.location.coordinates[0];
-    const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}&travelmode=walking`;
-
-    const bodyContents: any[] = [
-      {
-        type: 'text',
-        text: item.shopName,
-        weight: 'bold',
-        size: 'lg',
-        wrap: true,
-      },
-      {
-        type: 'text',
-        text: item.shopCategory || '',
-        color: '#999999',
-      },
-      {
-        type: 'box',
-        layout: 'vertical',
-        margin: 'sm',
-        spacing: 'xs',
-        contents: [
-          {
-            type: 'box',
-            layout: 'baseline',
-            contents: [
-              {
-                type: 'text',
-                text: 'สถานที่',
-                weight: 'bold',
-                flex: 3,
-                size: 'xs',
-                color: '#555555',
-              },
-              {
-                type: 'text',
-                text: item.locationName || '-',
-                flex: 5,
-                color: '#888888',
-                size: 'sm',
-                wrap: true,
-              },
-            ],
-          },
-          {
-            type: 'box',
-            layout: 'baseline',
-            contents: [
-              {
-                type: 'text',
-                text: 'ช่วงราคา',
-                weight: 'bold',
-                flex: 3,
-                size: 'xs',
-                color: '#555555',
-              },
-              {
-                type: 'text',
-                text: this.getPriceLevel(item.price),
-                flex: 5,
-                color: '#888888',
-                size: 'sm',
-              },
-            ],
-          },
-        ],
-      },
-    ];
-
-    if (distance) {
-      (bodyContents[2] as any).contents.push({
-        type: 'box',
-        layout: 'baseline',
-        contents: [
-          {
-            type: 'text',
-            text: 'ใกล้คุณ',
-            weight: 'bold',
-            flex: 3,
-            size: 'xs',
-            color: '#555555',
-          },
-          {
-            type: 'text',
-            text: `${distance} กม.`,
-            flex: 5,
-            color: '#888888',
-            size: 'sm',
-          },
-        ],
-      });
-    }
-
-    return {
-      type: 'bubble' as const,
-      styles: { body: { backgroundColor: '#FFF8F0' } },
-      hero: {
-        type: 'image',
-        url: this.transformCloudinaryUrl(item.shopImage),
-        size: 'full',
-        aspectRatio: '20:13',
-        aspectMode: 'cover',
-      },
-      body: {
-        type: 'box',
-        layout: 'vertical',
-        spacing: 'sm',
-        backgroundColor: '#FFF8F0',
-        contents: bodyContents,
-      },
-      footer: {
-        type: 'box',
-        layout: 'vertical',
-        spacing: 'sm',
-        backgroundColor: '#FFF8F0',
-        contents: [
-          {
-            type: 'button',
-            style: 'primary',
-            height: 'sm',
-            color: '#D97A2B',
-            action: {
-              type: 'uri',
-              label: 'ดูเส้นทาง',
-              uri: mapUrl,
-            },
-          },
-        ],
-      },
-    };
-  }
+  // ─── Diary Summary  ──────────────────────────────────────────────
 
   private async showDiarySummary(
     replyToken: string,
@@ -2021,7 +425,7 @@ export class LineBotService {
       messages: [
         {
           type: 'text',
-          text: '👋 สวัสดี! ขอถามข้อมูลสั้นๆ 7 ขั้นตอนเพื่อคำนวณเป้าหมายแคลอรี่ส่วนตัวของคุณนะ\n\n📌 ขั้นที่ 1/7\nเป้าหมายของคุณคืออะไร?',
+          text: '👋 สวัสดี! เราขอถามข้อมูลสั้นๆ 7 ข้อ\nเพื่อคำนวณเป้าหมายแคลอรี่ส่วนตัวของคุณนะ\n\n📌 ข้อที่ 1 : เป้าหมายของคุณคืออะไร?',
           quickReply: {
             items: [
               {
@@ -2056,7 +460,7 @@ export class LineBotService {
         },
       ],
     });
-  }
+  } // used in onboard
 
   private async handleOnboardingPostback(
     replyToken: string,
@@ -2077,7 +481,7 @@ export class LineBotService {
           messages: [
             {
               type: 'text',
-              text: '📌 ขั้นที่ 2/7\nเพศของคุณ?',
+              text: '📌 ข้อที่ 2 : เพศของคุณ?',
               quickReply: {
                 items: [
                   {
@@ -2110,7 +514,7 @@ export class LineBotService {
         session.currentStep = 'ONBOARD_AGE';
         await this.replyText(
           replyToken,
-          '📌 ขั้นที่ 3/7\nอายุกี่ปี? (พิมพ์ตัวเลข เช่น 22)',
+          '📌 ข้อที่ 3 : คุณอายุเท่าไหร่?\n(พิมพ์ตัวเลข เช่น 22)',
         );
         break;
 
@@ -2122,7 +526,7 @@ export class LineBotService {
           messages: [
             {
               type: 'text',
-              text: '📌 ขั้นที่ 7/7\n% ไขมันในร่างกาย (ถ้าไม่รู้กด "ข้าม")',
+              text: '📌 ข้อสุดท้าย : % ไขมันในร่างกาย (ถ้าไม่รู้กด "ข้าม")',
               quickReply: {
                 items: [
                   {
@@ -2190,7 +594,7 @@ export class LineBotService {
         session.onboardData.bodyFatRange = value === 'skip' ? '' : value;
         return this.completeOnboarding(replyToken, userId);
     }
-  }
+  } // used in onboard
 
   private async handleOnboardingText(
     replyToken: string,
@@ -2212,7 +616,7 @@ export class LineBotService {
         session.currentStep = 'ONBOARD_WEIGHT';
         return this.replyText(
           replyToken,
-          '📌 ขั้นที่ 4/7\nน้ำหนักกี่ กก.? (พิมพ์ตัวเลข เช่น 65)',
+          '📌 ข้อที่ 4 : น้ำหนักกี่ กก.?\n(พิมพ์ตัวเลข เช่น 65)',
         );
       }
       case 'ONBOARD_WEIGHT': {
@@ -2227,7 +631,7 @@ export class LineBotService {
         session.currentStep = 'ONBOARD_HEIGHT';
         return this.replyText(
           replyToken,
-          '📌 ขั้นที่ 5/7\nส่วนสูงกี่ ซม.? (พิมพ์ตัวเลข เช่น 170)',
+          '📌 ข้อที่ 5 : ส่วนสูงกี่ ซม.?\n(พิมพ์ตัวเลข เช่น 170)',
         );
       }
       case 'ONBOARD_HEIGHT': {
@@ -2245,7 +649,7 @@ export class LineBotService {
           messages: [
             {
               type: 'text',
-              text: '📌 ขั้นที่ 6/7\nระดับกิจกรรมในชีวิตประจำวัน?',
+              text: '📌 ข้อที่ 6 : ระดับกิจกรรมในชีวิตประจำวัน?',
               quickReply: {
                 items: [
                   {
@@ -2291,10 +695,9 @@ export class LineBotService {
         });
       }
       default:
-        // ขั้นอื่นที่ใช้ quick reply ไม่ใช่ text
         return this.replyText(replyToken, '⚠️ กรุณากดปุ่มเพื่อเลือก');
     }
-  }
+  } // used in onboard
 
   private async completeOnboarding(replyToken: string, userId: string) {
     const session = this.sessions.get(userId)!;
@@ -2336,11 +739,395 @@ export class LineBotService {
       gain: 'เพิ่มน้ำหนัก',
     };
 
-    await this.replyText(
+    await this.replyOnboardingComplete(
       replyToken,
-      `✅ ตั้งค่าเสร็จแล้ว!\n\n🎯 เป้าหมาย: ${goalLabel[data.goal]}\n🔥 แคลอรี่ต่อวัน: ${profile.dailyCalorieGoal} kcal\n🥩 โปรตีน: ${profile.dailyProteinGoal}g\n🍚 คาร์บ: ${profile.dailyCarbGoal}g\n🥑 ไขมัน: ${profile.dailyFatGoal}g\n\nเริ่มได้เลย! ถ่ายรูปอาหารแล้วส่งมาเลย 📸`,
+      goalLabel[data.goal],
+      profile,
     );
+  } // used in onboard
+
+  private async replyOnboardingComplete(
+    replyToken: string,
+    goalLabel: string,
+    profile: {
+      dailyCalorieGoal: number;
+      dailyProteinGoal: number;
+      dailyCarbGoal: number;
+      dailyFatGoal: number;
+    },
+  ): Promise<void> {
+    // TODO: เปลี่ยน LIFF_DASHBOARD_URL เป็น URL จริงเมื่อ LIFF Dashboard พร้อม (ตอนนี้แค่ประวัติ ยังไม่มีหน้าตั้งค่าโปรไฟล์)
+    const LIFF_DASHBOARD_URL = 'https://liff.line.me/placeholder';
+
+    await this.client.replyMessage({
+      replyToken,
+      messages: [
+        {
+          type: 'flex',
+          altText: '✅ ตั้งค่าโปรไฟล์เสร็จแล้ว!',
+          contents: {
+            type: 'bubble',
+            styles: { body: { backgroundColor: '#FFF8F0' } },
+            body: {
+              type: 'box',
+              layout: 'vertical',
+              spacing: 'md',
+              contents: [
+                {
+                  type: 'text',
+                  text: '✅ ตั้งค่าเสร็จแล้ว!',
+                  weight: 'bold',
+                  size: 'xl',
+                  color: '#1DB446',
+                },
+                {
+                  type: 'text',
+                  text: 'เป้าหมายของคุณ',
+                  size: 'sm',
+                  color: '#999999',
+                  margin: 'md',
+                },
+                {
+                  type: 'box',
+                  layout: 'vertical',
+                  spacing: 'sm',
+                  margin: 'sm',
+                  contents: [
+                    {
+                      type: 'box',
+                      layout: 'baseline',
+                      contents: [
+                        {
+                          type: 'text',
+                          text: '🎯 เป้าหมาย',
+                          flex: 3,
+                          size: 'sm',
+                          color: '#555555',
+                        },
+                        {
+                          type: 'text',
+                          text: goalLabel,
+                          flex: 4,
+                          size: 'sm',
+                          weight: 'bold',
+                          color: '#333333',
+                        },
+                      ],
+                    },
+                    {
+                      type: 'box',
+                      layout: 'baseline',
+                      contents: [
+                        {
+                          type: 'text',
+                          text: '🔥 แคลอรี่',
+                          flex: 3,
+                          size: 'sm',
+                          color: '#555555',
+                        },
+                        {
+                          type: 'text',
+                          text: `${profile.dailyCalorieGoal} kcal/วัน`,
+                          flex: 4,
+                          size: 'sm',
+                          weight: 'bold',
+                          color: '#D97A2B',
+                        },
+                      ],
+                    },
+                    {
+                      type: 'box',
+                      layout: 'baseline',
+                      contents: [
+                        {
+                          type: 'text',
+                          text: '🥩 โปรตีน',
+                          flex: 3,
+                          size: 'sm',
+                          color: '#555555',
+                        },
+                        {
+                          type: 'text',
+                          text: `${profile.dailyProteinGoal}g`,
+                          flex: 4,
+                          size: 'sm',
+                          color: '#333333',
+                        },
+                      ],
+                    },
+                    {
+                      type: 'box',
+                      layout: 'baseline',
+                      contents: [
+                        {
+                          type: 'text',
+                          text: '🍚 คาร์บ',
+                          flex: 3,
+                          size: 'sm',
+                          color: '#555555',
+                        },
+                        {
+                          type: 'text',
+                          text: `${profile.dailyCarbGoal}g`,
+                          flex: 4,
+                          size: 'sm',
+                          color: '#333333',
+                        },
+                      ],
+                    },
+                    {
+                      type: 'box',
+                      layout: 'baseline',
+                      contents: [
+                        {
+                          type: 'text',
+                          text: '🥑 ไขมัน',
+                          flex: 3,
+                          size: 'sm',
+                          color: '#555555',
+                        },
+                        {
+                          type: 'text',
+                          text: `${profile.dailyFatGoal}g`,
+                          flex: 4,
+                          size: 'sm',
+                          color: '#333333',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                { type: 'separator', margin: 'lg' },
+                {
+                  type: 'text',
+                  text: 'มีอะไรให้ลองเลย 👇',
+                  size: 'sm',
+                  color: '#999999',
+                  margin: 'lg',
+                },
+                {
+                  type: 'box',
+                  layout: 'vertical',
+                  spacing: 'sm',
+                  margin: 'sm',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: '📸 ถ่ายรูปอาหาร → บันทึกอัตโนมัติ',
+                      size: 'sm',
+                      color: '#555555',
+                    },
+                    {
+                      type: 'text',
+                      text: '💬 พิมพ์คุยกับเรา เช่น "วันนี้กินอะไรดี"',
+                      size: 'sm',
+                      color: '#555555',
+                    },
+                    {
+                      type: 'text',
+                      text: '🗺️ ถามหาร้านอาหารใกล้ๆ',
+                      size: 'sm',
+                      color: '#555555',
+                    },
+                  ],
+                },
+              ],
+            },
+            footer: {
+              type: 'box',
+              layout: 'vertical',
+              backgroundColor: '#FFF8F0',
+              contents: [
+                {
+                  type: 'button',
+                  style: 'primary',
+                  color: '#D97A2B',
+                  action: {
+                    type: 'uri',
+                    label: '📊 เปิด Dashboard',
+                    uri: LIFF_DASHBOARD_URL,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  } // used in onboard
+
+  // ─── Image flow ──────────────────────────────────────────────
+
+  private async replyFoodSavedCard(
+    replyToken: string,
+    userId: string,
+    result: Awaited<ReturnType<typeof this.geminiService.analyzeFood>>,
+    savedEntryId: string,
+  ): Promise<void> {
+    const todayEntries = await this.foodDiaryService.getTodaySummary(userId);
+    const totalCalories = todayEntries.reduce((sum, e) => sum + e.calories, 0);
+    const totalProtein = todayEntries.reduce((sum, e) => sum + e.protein, 0);
+
+    await this.client.replyMessage({
+      replyToken,
+      messages: [
+        {
+          type: 'flex',
+          altText: `บันทึกแล้ว! ${result.menuName}`,
+          contents: {
+            type: 'bubble',
+            size: 'kilo',
+            body: {
+              type: 'box',
+              layout: 'vertical',
+              contents: [
+                {
+                  type: 'text',
+                  text: '✅ บันทึกอาหารแล้ว!',
+                  weight: 'bold',
+                  size: 'md',
+                  color: '#1DB446',
+                },
+                {
+                  type: 'text',
+                  text: result.menuName,
+                  size: 'lg',
+                  weight: 'bold',
+                  margin: 'sm',
+                  wrap: true,
+                },
+                { type: 'separator', margin: 'lg' },
+                {
+                  type: 'box',
+                  layout: 'vertical',
+                  margin: 'lg',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: 'โภชนาการ :',
+                      size: 'sm',
+                      color: '#999999',
+                    },
+                    {
+                      type: 'text',
+                      text: `🔥 ${result.calories} kcal  🥩 โปรตีน ${result.protein}g`,
+                      size: 'sm',
+                      color: '#555555',
+                      margin: 'sm',
+                    },
+                    {
+                      type: 'text',
+                      text: `🍚 คาร์บ ${result.carb}g  🥑 ไขมัน ${result.fat}g`,
+                      size: 'sm',
+                      color: '#555555',
+                      margin: 'sm',
+                    },
+                  ],
+                },
+                { type: 'separator', margin: 'lg' },
+                {
+                  type: 'box',
+                  layout: 'vertical',
+                  margin: 'lg',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: `📊 วันนี้รวม: ${totalCalories} kcal  โปรตีน ${totalProtein}g`,
+                      size: 'sm',
+                      weight: 'bold',
+                      color: '#D97A2B',
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+          quickReply: {
+            items: [
+              {
+                type: 'action',
+                action: {
+                  type: 'postback',
+                  label: '🌅 เช้า',
+                  data: `action=change_meal_type&entryId=${savedEntryId}&mealType=breakfast`,
+                  displayText: '🌅 เช้า',
+                },
+              },
+              {
+                type: 'action',
+                action: {
+                  type: 'postback',
+                  label: '☀️ เที่ยง',
+                  data: `action=change_meal_type&entryId=${savedEntryId}&mealType=lunch`,
+                  displayText: '☀️ เที่ยง',
+                },
+              },
+              {
+                type: 'action',
+                action: {
+                  type: 'postback',
+                  label: '🌙 เย็น',
+                  data: `action=change_meal_type&entryId=${savedEntryId}&mealType=dinner`,
+                  displayText: '🌙 เย็น',
+                },
+              },
+              {
+                type: 'action',
+                action: {
+                  type: 'postback',
+                  label: '🍪 ของว่าง',
+                  data: `action=change_meal_type&entryId=${savedEntryId}&mealType=snack`,
+                  displayText: '🍪 ของว่าง',
+                },
+              },
+            ],
+          },
+        },
+      ],
+    });
+  } // used in image flow
+
+  private async saveFoodDiaryEntry(
+    userId: string,
+    result: Awaited<ReturnType<typeof this.geminiService.analyzeFood>>,
+  ): Promise<string> {
+    if (!result.menuName || result.calories <= 0) return '';
+    const mealType = this.foodDiaryService.getMealTypeFromTime();
+    const saved = await this.foodDiaryService.save(
+      userId,
+      result.menuName,
+      result.calories,
+      result.protein,
+      result.carb,
+      result.fat,
+      result.cuisineType,
+      result.confidence,
+      mealType,
+    );
+    return String(saved._id);
+  } // used in image flow
+
+  private async fetchImageAsBase64(messageId: string): Promise<string> {
+    const stream = await this.blobClient.getMessageContent(messageId);
+    const buf = await buffer(stream);
+    return buf.toString('base64');
+  } // used in image flow
+
+  private async animationLoading(userId: string, loadingSec: number) {
+    await this.client.showLoadingAnimation({
+      chatId: userId,
+      loadingSeconds: loadingSec,
+    });
+  } // used
+
+  private async replyText(replyToken: string, text: string): Promise<void> {
+    await this.client.replyMessage({
+      replyToken: replyToken,
+      messages: [{ type: 'text', text }],
+    });
   }
+
+  // ─── Image flow ──────────────────────────────────────────────
 
   private async handleAgentChat(
     replyToken: string,

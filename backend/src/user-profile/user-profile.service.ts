@@ -64,7 +64,7 @@ export class UserProfileService {
       dailyCarbGoal: Math.round((dailyCalorieGoal * split.carb) / 4), // 4 kcal/g
       dailyFatGoal: Math.round((dailyCalorieGoal * split.fat) / 9), // 9 kcal/g
     };
-  }
+  } // used
 
   async createOrUpdate(
     dto: CreateUserProfileDto,
