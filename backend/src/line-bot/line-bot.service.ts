@@ -296,7 +296,7 @@ export class LineBotService {
                 {
                   type: 'text',
                   text: 'สรุปมื้อวันนี้',
-                  color: '#C44A3A',
+                  color: '#D97A2B',
                   weight: 'bold',
                   size: 'xl',
                 },
@@ -396,7 +396,7 @@ export class LineBotService {
                     label: 'ดูประวัติการกิน',
                     uri: connectUrl,
                   },
-                  color: '#A0522D',
+                  color: '#D97A2B',
                   margin: 'lg',
                 },
               ],

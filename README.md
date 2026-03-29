@@ -1,6 +1,6 @@
 # PaPaiKin
 
-A LINE Bot that recommends nearby food menus and restaurants, with a calorie tracking system powered by AI image analysis.
+LINE Bot สำหรับ Personal Nutrition Intelligence — ถ่ายรูปอาหาร → AI วิเคราะห์สารอาหาร → ติดตาม TDEE แบบ personalized + AI Agent แนะนำมื้ออาหารตามสารอาหารที่ขาด
 
 ---
 
@@ -8,20 +8,23 @@ A LINE Bot that recommends nearby food menus and restaurants, with a calorie tra
 
 | Feature | Description |
 |---|---|
-| Random Menu | Answer 3 questions → get 3 recommendations (cheapest / nearest / random) |
-| Quick Random | Instantly get 3 random restaurants near you |
-| Random Restaurant | Choose style + max distance → get 3 restaurant options |
-| Calorie Counter | Send a food photo → Gemini AI analyzes nutrition → auto-saved |
-| Meal Summary | View today's calorie summary + open LIFF to see full history |
+| Onboarding TDEE | 7-step survey (goal / gender / age / weight / height / activity / body fat) → คำนวณ TDEE + macro goals อัตโนมัติ |
+| AI Calorie Counter | ส่งรูปอาหาร → Gemini วิเคราะห์แคลอรี่ + โปรตีน + คาร์บ + ไขมัน → auto-save |
+| Nutrition Gap | เทียบ diary วันนี้ vs เป้าหมาย TDEE → รู้ว่าขาดสารอาหารอะไร |
+| AI Agent | Gemini Function Calling + Google Places — แนะนำมื้อและร้านอาหารแบบ personalized ตาม gap |
+| Conversation Memory | Agent จำบทสนทนาย้อนหลัง 6 turns — ถามต่อเนื่องได้โดยไม่ต้องอธิบายซ้ำ |
+| LIFF Dashboard | Dashboard macro progress + ประวัติการกิน + แก้ไขโปรไฟล์ (goal / น้ำหนัก / กิจกรรม) |
 
 ---
 
 ## Tech Stack
 
 ```
-Backend    NestJS + MongoDB (Mongoose) + LINE Bot SDK + Google Gemini API
-Frontend   React + Vite + TypeScript + LIFF SDK + Axios
-Tunnel     instatunnel.my (expose local server to internet)
+Backend    NestJS + MongoDB (Mongoose) + LINE Bot SDK v10
+AI         Google Gemini API (gemini-2.5-flash) + Function Calling
+Maps       Google Places API (Nearby Search)
+Frontend   React + Vite + TypeScript + LIFF SDK + Recharts + Axios
+Tunnel     instatunnel.my
 Deploy     LIFF → Vercel
 ```
 
@@ -33,15 +36,20 @@ Deploy     LIFF → Vercel
 PaPaiKin/
 ├── backend/
 │   └── src/
-│       ├── line-bot/        # Webhook handler + bot state machine
+│       ├── line-bot/        # Webhook handler + onboarding state machine + AI Agent routing
 │       ├── food-diary/      # Save and retrieve food intake history
-│       ├── menu/            # Food menu data
-│       ├── shop/            # Restaurant data
-│       ├── shop-menu-item/  # Links shops + menus + geolocation
+│       ├── user-profile/    # TDEE calculation + user profile CRUD
+│       ├── nutrition/       # Nutrition gap + weekly summary
+│       ├── ai-agent/        # Gemini Function Calling agent
+│       ├── google-places/   # Nearby restaurant search
 │       └── gemini/          # AI food image analysis
 └── liff-react/
     └── src/
-        └── App.tsx          # Food history page (LIFF web app)
+        ├── App.tsx          # LIFF app (3-tab bottom nav)
+        └── pages/
+            ├── Dashboard.tsx    # Macro ring charts + today's meals
+            ├── History.tsx      # Full food history table
+            └── ProfileEditor.tsx # Edit goal / weight / activity / body fat
 ```
 
 ---
@@ -49,12 +57,17 @@ PaPaiKin/
 ## Conversation Flow
 
 ```
-Rich Menu
-├── Random Menu       → Q1 (category) → Q2 (protein) → Q3 (cooking style) → Location → 3 options
-├── Quick Random      → Location → 3 random restaurants
-├── Random Restaurant → Q1 (style) → Q2 (max distance) → Location → 3 restaurants
-├── Calorie Counter   → Receive image → Gemini analysis → Save to FoodDiary → Reply with nutrition
-└── Meal Summary      → Today's calorie summary + LIFF button
+Add Friend → Onboarding (7 steps) → TDEE calculated
+
+[ส่งรูปอาหาร]
+  → Gemini analyzes → saved to diary → Flex reply (nutrition + running total)
+  → Quick reply: เช้า / กลางวัน / เย็น / มื้อดึก
+
+[ข้อความอิสระ / แนะนำ / ขาดอะไร / หาร้าน]
+  → AI Agent (Function Calling)
+    tools: getDiaryToday, getUserGoals, getNutritionGap,
+           getWeeklySummary, getNearbyRestaurants, getMenuRecommendation
+  → ตอบ text + Flex Carousel (ร้านอาหาร) ตามต้องการ
 ```
 
 ---
@@ -65,12 +78,8 @@ Rich Menu
 |---|---|---|
 | POST | `/line-bot/webhook` | Receive events from LINE |
 | GET | `/history/data?userId=` | Get all food entries for a user |
-| POST | `/menu` | Create a menu |
-| GET | `/menu` | List all menus |
-| POST | `/menu/control-menu` | Filter menus by Q1/Q2/Q3 answers |
-| POST | `/shop-menu-item` | Create a shop menu item |
-| POST | `/shop-menu-item/guided-menu` | Get 3 recommendations by filter + location |
-| GET | `/shop-menu-item/restaurant-listing/:menuId` | Find all restaurants serving a menu |
+| GET | `/user-profile?userId=` | Get user profile + TDEE goals |
+| PUT | `/user-profile?userId=` | Update profile → recalculate TDEE |
 
 ---
 
@@ -78,21 +87,12 @@ Rich Menu
 
 | Collection | Data |
 |---|---|
-| `menus` | Food menus (name, category, ingredients, cooking method) |
-| `shops` | Restaurants (name, image, GeoJSON location) |
-| `shopmenuitems` | Menu items per shop with location + price (used for nearest/cheapest/random) |
-| `fooddiaries` | User food intake log (lineUserId, menu name, calories, protein, carb, fat) |
+| `fooddiaries` | User food intake log (lineUserId, menuName, calories, protein, carb, fat, mealType, cuisineType) |
+| `userprofiles` | User profile (lineUserId, goal, gender, age, weight, height, activityLevel, bodyFatRange, dailyCalorie/Protein/Carb/FatGoal) |
 
 ---
 
-## Getting Started
-
-### 1. Backend
-
-```bash
-cd backend
-npm install
-```
+## Environment Variables
 
 Create `backend/.env`:
 
@@ -103,13 +103,18 @@ LINE_CHANNEL_SECRET=...
 LINE_CHANNEL_ACCESS_TOKEN=...
 
 GEMINI_API_KEY=...
-
-SERVER_URL=https://liff.line.me/<LIFF_ID>
+GOOGLE_PLACES_API_KEY=...
 ```
 
-Run:
+---
+
+## Getting Started
+
+### 1. Backend
 
 ```bash
+cd backend
+npm install
 npm run start:dev
 ```
 
@@ -119,7 +124,7 @@ npm run start:dev
 instatunnel --port 3000
 ```
 
-Update the Webhook URL in LINE Developers Console to `https://<tunnel-url>/line-bot/webhook`
+Update Webhook URL in LINE Developers Console → `https://<tunnel-url>/line-bot/webhook`
 
 ### 3. LIFF Frontend
 
@@ -129,16 +134,9 @@ npm install
 npm run dev
 ```
 
-Deploy to Vercel and set the Endpoint URL in LINE LIFF settings.
+Deploy to Vercel → set Endpoint URL in LINE LIFF settings.
 
-### 4. Rich Menu Setup
-
-```bash
-cd backend
-npx ts-node -r tsconfig-paths/register scripts/setup-rich-menu.ts
-```
-
-### 5. MongoDB (Docker)
+### 4. MongoDB (Docker)
 
 ```bash
 docker compose up -d
@@ -152,4 +150,4 @@ docker compose up -d
 - **URL**: `https://liff.line.me/2009619573-KoQIjGuU`
 - **Deploy**: Vercel (`pa-pai-kin.vercel.app`)
 
-Can only be opened inside the LINE app.
+เปิดได้ภายใน LINE เท่านั้น
