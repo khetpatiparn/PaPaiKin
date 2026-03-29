@@ -30,7 +30,7 @@ export class GooglePlacesService {
     radiusMeters = 1000,
     minRating = 0,
     openNow = false,
-    maxPrice?: number, // 0-4
+    maxPrice?: number,
   ): Promise<PlaceResult[]> {
     const params = new URLSearchParams({
       location: `${lat},${lng}`,

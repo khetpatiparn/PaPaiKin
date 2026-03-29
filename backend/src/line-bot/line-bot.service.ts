@@ -1169,12 +1169,12 @@ export class LineBotService {
         messages: [
           {
             type: 'text',
-            text: `${agentResponse.summary}\n\nแชร์ตำแหน่งเพื่อหาร้านใกล้คุณได้เลย 📍`,
+            text: `${agentResponse.summary}\n\nแชร์ตำแหน่งเพื่อหาร้านใกล้ๆคุณ 📍`,
             quickReply: {
               items: [
                 {
                   type: 'action',
-                  action: { type: 'location', label: '📍 แชร์ตำแหน่ง' },
+                  action: { type: 'location', label: 'แชร์ตำแหน่ง' },
                 },
               ],
             },
@@ -1207,7 +1207,7 @@ export class LineBotService {
   private buildAgentRestaurantBubble(
     restaurant: AgentResponse['restaurants'][number],
   ) {
-    const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${restaurant.lat},${restaurant.lng}&travelmode=walking`;
+    const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${restaurant.lat},${restaurant.lng}`;
     const priceLevelText = this.getPlacePriceLevelText(restaurant.priceLevel);
     const openText =
       restaurant.isOpenNow === true

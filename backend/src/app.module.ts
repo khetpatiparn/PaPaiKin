@@ -5,9 +5,6 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 // mongoose
 import { MongooseModule } from '@nestjs/mongoose';
-import { MenuModule } from './menu/menu.module';
-import { ShopModule } from './shop/shop.module';
-import { ShopMenuItemModule } from './shop-menu-item/shop-menu-item.module';
 import { Connection } from 'mongoose';
 import { LineBotModule } from './line-bot/line-bot.module';
 import { FoodDiaryModule } from './food-diary/food-diary.module';
@@ -33,9 +30,6 @@ import { AiAgentModule } from './ai-agent/ai-agent.module';
         },
       }),
     }),
-    MenuModule,
-    ShopModule,
-    ShopMenuItemModule,
     LineBotModule,
     FoodDiaryModule,
     UserProfileModule,
