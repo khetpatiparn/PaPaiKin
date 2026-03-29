@@ -1,4 +1,4 @@
-import { FoodEntry } from '../api'
+import type { FoodEntry } from '../api'
 
 interface Props {
   entries: FoodEntry[]

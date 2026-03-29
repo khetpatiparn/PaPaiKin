@@ -1,4 +1,4 @@
-import { UserProfile, FoodEntry } from '../api'
+import type { UserProfile, FoodEntry } from '../api'
 import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip } from 'recharts'
 
 interface Props {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { UserProfile, UpdateProfileDto, api } from '../api'
+import { api } from '../api'
+import type { UserProfile, UpdateProfileDto } from '../api'
 
 interface Props {
   userId: string
