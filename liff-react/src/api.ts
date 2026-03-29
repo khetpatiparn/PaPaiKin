@@ -26,6 +26,23 @@ export interface UserProfile {
   dailyFatGoal: number
 }
 
+export interface WeeklyDay {
+  date: string
+  calories: number
+  protein: number
+  carb: number
+  fat: number
+  entryCount: number
+}
+
+export interface WeeklySummary {
+  days: WeeklyDay[]
+  avgCalories: number
+  avgProtein: number
+  avgCarb: number
+  avgFat: number
+}
+
 export interface UpdateProfileDto {
   goal: 'lose' | 'maintain' | 'gain'
   gender: 'male' | 'female'
@@ -45,4 +62,7 @@ export const api = {
 
   updateProfile: (userId: string, dto: UpdateProfileDto) =>
     axios.put<UserProfile>(`${BACKEND_URL}/user-profile`, dto, { params: { userId } }).then(r => r.data),
+
+  getWeeklySummary: (userId: string) =>
+    axios.get<WeeklySummary>(`${BACKEND_URL}/nutrition/weekly`, { params: { userId } }).then(r => r.data),
 }

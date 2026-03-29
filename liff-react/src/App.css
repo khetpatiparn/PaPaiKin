@@ -272,6 +272,80 @@ tr:last-child td {
   text-align: center;
 }
 
+/* Weekly summary */
+.weekly-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-top: 16px;
+}
+
+.weekly-summary h3 {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 12px;
+}
+
+.weekly-avg-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.weekly-avg-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.weekly-avg-label {
+  font-size: 10px;
+  color: #999;
+}
+
+.weekly-avg-value {
+  font-size: 15px;
+  font-weight: bold;
+  color: #D97A2B;
+}
+
+.weekly-avg-unit {
+  font-size: 10px;
+  color: #bbb;
+}
+
+.weekly-days {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 60px;
+}
+
+.weekly-day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 4px;
+}
+
+.weekly-bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+  transition: height 0.3s;
+}
+
+.weekly-day-label {
+  font-size: 10px;
+  color: #999;
+}
+
 /* Utilities */
 .center-screen {
   display: flex;

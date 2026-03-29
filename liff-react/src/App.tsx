@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import liff from '@line/liff'
 import { api } from './api'
-import type { UserProfile, FoodEntry } from './api'
+import type { UserProfile, FoodEntry, WeeklySummary } from './api'
 import Dashboard from './pages/Dashboard'
 import History from './pages/History'
 import ProfileEditor from './pages/ProfileEditor'
@@ -15,6 +15,7 @@ function App() {
   const [userId, setUserId] = useState<string | null>(null)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [entries, setEntries] = useState<FoodEntry[]>([])
+  const [weekly, setWeekly] = useState<WeeklySummary | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('dashboard')
@@ -28,12 +29,14 @@ function App() {
         const uid = lineProfile.userId
         setUserId(uid)
 
-        const [profileData, historyData] = await Promise.all([
+        const [profileData, historyData, weeklyData] = await Promise.all([
           api.getProfile(uid),
           api.getHistory(uid),
+          api.getWeeklySummary(uid),
         ])
         setProfile(profileData)
         setEntries(historyData)
+        setWeekly(weeklyData)
       } catch (err: any) {
         setError(err.message)
       } finally {
@@ -53,7 +56,7 @@ function App() {
   return (
     <div className="app">
       <div className="content">
-        {tab === 'dashboard' && <Dashboard profile={profile} todayEntries={todayEntries} />}
+        {tab === 'dashboard' && <Dashboard profile={profile} todayEntries={todayEntries} weekly={weekly} />}
         {tab === 'history' && <History entries={entries} />}
         {tab === 'profile' && userId && (
           <ProfileEditor

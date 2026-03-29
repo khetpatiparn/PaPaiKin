@@ -1,12 +1,13 @@
-import type { UserProfile, FoodEntry } from '../api'
+import type { UserProfile, FoodEntry, WeeklySummary } from '../api'
 import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip } from 'recharts'
 
 interface Props {
   profile: UserProfile
   todayEntries: FoodEntry[]
+  weekly: WeeklySummary | null
 }
 
-export default function Dashboard({ profile, todayEntries }: Props) {
+export default function Dashboard({ profile, todayEntries, weekly }: Props) {
   const today = todayEntries.reduce(
     (acc, e) => ({
       calories: acc.calories + e.calories,
@@ -83,6 +84,49 @@ export default function Dashboard({ profile, todayEntries }: Props) {
               <span className="today-cal">🔥 {e.calories} kcal</span>
             </div>
           ))}
+        </div>
+      )}
+
+      {weekly && (
+        <div className="weekly-summary">
+          <h3>📅 สรุปสัปดาห์นี้ (เฉลี่ย/วัน)</h3>
+          <div className="weekly-avg-row">
+            <div className="weekly-avg-item">
+              <span className="weekly-avg-label">🔥 แคลอรี่</span>
+              <span className="weekly-avg-value">{weekly.avgCalories}</span>
+              <span className="weekly-avg-unit">kcal</span>
+            </div>
+            <div className="weekly-avg-item">
+              <span className="weekly-avg-label">🥩 โปรตีน</span>
+              <span className="weekly-avg-value">{weekly.avgProtein}</span>
+              <span className="weekly-avg-unit">g</span>
+            </div>
+            <div className="weekly-avg-item">
+              <span className="weekly-avg-label">🍚 คาร์บ</span>
+              <span className="weekly-avg-value">{weekly.avgCarb}</span>
+              <span className="weekly-avg-unit">g</span>
+            </div>
+            <div className="weekly-avg-item">
+              <span className="weekly-avg-label">🥑 ไขมัน</span>
+              <span className="weekly-avg-value">{weekly.avgFat}</span>
+              <span className="weekly-avg-unit">g</span>
+            </div>
+          </div>
+          <div className="weekly-days">
+            {weekly.days.map((d) => {
+              const pct = Math.min(Math.round((d.calories / profile.dailyCalorieGoal) * 100), 100)
+              const dayName = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'][new Date(d.date).getDay()]
+              return (
+                <div key={d.date} className="weekly-day">
+                  <div
+                    className="weekly-bar"
+                    style={{ height: `${Math.max(pct, 4)}%`, background: d.entryCount > 0 ? '#D97A2B' : '#e8e0d8' }}
+                  />
+                  <span className="weekly-day-label">{dayName}</span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       )}
     </div>
