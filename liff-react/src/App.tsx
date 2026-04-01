@@ -5,6 +5,7 @@ import type { UserProfile, FoodEntry, WeeklySummary } from './api'
 import Dashboard from './pages/Dashboard'
 import History from './pages/History'
 import ProfileEditor from './pages/ProfileEditor'
+import { LayoutDashboard, ClipboardList, UserCircle } from 'lucide-react'
 import './App.css'
 
 const LIFF_ID = '2009619573-KoQIjGuU'
@@ -69,12 +70,15 @@ function App() {
 
       <nav className="bottom-nav">
         <button className={tab === 'dashboard' ? 'active' : ''} onClick={() => setTab('dashboard')}>
+          <LayoutDashboard size={20} />
           <span>Dashboard</span>
         </button>
         <button className={tab === 'history' ? 'active' : ''} onClick={() => setTab('history')}>
+          <ClipboardList size={20} />
           <span>ประวัติ</span>
         </button>
         <button className={tab === 'profile' ? 'active' : ''} onClick={() => setTab('profile')}>
+          <UserCircle size={20} />
           <span>โปรไฟล์</span>
         </button>
       </nav>

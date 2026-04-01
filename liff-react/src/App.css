@@ -27,11 +27,12 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 64px;
   background: white;
-  border-top: 1px solid #e8d8c8;
+  border-top: 1px solid #ede0d4;
   display: flex;
   z-index: 100;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
 }
 
 .bottom-nav button {
@@ -40,21 +41,30 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   border: none;
   background: none;
   cursor: pointer;
   font-size: 10px;
-  color: #999;
-  padding: 6px 0;
-}
-
-.bottom-nav button span:first-child {
-  font-size: 20px;
+  color: #bbb;
+  padding: 8px 0;
+  transition: color 0.15s;
+  position: relative;
 }
 
 .bottom-nav button.active {
   color: #D97A2B;
+}
+
+.bottom-nav button.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: #D97A2B;
+  border-radius: 0 0 4px 4px;
 }
 
 /* Page */
