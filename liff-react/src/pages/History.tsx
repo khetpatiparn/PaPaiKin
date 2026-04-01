@@ -1,4 +1,5 @@
 import type { FoodEntry } from '../api'
+import { ClipboardList } from 'lucide-react'
 
 interface Props {
   entries: FoodEntry[]
@@ -17,7 +18,7 @@ export default function History({ entries }: Props) {
 
   return (
     <div className="page">
-      <h2 className="page-title">📋 ประวัติการกิน</h2>
+      <h2 className="page-title"><ClipboardList size={18} /> ประวัติการกิน</h2>
 
       {entries.length === 0 ? (
         <p className="empty-hint">ยังไม่มีประวัติการกิน<br />ลองส่งรูปอาหารใน LINE ดูสิ!</p>

@@ -1,5 +1,6 @@
 import type { UserProfile, FoodEntry, WeeklySummary } from '../api'
 import { RadialBarChart, RadialBar, ResponsiveContainer, Tooltip } from 'recharts'
+import { TrendingDown, TrendingUp, Minus, Flame, Beef, Wheat, Droplets, CalendarDays, Camera } from 'lucide-react'
 
 interface Props {
   profile: UserProfile
@@ -19,24 +20,26 @@ export default function Dashboard({ profile, todayEntries, weekly }: Props) {
   )
 
   const macros = [
-    { name: 'แคลอรี่', consumed: today.calories, goal: profile.dailyCalorieGoal, unit: 'kcal', color: '#D97A2B' },
-    { name: 'โปรตีน', consumed: today.protein, goal: profile.dailyProteinGoal, unit: 'g', color: '#E85D5D' },
-    { name: 'คาร์บ', consumed: today.carb, goal: profile.dailyCarbGoal, unit: 'g', color: '#F5A623' },
-    { name: 'ไขมัน', consumed: today.fat, goal: profile.dailyFatGoal, unit: 'g', color: '#7ED321' },
+    { name: 'แคลอรี่', consumed: today.calories, goal: profile.dailyCalorieGoal, unit: 'kcal', color: '#D97A2B', icon: <Flame size={13} /> },
+    { name: 'โปรตีน', consumed: today.protein,   goal: profile.dailyProteinGoal, unit: 'g',    color: '#E85D5D', icon: <Beef size={13} /> },
+    { name: 'คาร์บ',  consumed: today.carb,       goal: profile.dailyCarbGoal,    unit: 'g',    color: '#F5A623', icon: <Wheat size={13} /> },
+    { name: 'ไขมัน',  consumed: today.fat,        goal: profile.dailyFatGoal,     unit: 'g',    color: '#7ED321', icon: <Droplets size={13} /> },
   ]
 
-  const goalLabel: Record<string, string> = {
-    lose: '⬇️ ลดน้ำหนัก',
-    maintain: '⚖️ คงน้ำหนัก',
-    gain: '⬆️ เพิ่มน้ำหนัก',
+  const goalLabel: Record<string, { text: string; icon: React.ReactNode }> = {
+    lose:     { text: 'ลดน้ำหนัก',   icon: <TrendingDown size={14} /> },
+    maintain: { text: 'คงน้ำหนัก',   icon: <Minus size={14} /> },
+    gain:     { text: 'เพิ่มน้ำหนัก', icon: <TrendingUp size={14} /> },
   }
+
+  const goal = goalLabel[profile.goal]
 
   return (
     <div className="page">
-      <h2 className="page-title">📊 สรุปวันนี้</h2>
+      <h2 className="page-title">สรุปวันนี้</h2>
 
       <div className="profile-badge">
-        <span>{goalLabel[profile.goal]}</span>
+        <span className="goal-badge">{goal.icon}{goal.text}</span>
         <span>{profile.weight} kg · {profile.height} cm</span>
       </div>
 
@@ -62,7 +65,7 @@ export default function Dashboard({ profile, todayEntries, weekly }: Props) {
                 <span className="macro-pct" style={{ color: m.color }}>{pct}%</span>
               </div>
               <div className="macro-info">
-                <div className="macro-name">{m.name}</div>
+                <div className="macro-name" style={{ color: m.color }}>{m.icon} {m.name}</div>
                 <div className="macro-consumed">{m.consumed} / {m.goal} {m.unit}</div>
                 <div className="macro-remaining">เหลือ {remaining} {m.unit}</div>
               </div>
@@ -72,7 +75,10 @@ export default function Dashboard({ profile, todayEntries, weekly }: Props) {
       </div>
 
       {todayEntries.length === 0 && (
-        <p className="empty-hint">ยังไม่มีบันทึกวันนี้<br />ถ่ายรูปอาหารใน LINE ได้เลย 📸</p>
+        <p className="empty-hint">
+          <Camera size={16} />
+          ยังไม่มีบันทึกวันนี้ — ถ่ายรูปอาหารใน LINE ได้เลย
+        </p>
       )}
 
       {todayEntries.length > 0 && (
@@ -81,7 +87,7 @@ export default function Dashboard({ profile, todayEntries, weekly }: Props) {
           {todayEntries.map((e, i) => (
             <div key={i} className="today-item">
               <span className="today-menu">{e.menuName}</span>
-              <span className="today-cal">🔥 {e.calories} kcal</span>
+              <span className="today-cal"><Flame size={12} /> {e.calories} kcal</span>
             </div>
           ))}
         </div>
@@ -89,25 +95,25 @@ export default function Dashboard({ profile, todayEntries, weekly }: Props) {
 
       {weekly && (
         <div className="weekly-summary">
-          <h3>📅 สรุปสัปดาห์นี้ (เฉลี่ย/วัน)</h3>
+          <h3><CalendarDays size={15} /> สรุปสัปดาห์นี้ (เฉลี่ย/วัน)</h3>
           <div className="weekly-avg-row">
             <div className="weekly-avg-item">
-              <span className="weekly-avg-label">🔥 แคลอรี่</span>
+              <span className="weekly-avg-label"><Flame size={13} /> แคลอรี่</span>
               <span className="weekly-avg-value">{weekly.avgCalories}</span>
               <span className="weekly-avg-unit">kcal</span>
             </div>
             <div className="weekly-avg-item">
-              <span className="weekly-avg-label">🥩 โปรตีน</span>
+              <span className="weekly-avg-label"><Beef size={13} /> โปรตีน</span>
               <span className="weekly-avg-value">{weekly.avgProtein}</span>
               <span className="weekly-avg-unit">g</span>
             </div>
             <div className="weekly-avg-item">
-              <span className="weekly-avg-label">🍚 คาร์บ</span>
+              <span className="weekly-avg-label"><Wheat size={13} /> คาร์บ</span>
               <span className="weekly-avg-value">{weekly.avgCarb}</span>
               <span className="weekly-avg-unit">g</span>
             </div>
             <div className="weekly-avg-item">
-              <span className="weekly-avg-label">🥑 ไขมัน</span>
+              <span className="weekly-avg-label"><Droplets size={13} /> ไขมัน</span>
               <span className="weekly-avg-value">{weekly.avgFat}</span>
               <span className="weekly-avg-unit">g</span>
             </div>

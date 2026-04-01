@@ -69,13 +69,13 @@ function App() {
 
       <nav className="bottom-nav">
         <button className={tab === 'dashboard' ? 'active' : ''} onClick={() => setTab('dashboard')}>
-          <span>📊</span><span>Dashboard</span>
+          <span>Dashboard</span>
         </button>
         <button className={tab === 'history' ? 'active' : ''} onClick={() => setTab('history')}>
-          <span>📋</span><span>ประวัติ</span>
+          <span>ประวัติ</span>
         </button>
         <button className={tab === 'profile' ? 'active' : ''} onClick={() => setTab('profile')}>
-          <span>⚙️</span><span>โปรไฟล์</span>
+          <span>โปรไฟล์</span>
         </button>
       </nav>
     </div>

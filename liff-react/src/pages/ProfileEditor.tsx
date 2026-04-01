@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { api } from '../api'
 import type { UserProfile, UpdateProfileDto } from '../api'
+import { Settings, Target, User, Cake, Weight, Ruler, Activity, BarChart2, Save, CheckCircle } from 'lucide-react'
 
 interface Props {
   userId: string
@@ -9,30 +10,30 @@ interface Props {
 }
 
 const goalOptions = [
-  { value: 'lose', label: '⬇️ ลดน้ำหนัก' },
-  { value: 'maintain', label: '⚖️ คงน้ำหนัก' },
-  { value: 'gain', label: '⬆️ เพิ่มน้ำหนัก' },
+  { value: 'lose',     label: 'ลดน้ำหนัก' },
+  { value: 'maintain', label: 'คงน้ำหนัก' },
+  { value: 'gain',     label: 'เพิ่มน้ำหนัก' },
 ]
 
 const genderOptions = [
-  { value: 'male', label: '👨 ชาย' },
-  { value: 'female', label: '👩 หญิง' },
+  { value: 'male',   label: 'ชาย' },
+  { value: 'female', label: 'หญิง' },
 ]
 
 const activityOptions = [
-  { value: 'sedentary', label: '🪑 นั่งโต๊ะเป็นส่วนใหญ่' },
-  { value: 'light', label: '🚶 เดินเบาๆ บางวัน' },
-  { value: 'moderate', label: '🏃 ออกกำลังสม่ำเสมอ' },
-  { value: 'very_active', label: '💪 ออกกำลังหนักมาก' },
+  { value: 'sedentary',   label: 'นั่งโต๊ะเป็นส่วนใหญ่' },
+  { value: 'light',       label: 'เดินเบาๆ บางวัน' },
+  { value: 'moderate',    label: 'ออกกำลังสม่ำเสมอ' },
+  { value: 'very_active', label: 'ออกกำลังหนักมาก' },
 ]
 
 const bodyFatOptions = [
-  { value: '', label: 'ไม่ระบุ' },
+  { value: '',      label: 'ไม่ระบุ' },
   { value: '10-15%', label: '10-15%' },
   { value: '16-20%', label: '16-20%' },
   { value: '21-25%', label: '21-25%' },
   { value: '26-30%', label: '26-30%' },
-  { value: '31%+', label: '31%+' },
+  { value: '31%+',   label: '31%+' },
 ]
 
 export default function ProfileEditor({ userId, profile, onSaved }: Props) {
@@ -66,49 +67,49 @@ export default function ProfileEditor({ userId, profile, onSaved }: Props) {
 
   return (
     <div className="page">
-      <h2 className="page-title">⚙️ แก้ไขโปรไฟล์</h2>
+      <h2 className="page-title"><Settings size={18} /> แก้ไขโปรไฟล์</h2>
       <p className="page-subtitle">ระบบจะคำนวณ TDEE ใหม่อัตโนมัติเมื่อบันทึก</p>
 
       <div className="form">
-        <label>🎯 เป้าหมาย</label>
+        <label><Target size={14} /> เป้าหมาย</label>
         <select value={form.goal} onChange={(e) => set('goal', e.target.value as UpdateProfileDto['goal'])}>
           {goalOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
 
-        <label>👤 เพศ</label>
+        <label><User size={14} /> เพศ</label>
         <select value={form.gender} onChange={(e) => set('gender', e.target.value as UpdateProfileDto['gender'])}>
           {genderOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
 
-        <label>🎂 อายุ (ปี)</label>
+        <label><Cake size={14} /> อายุ (ปี)</label>
         <input type="number" value={form.age} min={10} max={100}
           onChange={(e) => set('age', Number(e.target.value))} />
 
-        <label>⚖️ น้ำหนัก (kg)</label>
+        <label><Weight size={14} /> น้ำหนัก (kg)</label>
         <input type="number" value={form.weight} min={30} max={300} step={0.1}
           onChange={(e) => set('weight', Number(e.target.value))} />
 
-        <label>📏 ส่วนสูง (cm)</label>
+        <label><Ruler size={14} /> ส่วนสูง (cm)</label>
         <input type="number" value={form.height} min={100} max={250}
           onChange={(e) => set('height', Number(e.target.value))} />
 
-        <label>🏃 ระดับกิจกรรม</label>
+        <label><Activity size={14} /> ระดับกิจกรรม</label>
         <select value={form.activityLevel} onChange={(e) => set('activityLevel', e.target.value as UpdateProfileDto['activityLevel'])}>
           {activityOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
 
-        <label>📊 % ไขมันในร่างกาย</label>
+        <label><BarChart2 size={14} /> % ไขมันในร่างกาย</label>
         <select value={form.bodyFatRange ?? ''} onChange={(e) => set('bodyFatRange', e.target.value)}>
           {bodyFatOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
         </select>
 
         <button className="save-btn" onClick={handleSave} disabled={saving}>
-          {saving ? 'กำลังบันทึก...' : '💾 บันทึก'}
+          <Save size={15} /> {saving ? 'กำลังบันทึก...' : 'บันทึก'}
         </button>
 
         {saved && (
           <div className="saved-badge">
-            ✅ บันทึกแล้ว! แคลอรี่เป้าหมายใหม่คือ {profile.dailyCalorieGoal} kcal/วัน
+            <CheckCircle size={15} /> บันทึกแล้ว! แคลอรี่เป้าหมายใหม่คือ {profile.dailyCalorieGoal} kcal/วัน
           </div>
         )}
       </div>
