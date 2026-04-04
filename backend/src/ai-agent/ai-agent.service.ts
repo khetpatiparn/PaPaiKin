@@ -5,6 +5,8 @@ import {
   GooglePlacesService,
   PlaceResult,
 } from 'src/google-places/google-places.service';
+import { FoodDiaryService } from 'src/food-diary/food-diary.service';
+import { UserProfileService } from 'src/user-profile/user-profile.service';
 
 export interface AgentResponse {
   summary: string;
@@ -72,9 +74,57 @@ export class AiAgentService {
     ],
   };
 
+  private readonly logFoodEntryTool = {
+    functionDeclarations: [
+      {
+        name: 'logFoodEntry',
+        description:
+          'ใช้บันทึกข้อมูลโภชนาการลงในระบบเมื่อผู้ใช้พิมพ์บอกชื่ออาหารหรือสิ่งที่เพิ่งกินไป โดยให้ AI ประเมินปริมาณสารอาหารเองแล้วส่งมาให้ระบบ',
+        parameters: {
+          type: Type.OBJECT,
+          properties: {
+            menuName: {
+              type: Type.STRING,
+              description: 'ชื่อเมนูอาหาร เช่น ข้าวมันไก่, นมสด, หมูปิ้ง',
+            },
+            estimatedCalories: {
+              type: Type.NUMBER,
+              description: 'แคลอรี่ที่ประเมินได้',
+            },
+            protein: {
+              type: Type.NUMBER,
+              description: 'โปรตีนที่ประเมินได้ (กรัม)',
+            },
+            carb: {
+              type: Type.NUMBER,
+              description: 'คาร์โบไฮเดรตที่ประเมินได้ (กรัม)',
+            },
+            fat: {
+              type: Type.NUMBER,
+              description: 'ไขมันที่ประเมินได้ (กรัม)',
+            },
+            mealType: {
+              type: Type.STRING,
+              description:
+                'มื้ออาหารที่สกัดจากประโยคผู้ใช้ (breakfast, lunch, dinner, snack) ถ้าไม่ระบุเวลาที่ชัดเจนไม่ต้องส่งฟิลด์นี้มา',
+            },
+            cuisineType: {
+              type: Type.STRING,
+              description:
+                'สัญชาติอาหารหรือประเภทหมวดหมู่ (เช่น อาหารไทย, ของหวาน, เครื่องดื่ม, อาหารญี่ปุ่น)',
+            },
+          },
+          required: ['menuName', 'estimatedCalories', 'protein', 'carb', 'fat'],
+        },
+      },
+    ],
+  };
+
   constructor(
     private readonly nutritionService: NutritionService,
     private readonly googlePlacesService: GooglePlacesService,
+    private readonly foodDiaryService: FoodDiaryService,
+    private readonly userProfileService: UserProfileService,
   ) {
     this.ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   }
@@ -85,21 +135,33 @@ export class AiAgentService {
     location?: { lat: number; lng: number },
     history?: Content[],
   ): Promise<AgentResponse> {
-    // 1. เตรียมข้อมูล nutrition ก่อนส่งให้ Gemini
-    const [gap, weekly] = await Promise.all([
+    const [gap, weekly, todayEntries, userProfile] = await Promise.all([
       this.nutritionService.getNutritionGap(lineUserId),
       this.nutritionService.getWeeklySummary(lineUserId),
+      this.foodDiaryService.getTodaySummary(lineUserId),
+      this.userProfileService.findByLineUserId(lineUserId),
     ]);
 
+    const menusText =
+      todayEntries.length > 0
+        ? `\nมื้อที่บันทึกวันนี้: ${todayEntries.map((e) => `${e.menuName} (${e.calories} kcal)`).join(', ')}`
+        : '\nมื้อที่บันทึกวันนี้: ยังไม่มีการบันทึกอาหาร';
+
+    const profileText = userProfile
+      ? `เพศ: ${userProfile.gender === 'male' ? 'ชาย' : 'หญิง'}, อายุ: ${userProfile.age} ปี, น้ำหนัก: ${userProfile.weight} kg, ส่วนสูง: ${userProfile.height} cm, เป้าหมาย: ${userProfile.goal === 'lose' ? 'ลดน้ำหนัก' : userProfile.goal === 'gain' ? 'เพิ่มน้ำหนัก' : 'รักษาน้ำหนัก'}`
+      : 'ไม่มีข้อมูลส่วนสูง/น้ำหนักประจำตัว';
+
     const nutritionContext = gap.hasProfile
-      ? `ข้อมูลโภชนาการวันนี้ของ user:
+      ? `ข้อมูลโภชนาการและสถานะปัจจุบันของ user:
+- ข้อมูลทางกายภาพ: ${profileText}
 - แคลอรี่: กินไป ${gap.calories.consumed} kcal / เป้า ${gap.calories.goal} kcal (ขาดอีก ${gap.calories.remaining} kcal)
 - โปรตีน: กินไป ${gap.protein.consumed}g / เป้า ${gap.protein.goal}g (ขาดอีก ${gap.protein.remaining}g)
 - คาร์บ: กินไป ${gap.carb.consumed}g / เป้า ${gap.carb.goal}g (ขาดอีก ${gap.carb.remaining}g)
 - ไขมัน: กินไป ${gap.fat.consumed}g / เป้า ${gap.fat.goal}g (ขาดอีก ${gap.fat.remaining}g)
+${menusText}
 
 ค่าเฉลี่ยสัปดาห์นี้: ${weekly.avgCalories} kcal/วัน, โปรตีน ${weekly.avgProtein}g/วัน`
-      : 'user ยังไม่มีข้อมูลโภชนาการ';
+      : 'user ยังไม่มีข้อมูลโภชนาการ (แนะนำให้ไปตั้งค่า profile)';
 
     const locationContext = location
       ? `ตำแหน่ง user: lat=${location.lat}, lng=${location.lng}`
@@ -111,9 +173,12 @@ ${nutritionContext}
 ${locationContext}
 
 กฎการตอบ:
-- ถ้า user ทักทายเฉยๆ ไม่มี task (เช่น สวัสดี, หวัดดี, ดีๆ) → ทักกลับ 1 ประโยค แล้วแสดงรายการตัวอย่างที่ช่วยได้:\n"อยากให้เราช่วยเรื่องอะไรบอกมาได้เลย เช่น\n🍱 สรุปมื้อวันนี้ให้หน่อย\n🗺️ ช่วยหาร้านอาหาร\n📊 เราขาดสารอาหารอะไร\n🤔 กินอะไรดี\n🥗 แนะนำมื้อให้หน่อย\n💬 อื่นๆ"\n- ถ้า user มี task request ชัดเจน (ขอร้านอาหาร, ถามโภชนาการ, ขอคำแนะนำ) → จัดการ task โดยตรง ห้ามแสดง feature guide เด็ดขาด
-- ถ้า user ถามเรื่องอาหารหรือโภชนาการ → แสดงผลเป็นลิสต์ดูง่าย ต้องใส่ตัวเลขจริงเสมอ รูปแบบ:\n"วันนี้กินไปแล้ว:\n🔥 แคลอรี่: X/Y kcal (ขาดอีก Z kcal)\n🥩 โปรตีน: X/Y g (ขาดอีก Z g)\n🍚 คาร์บ: X/Y g (ขาดอีก Z g)\n🥑 ไขมัน: X/Y g (ขาดอีก Z g)"\nถ้ามีข้อมูลเมนูที่ user กินในวันนี้ → บอกด้วยสั้นๆ เช่น "มื้อที่บันทึก: ข้าวผัด, ไข่ต้ม" แต่ถ้าไม่มีก็ไม่ต้องบอก
-- ใช้บรรทัดใหม่ (\n\n) แบ่งย่อหน้า ไม่เขียนต่อกันยาว
+- สำคัญมาก: หาก user เล่าว่าเพิ่งกินอะไรไป ให้เรียกฟังก์ชัน logFoodEntry ทันทีเพื่อบันทึกลงระบบ
+- หาก user แจ้งว่า "น้ำหนักปัจจุบันเปลี่ยนไปแล้วจริงๆ" (เช่น ตอนนี้ชั่งได้ 60 แล้ว) ให้บอกให้ user "ไปกดอัปเดตน้ำหนักใหม่ในหน้า Dashboard ด้วย" แต่ถ้า user แค่ถามสมมติหรือปรึกษา (เช่น จะลดเหลือ 60 ได้ไหม, อ้วนไปไหม) ให้ตอบคำนวณให้ตามปกติ และ "ห้าม" สั่งให้อัปเดต Dashboard เด็ดขาด
+- ถ้า user พิมพ์มาแค่คำทักทายสั้นๆ โดยไม่มีคำถามอื่น (เช่น สวัสดี, หวัดดี) ให้ทักกลับ 1 ประโยค แล้วแสดงเมนูนี้: "อยากให้เราช่วยเรื่องอะไรบอกมาได้เลย เช่น 🍱 สรุปมื้อ 🗺️ หาร้านอาหาร 📊 สรุปสารอาหาร 🤔 แนะนำมื้อเย็น"
+- ถ้า user มีคำถามประโยคยาวๆ หรือ task ชัดเจน (เช่น ควรกินอะไรดี, อ้วนรึยัง) ให้ตอบไปตรงๆ ห้ามพิมพ์อธิบายความสามารถ (Feature guide) ออกมาเด็ดขาด
+- คำถามนอกเรื่อง (Jailbreak/ตลก/โค้ดโปรแกรม/แต่งกลอน/แปลภาษา) ให้ปฏิเสธอย่างสุภาพและวกกลับมานำเสนอเรื่องการแนะนำอาหาร
+- ให้แสดงตารางสรุปโภชนาการ (🔥 แคลอรี่... 🥩 โปรตีน...) ก็ต่อเมื่อ user "ร้องขอให้สรุปข้อมูล" หรือ "ขอดูสถานะโภชนาการโดยรวม" เท่านั้น
 - ถ้า user ถามหาร้านและมีตำแหน่ง → เรียก findNearbyRestaurants เลือก keyword ตาม macro ที่ขาดมากที่สุด
 
 ตอบกลับเป็น JSON รูปแบบนี้เท่านั้น:
@@ -130,8 +195,19 @@ ${locationContext}
 - false ทุกกรณีอื่น (ทักทาย ถามโภชนาการ ถามทั่วไป)
 ถ้าไม่มีร้านให้แนะนำ ให้ restaurants เป็น []`;
 
+    // ลบ function call/response ออกจาก history เก็บแค่ text
+    // ป้องกัน Gemini error "function response turn must come immediately after function call"
+    const sanitizedHistory = (history ?? [])
+      .map((c) => ({
+        role: c.role || 'user',
+        parts: (c.parts ?? []).filter(
+          (p) => p.text != null && !p.functionCall && !p.functionResponse,
+        ),
+      }))
+      .filter((c) => c.parts.length > 0);
+
     const contents: Content[] = [
-      ...(history ?? []).slice(-12),
+      ...sanitizedHistory.slice(-12),
       {
         role: 'user',
         parts: [{ text: `${systemPrompt}\n\nคำถาม: ${userMessage}` }],
@@ -144,40 +220,31 @@ ${locationContext}
           model,
           contents,
           config: {
-            tools: [this.findNearbyRestaurantsTool],
+            tools: [this.findNearbyRestaurantsTool, this.logFoodEntryTool],
           },
         });
 
-        // 2. Agentic loop — วนจนกว่า Gemini หยุดเรียก function
+        // Agentic loop
         while (response.functionCalls && response.functionCalls.length > 0) {
           const functionCall = response.functionCalls[0];
           this.logger.log(
             `Gemini calls: ${functionCall.name} args=${JSON.stringify(functionCall.args)}`,
           );
 
-          let functionResult: PlaceResult[] = [];
-          if (functionCall.name === 'findNearbyRestaurants' && location) {
-            const args = functionCall.args as {
-              keyword?: string;
-              radiusMeters?: number;
-              minRating?: number;
-              openNow?: boolean;
-              maxPrice?: number;
-            };
-            functionResult =
-              await this.googlePlacesService.findNearbyRestaurants(
-                location.lat,
-                location.lng,
-                args.keyword,
-                args.radiusMeters,
-                args.minRating,
-                args.openNow,
-                args.maxPrice,
-              );
-          }
+          const functionResult = await this.executeToolCall(
+            functionCall,
+            lineUserId,
+            location,
+          );
 
           // ส่งผลกลับ Gemini
-          contents.push(response.candidates![0].content as Content);
+          const modelContent = response.candidates?.[0]?.content;
+          if (modelContent) {
+            contents.push({
+              role: modelContent.role || 'model',
+              parts: modelContent.parts || [],
+            });
+          }
           contents.push({
             role: 'user',
             parts: [
@@ -195,18 +262,20 @@ ${locationContext}
             model,
             contents,
             config: {
-              tools: [this.findNearbyRestaurantsTool],
+              tools: [this.findNearbyRestaurantsTool, this.logFoodEntryTool],
             },
           });
         }
 
-        // 3. parse JSON สุดท้าย (strip markdown code block ถ้ามี)
+        // parse JSON
         const rawText = (response.text ?? '{}')
           .trim()
           .replace(/^```json\s*/i, '')
           .replace(/^```\s*/i, '')
           .replace(/\s*```$/i, '')
           .trim();
+
+        this.logger.log(`Raw Gemini Response: ${rawText}`);
 
         let raw: {
           summary?: string;
@@ -216,8 +285,14 @@ ${locationContext}
         try {
           raw = JSON.parse(rawText);
         } catch {
-          // Gemini ตอบ plain text ไม่ใช่ JSON → ใช้เป็น summary โดยตรง
           raw = { summary: rawText, needsLocation: false, restaurants: [] };
+        }
+
+        if (!raw.summary) {
+          if (rawText !== '{}' && rawText !== '') {
+          } else {
+            raw.summary = '(ขอโทษด้วยตอนนี้ฉันกำลังหลับอยู่)';
+          }
         }
 
         // รวม place details จาก function call ล่าสุดกลับเข้า restaurants
@@ -235,9 +310,17 @@ ${locationContext}
 
         const placeMap = new Map(lastPlaces.map((p) => [p.name, p]));
 
-        // เก็บ turn ปัจจุบันเข้า history (model response ล่าสุด)
-        if (response.candidates?.[0]?.content) {
-          contents.push(response.candidates[0].content as Content);
+        // เก็บ turn ปัจจุบันเข้า history
+        const finalContent = response.candidates?.[0]?.content;
+        if (
+          finalContent &&
+          finalContent.parts &&
+          finalContent.parts.length > 0
+        ) {
+          contents.push({
+            role: finalContent.role || 'model',
+            parts: finalContent.parts,
+          });
         }
 
         return {
@@ -260,8 +343,10 @@ ${locationContext}
           }),
         };
       } catch (error: any) {
-        if (error?.status === 429) {
-          this.logger.warn(`${model} quota exceeded, trying next...`);
+        if (error?.status === 429 || error?.status === 503) {
+          this.logger.warn(
+            `${model} quota exceeded or unavailable (503), trying next...`,
+          );
           continue;
         }
         if (error?.status === 404) {
@@ -272,6 +357,77 @@ ${locationContext}
       }
     }
 
-    return { summary: 'ขออภัย ระบบไม่พร้อมใช้งานในขณะนี้', needsLocation: false, updatedHistory: [], restaurants: [] };
+    return {
+      summary: 'ขออภัย ระบบไม่พร้อมใช้งานในขณะนี้',
+      needsLocation: false,
+      updatedHistory: [],
+      restaurants: [],
+    };
+  }
+
+  private async executeToolCall(
+    functionCall: { name?: string; args?: any },
+    lineUserId: string,
+    location?: { lat: number; lng: number },
+  ): Promise<any> {
+    if (functionCall.name === 'findNearbyRestaurants' && location) {
+      const args = functionCall.args as {
+        keyword?: string;
+        radiusMeters?: number;
+        minRating?: number;
+        openNow?: boolean;
+        maxPrice?: number;
+      };
+      return await this.googlePlacesService.findNearbyRestaurants(
+        location.lat,
+        location.lng,
+        args.keyword,
+        args.radiusMeters,
+        args.minRating,
+        args.openNow,
+        args.maxPrice,
+      );
+    } else if (functionCall.name === 'logFoodEntry') {
+      const args = functionCall.args as {
+        menuName: string;
+        estimatedCalories: number;
+        protein: number;
+        carb: number;
+        fat: number;
+        mealType?: string;
+        cuisineType?: string;
+      };
+
+      let finalMealType: string | undefined = undefined;
+      if (
+        args.mealType &&
+        ['breakfast', 'lunch', 'dinner', 'snack'].includes(
+          args.mealType.toLowerCase(),
+        )
+      ) {
+        finalMealType = args.mealType.toLowerCase();
+      }
+
+      const finalCuisineType = args.cuisineType?.trim()
+        ? args.cuisineType
+        : 'Text Input';
+
+      await this.foodDiaryService.save(
+        lineUserId,
+        args.menuName,
+        args.estimatedCalories,
+        args.protein,
+        args.carb,
+        args.fat,
+        finalCuisineType,
+        0,
+        finalMealType,
+      );
+      return {
+        success: true,
+        message: `บันทึกเมนู ${args.menuName} เรียบร้อยแล้ว ประเมินแคลอรี่ที่ ${args.estimatedCalories} kcal`,
+      };
+    }
+    return [];
   }
 }

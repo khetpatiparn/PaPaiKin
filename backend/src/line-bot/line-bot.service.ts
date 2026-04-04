@@ -113,7 +113,7 @@ export class LineBotService {
           return this.showDiarySummary(messageEvent.replyToken!, userId);
         }
 
-        // Free-text → AI Agent (เฉพาะเมื่ออยู่ใน IDLE)
+        // AI Agent
         if (session.currentStep === 'IDLE') {
           await this.animationLoading(userId, 20);
           await this.handleAgentChat(
@@ -460,7 +460,7 @@ export class LineBotService {
         },
       ],
     });
-  } // used in onboard
+  }
 
   private async handleOnboardingPostback(
     replyToken: string,
@@ -594,7 +594,7 @@ export class LineBotService {
         session.onboardData.bodyFatRange = value === 'skip' ? '' : value;
         return this.completeOnboarding(replyToken, userId);
     }
-  } // used in onboard
+  }
 
   private async handleOnboardingText(
     replyToken: string,
@@ -697,7 +697,7 @@ export class LineBotService {
       default:
         return this.replyText(replyToken, '⚠️ กรุณากดปุ่มเพื่อเลือก');
     }
-  } // used in onboard
+  }
 
   private async completeOnboarding(replyToken: string, userId: string) {
     const session = this.sessions.get(userId)!;
@@ -744,7 +744,7 @@ export class LineBotService {
       goalLabel[data.goal],
       profile,
     );
-  } // used in onboard
+  }
 
   private async replyOnboardingComplete(
     replyToken: string,
@@ -953,7 +953,7 @@ export class LineBotService {
         },
       ],
     });
-  } // used in onboard
+  }
 
   // ─── Image flow ──────────────────────────────────────────────
 
@@ -1084,7 +1084,7 @@ export class LineBotService {
         },
       ],
     });
-  } // used in image flow
+  }
 
   private async saveFoodDiaryEntry(
     userId: string,
@@ -1104,20 +1104,20 @@ export class LineBotService {
       mealType,
     );
     return String(saved._id);
-  } // used in image flow
+  }
 
   private async fetchImageAsBase64(messageId: string): Promise<string> {
     const stream = await this.blobClient.getMessageContent(messageId);
     const buf = await buffer(stream);
     return buf.toString('base64');
-  } // used in image flow
+  }
 
   private async animationLoading(userId: string, loadingSec: number) {
     await this.client.showLoadingAnimation({
       chatId: userId,
       loadingSeconds: loadingSec,
     });
-  } // used
+  }
 
   private async replyText(replyToken: string, text: string): Promise<void> {
     await this.client.replyMessage({
@@ -1159,7 +1159,6 @@ export class LineBotService {
       return;
     }
 
-    // Agent บอกว่าต้องการ location แต่ยังไม่มี → เก็บ pending แล้วขอ location
     if (agentResponse.needsLocation && !location) {
       session.currentStep = 'AGENT_LOCATION';
       session.pendingAgentMessage = userMessage;
@@ -1260,7 +1259,7 @@ export class LineBotService {
                 contents: [
                   {
                     type: 'text',
-                    text: '⭐ คะแนน',
+                    text: '⭐ รีวิว',
                     weight: 'bold',
                     flex: 3,
                     size: 'xs',

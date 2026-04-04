@@ -122,5 +122,5 @@ export class GeminiService {
       cuisineType: 'Other',
       confidence: 0,
     };
-  } // used
+  }
 }

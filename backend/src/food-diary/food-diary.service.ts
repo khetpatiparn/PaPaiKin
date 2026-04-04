@@ -20,7 +20,7 @@ export class FoodDiaryService {
     if (time >= 870 && time < 1020) return 'snack'; // 14:30 - 17:00
     if (time >= 1020 && time < 1260) return 'dinner'; // 17:00 - 21:00
     return 'snack'; // 21:00 - 06:00
-  } // used
+  }
 
   async save(
     lineUserId: string,
@@ -45,7 +45,7 @@ export class FoodDiaryService {
       confidence,
     });
     return entry.save();
-  } // used
+  }
 
   async updateMealType(
     entryId: string,
@@ -54,7 +54,7 @@ export class FoodDiaryService {
     return this.foodDiaryModel
       .findByIdAndUpdate(entryId, { mealType }, { new: true })
       .exec();
-  } // used
+  }
 
   async getAllEntries(lineUserId: string): Promise<FoodDiaryDocument[]> {
     return this.foodDiaryModel
@@ -77,5 +77,5 @@ export class FoodDiaryService {
       })
       .sort({ createdAt: 1 })
       .exec();
-  } // used
+  }
 }
