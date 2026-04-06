@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const BACKEND_URL = 'https://53a1rh.instatunnel.my'
+export const BACKEND_URL = 'https://6uemsk.instatunnel.my'
 
 export interface FoodEntry {
   menuName: string
