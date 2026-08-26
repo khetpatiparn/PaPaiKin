@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const BACKEND_URL = 'https://i0hh7o.instatunnel.my'
+export const BACKEND_URL = 'https://papaikin.onrender.com'
 
 export interface FoodEntry {
   menuName: string
