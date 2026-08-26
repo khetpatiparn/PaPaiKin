@@ -1,0 +1,4 @@
+# Secrets — never commit
+atlas-credentials.env
+*.env
+!.env.example
